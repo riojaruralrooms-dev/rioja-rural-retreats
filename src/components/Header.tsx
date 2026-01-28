@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, MessageCircle } from "lucide-react";
 import logo from "@/assets/logo.jpg";
 
 const navItems = [
@@ -11,7 +11,11 @@ const navItems = [
   { label: "Contacto", href: "/contacto" },
 ];
 
-const Header = () => {
+interface HeaderProps {
+  onOpenChat?: () => void;
+}
+
+const Header = ({ onOpenChat }: HeaderProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
@@ -28,11 +32,7 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
-          ? "bg-cream/95 backdrop-blur-md shadow-soft py-3"
-          : "bg-transparent py-6"
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-cream/95 backdrop-blur-md shadow-soft py-3"
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
@@ -41,9 +41,7 @@ const Header = () => {
             <img
               src={logo}
               alt="Rioja Rural Rooms"
-              className={`h-12 md:h-14 w-auto transition-all duration-300 ${
-                isScrolled ? "" : "brightness-0 invert"
-              }`}
+              className="h-16 md:h-20 w-auto transition-all duration-300"
             />
           </Link>
 
@@ -53,25 +51,46 @@ const Header = () => {
               <Link
                 key={item.href}
                 to={item.href}
-                className={`nav-link ${isActive(item.href) ? "active" : ""} ${
-                  !isScrolled ? "!text-cream/90 hover:!text-cream" : ""
-                }`}
+                className={`nav-link ${isActive(item.href) ? "active" : ""}`}
               >
                 {item.label}
               </Link>
             ))}
+            {/* AI Assistant Button - Desktop */}
+            {onOpenChat && (
+              <button
+                onClick={onOpenChat}
+                className="flex items-center gap-2 px-4 py-2 bg-wine text-cream rounded-full hover:bg-wine-dark transition-colors duration-300 text-sm font-medium"
+                aria-label="Abrir asistente"
+              >
+                <MessageCircle size={18} />
+                <span>¿Te ayudo?</span>
+              </button>
+            )}
           </nav>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className={`lg:hidden p-2 transition-colors ${
-              isScrolled ? "text-charcoal" : "text-cream"
-            }`}
-            aria-label="Toggle menu"
-          >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          {/* Mobile: Chat Button + Menu Button */}
+          <div className="lg:hidden flex items-center gap-3">
+            {/* AI Assistant Button - Mobile */}
+            {onOpenChat && (
+              <button
+                onClick={onOpenChat}
+                className="p-2 bg-wine text-cream rounded-full hover:bg-wine-dark transition-colors"
+                aria-label="Abrir asistente"
+              >
+                <MessageCircle size={20} />
+              </button>
+            )}
+            
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 transition-colors text-charcoal"
+              aria-label="Toggle menu"
+            >
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
       </div>
 
