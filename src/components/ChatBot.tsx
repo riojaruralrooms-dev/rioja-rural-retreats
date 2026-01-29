@@ -6,12 +6,9 @@ type Message = { role: "user" | "assistant"; content: string };
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
 
-interface ChatBotProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-const ChatBot = ({ isOpen, onClose }: ChatBotProps) => {
+const ChatBot = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [showBubble, setShowBubble] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
@@ -21,6 +18,18 @@ const ChatBot = ({ isOpen, onClose }: ChatBotProps) => {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Show the small help bubble after 3 seconds on first visit
+  useEffect(() => {
+    const hasSeenBubble = sessionStorage.getItem("hasSeenChatBubble");
+    if (!hasSeenBubble) {
+      const timer = setTimeout(() => {
+        setShowBubble(true);
+        sessionStorage.setItem("hasSeenChatBubble", "true");
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -122,14 +131,47 @@ const ChatBot = ({ isOpen, onClose }: ChatBotProps) => {
     }
   };
 
-  if (!isOpen) return null;
+  const handleOpenChat = () => {
+    setIsOpen(true);
+    setShowBubble(false);
+  };
+
+  // Floating button with optional bubble message
+  if (!isOpen) {
+    return (
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">
+        {/* Help bubble */}
+        {showBubble && (
+          <div className="animate-fade-up bg-cream shadow-elevated rounded-lg p-3 max-w-[200px] relative">
+            <button
+              onClick={() => setShowBubble(false)}
+              className="absolute -top-2 -right-2 bg-charcoal text-cream rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-charcoal-light"
+              aria-label="Cerrar"
+            >
+              ×
+            </button>
+            <p className="text-sm text-charcoal">¿Necesitas ayuda? 🏡</p>
+          </div>
+        )}
+        
+        {/* Chat button */}
+        <button
+          onClick={handleOpenChat}
+          className="bg-wine text-cream p-4 rounded-full shadow-elevated hover:bg-wine-dark transition-all duration-300 hover:scale-105"
+          aria-label="Abrir asistente"
+        >
+          <MessageCircle size={24} />
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-end p-4 sm:items-center sm:justify-center">
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-charcoal/50 backdrop-blur-sm"
-        onClick={onClose}
+        onClick={() => setIsOpen(false)}
       />
 
       {/* Chat Window */}
@@ -141,7 +183,7 @@ const ChatBot = ({ isOpen, onClose }: ChatBotProps) => {
             <span className="font-medium">Asistente Rioja Rural Rooms</span>
           </div>
           <button
-            onClick={onClose}
+            onClick={() => setIsOpen(false)}
             className="p-1 hover:bg-wine-light rounded transition-colors"
             aria-label="Cerrar chat"
           >
