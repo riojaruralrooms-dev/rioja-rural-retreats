@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, MessageCircle } from "lucide-react";
-import logo from "@/assets/logo.jpg";
+import { Menu, X } from "lucide-react";
+import logo from "@/assets/logo-nuevo.png";
 
 const navItems = [
   { label: "Inicio", href: "/" },
@@ -11,11 +11,7 @@ const navItems = [
   { label: "Contacto", href: "/contacto" },
 ];
 
-interface HeaderProps {
-  onOpenChat?: () => void;
-}
-
-const Header = ({ onOpenChat }: HeaderProps) => {
+const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
@@ -41,7 +37,7 @@ const Header = ({ onOpenChat }: HeaderProps) => {
             <img
               src={logo}
               alt="Rioja Rural Rooms"
-              className="h-16 md:h-20 w-auto transition-all duration-300"
+              className="h-32 md:h-40 w-auto transition-all duration-300"
             />
           </Link>
 
@@ -56,41 +52,16 @@ const Header = ({ onOpenChat }: HeaderProps) => {
                 {item.label}
               </Link>
             ))}
-            {/* AI Assistant Button - Desktop */}
-            {onOpenChat && (
-              <button
-                onClick={onOpenChat}
-                className="flex items-center gap-2 px-4 py-2 bg-wine text-cream rounded-full hover:bg-wine-dark transition-colors duration-300 text-sm font-medium"
-                aria-label="Abrir asistente"
-              >
-                <MessageCircle size={18} />
-                <span>¿Te ayudo?</span>
-              </button>
-            )}
           </nav>
 
-          {/* Mobile: Chat Button + Menu Button */}
-          <div className="lg:hidden flex items-center gap-3">
-            {/* AI Assistant Button - Mobile */}
-            {onOpenChat && (
-              <button
-                onClick={onOpenChat}
-                className="p-2 bg-wine text-cream rounded-full hover:bg-wine-dark transition-colors"
-                aria-label="Abrir asistente"
-              >
-                <MessageCircle size={20} />
-              </button>
-            )}
-            
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 transition-colors text-charcoal"
-              aria-label="Toggle menu"
-            >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="lg:hidden p-2 transition-colors text-charcoal"
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
       </div>
 
