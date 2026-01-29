@@ -2,11 +2,36 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { X, Send, MessageCircle, Loader2, Mic, MicOff, Volume2, VolumeX } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 
+// Web Speech API types
+interface SpeechRecognitionEvent extends Event {
+  results: SpeechRecognitionResultList;
+}
+
+interface SpeechRecognitionErrorEvent extends Event {
+  error: string;
+}
+
+interface SpeechRecognitionInstance extends EventTarget {
+  lang: string;
+  continuous: boolean;
+  interimResults: boolean;
+  onresult: ((event: SpeechRecognitionEvent) => void) | null;
+  onerror: ((event: SpeechRecognitionErrorEvent) => void) | null;
+  onend: (() => void) | null;
+  start: () => void;
+  stop: () => void;
+}
+
+declare global {
+  interface Window {
+    SpeechRecognition: new () => SpeechRecognitionInstance;
+    webkitSpeechRecognition: new () => SpeechRecognitionInstance;
+  }
+}
+
 type Message = { role: "user" | "assistant"; content: string };
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
-const TTS_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/elevenlabs-tts`;
-const STT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/elevenlabs-stt`;
 
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,9 +48,8 @@ const ChatBot = () => {
   const [voiceEnabled, setVoiceEnabled] = useState(true);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-  const audioChunksRef = useRef<Blob[]>([]);
-  const currentAudioRef = useRef<HTMLAudioElement | null>(null);
+  const recognitionRef = useRef<SpeechRecognitionInstance | null>(null);
+  const synthRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   // Show the small help bubble after 3 seconds on first visit
   useEffect(() => {
@@ -47,119 +71,78 @@ const ChatBot = () => {
     scrollToBottom();
   }, [messages]);
 
-  // Text-to-Speech function
-  const speakText = useCallback(async (text: string) => {
-    if (!voiceEnabled) return;
+  // Text-to-Speech using Web Speech API
+  const speakText = useCallback((text: string) => {
+    if (!voiceEnabled || !('speechSynthesis' in window)) return;
     
-    // Stop any currently playing audio
-    if (currentAudioRef.current) {
-      currentAudioRef.current.pause();
-      currentAudioRef.current = null;
+    // Stop any currently speaking
+    window.speechSynthesis.cancel();
+
+    // Clean text for TTS (remove markdown)
+    const cleanText = text
+      .replace(/\*\*/g, '')
+      .replace(/\*/g, '')
+      .replace(/#{1,6}\s/g, '')
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+      .replace(/`[^`]+`/g, '')
+      .trim();
+
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    utterance.lang = 'es-ES';
+    utterance.rate = 1.0;
+    utterance.pitch = 1.0;
+    
+    // Try to find a Spanish voice
+    const voices = window.speechSynthesis.getVoices();
+    const spanishVoice = voices.find(voice => voice.lang.startsWith('es'));
+    if (spanishVoice) {
+      utterance.voice = spanishVoice;
     }
 
-    try {
-      setIsSpeaking(true);
-      
-      // Clean text for TTS (remove markdown)
-      const cleanText = text
-        .replace(/\*\*/g, '')
-        .replace(/\*/g, '')
-        .replace(/#{1,6}\s/g, '')
-        .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
-        .replace(/`[^`]+`/g, '')
-        .trim();
-
-      const response = await fetch(TTS_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-        },
-        body: JSON.stringify({ text: cleanText }),
-      });
-
-      if (!response.ok) {
-        throw new Error("TTS request failed");
-      }
-
-      const audioBlob = await response.blob();
-      const audioUrl = URL.createObjectURL(audioBlob);
-      const audio = new Audio(audioUrl);
-      currentAudioRef.current = audio;
-      
-      audio.onended = () => {
-        setIsSpeaking(false);
-        URL.revokeObjectURL(audioUrl);
-        currentAudioRef.current = null;
-      };
-      
-      audio.onerror = () => {
-        setIsSpeaking(false);
-        URL.revokeObjectURL(audioUrl);
-        currentAudioRef.current = null;
-      };
-      
-      await audio.play();
-    } catch (error) {
-      console.error("TTS error:", error);
-      setIsSpeaking(false);
-    }
+    utterance.onstart = () => setIsSpeaking(true);
+    utterance.onend = () => setIsSpeaking(false);
+    utterance.onerror = () => setIsSpeaking(false);
+    
+    synthRef.current = utterance;
+    window.speechSynthesis.speak(utterance);
   }, [voiceEnabled]);
 
-  // Speech-to-Text function
-  const startRecording = useCallback(async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const mediaRecorder = new MediaRecorder(stream);
-      mediaRecorderRef.current = mediaRecorder;
-      audioChunksRef.current = [];
-
-      mediaRecorder.ondataavailable = (event) => {
-        if (event.data.size > 0) {
-          audioChunksRef.current.push(event.data);
-        }
-      };
-
-      mediaRecorder.onstop = async () => {
-        const audioBlob = new Blob(audioChunksRef.current, { type: "audio/webm" });
-        stream.getTracks().forEach(track => track.stop());
-        
-        // Send to STT
-        try {
-          const formData = new FormData();
-          formData.append("audio", audioBlob, "recording.webm");
-
-          const response = await fetch(STT_URL, {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-            },
-            body: formData,
-          });
-
-          if (!response.ok) {
-            throw new Error("STT request failed");
-          }
-
-          const result = await response.json();
-          if (result.text) {
-            setInput(result.text);
-          }
-        } catch (error) {
-          console.error("STT error:", error);
-        }
-      };
-
-      mediaRecorder.start();
-      setIsRecording(true);
-    } catch (error) {
-      console.error("Microphone error:", error);
+  // Speech-to-Text using Web Speech API
+  const startRecording = useCallback(() => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      console.error("Speech recognition not supported");
+      return;
     }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'es-ES';
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      setInput(transcript);
+      setIsRecording(false);
+    };
+
+    recognition.onerror = (event) => {
+      console.error("Speech recognition error:", event.error);
+      setIsRecording(false);
+    };
+
+    recognition.onend = () => {
+      setIsRecording(false);
+    };
+
+    recognitionRef.current = recognition;
+    recognition.start();
+    setIsRecording(true);
   }, []);
 
   const stopRecording = useCallback(() => {
-    if (mediaRecorderRef.current && isRecording) {
-      mediaRecorderRef.current.stop();
+    if (recognitionRef.current && isRecording) {
+      recognitionRef.current.stop();
       setIsRecording(false);
     }
   }, [isRecording]);
@@ -173,11 +156,8 @@ const ChatBot = () => {
   }, [isRecording, startRecording, stopRecording]);
 
   const stopSpeaking = useCallback(() => {
-    if (currentAudioRef.current) {
-      currentAudioRef.current.pause();
-      currentAudioRef.current = null;
-      setIsSpeaking(false);
-    }
+    window.speechSynthesis.cancel();
+    setIsSpeaking(false);
   }, []);
 
   const streamChat = async (userMessages: Message[]) => {
