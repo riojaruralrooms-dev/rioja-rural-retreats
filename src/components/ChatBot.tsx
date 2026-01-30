@@ -298,26 +298,31 @@ const ChatBot = () => {
     <div className="fixed inset-0 z-50 flex items-end justify-end p-4 sm:items-center sm:justify-center">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-charcoal/50 backdrop-blur-sm"
+        className="absolute inset-0 bg-charcoal/60 backdrop-blur-md"
         onClick={() => setIsOpen(false)}
       />
 
       {/* Chat Window */}
-      <div className="relative w-full max-w-md h-[500px] sm:h-[600px] bg-cream rounded-lg shadow-elevated flex flex-col overflow-hidden animate-fade-up">
+      <div className="relative w-full max-w-md h-[500px] sm:h-[600px] bg-gradient-to-b from-cream to-stone-light rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-fade-up border border-wine/10">
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-3 bg-wine text-cream">
-          <div className="flex items-center gap-2">
-            <MessageCircle size={20} />
-            <span className="font-medium">Asistente Rioja Rural Rooms</span>
+        <div className="flex items-center justify-between px-5 py-4 bg-gradient-to-r from-wine to-wine-dark text-cream rounded-t-2xl">
+          <div className="flex items-center gap-3">
+            <div className="bg-cream/20 p-2 rounded-full">
+              <MessageCircle size={20} />
+            </div>
+            <div>
+              <span className="font-serif font-semibold text-lg">Asistente Virtual</span>
+              <p className="text-xs text-cream/80">Rioja Rural Rooms</p>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
             {/* Voice toggle */}
             <button
               onClick={() => {
                 setVoiceEnabled(!voiceEnabled);
                 if (isSpeaking) stopSpeaking();
               }}
-              className={`p-1.5 rounded transition-colors ${voiceEnabled ? 'bg-wine-light' : 'bg-wine-dark'}`}
+              className={`p-2 rounded-full transition-all duration-300 ${voiceEnabled ? 'bg-cream/20 hover:bg-cream/30' : 'bg-wine-dark/50 hover:bg-wine-dark/70'}`}
               aria-label={voiceEnabled ? "Desactivar voz" : "Activar voz"}
               title={voiceEnabled ? "Voz activada" : "Voz desactivada"}
             >
@@ -325,7 +330,7 @@ const ChatBot = () => {
             </button>
             <button
               onClick={() => setIsOpen(false)}
-              className="p-1 hover:bg-wine-light rounded transition-colors"
+              className="p-2 hover:bg-cream/20 rounded-full transition-all duration-300"
               aria-label="Cerrar chat"
             >
               <X size={20} />
@@ -334,33 +339,36 @@ const ChatBot = () => {
         </div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        <div className="flex-1 overflow-y-auto p-5 space-y-4">
           {messages.map((msg, idx) => (
             <div
               key={idx}
               className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
             >
               <div
-                className={`max-w-[85%] rounded-lg px-4 py-2 ${
+                className={`max-w-[85%] rounded-2xl px-4 py-3 shadow-soft ${
                   msg.role === "user"
-                    ? "bg-wine text-cream"
-                    : "bg-stone-light text-charcoal"
+                    ? "bg-gradient-to-br from-wine to-wine-dark text-cream rounded-br-md"
+                    : "bg-white text-charcoal rounded-bl-md border border-stone/30"
                 }`}
               >
                 {msg.role === "assistant" ? (
-                  <div className="prose prose-sm max-w-none text-charcoal">
+                  <div className="prose prose-sm max-w-none text-charcoal [&>p]:mb-2 [&>ul]:mt-1 [&>ol]:mt-1">
                     <ReactMarkdown>{msg.content}</ReactMarkdown>
                   </div>
                 ) : (
-                  <p className="text-sm">{msg.content}</p>
+                  <p className="text-sm leading-relaxed">{msg.content}</p>
                 )}
               </div>
             </div>
           ))}
           {isLoading && messages[messages.length - 1]?.role === "user" && (
             <div className="flex justify-start">
-              <div className="bg-stone-light text-charcoal rounded-lg px-4 py-2">
-                <Loader2 className="w-5 h-5 animate-spin" />
+              <div className="bg-white text-charcoal rounded-2xl rounded-bl-md px-4 py-3 shadow-soft border border-stone/30">
+                <div className="flex items-center gap-2">
+                  <Loader2 className="w-4 h-4 animate-spin text-wine" />
+                  <span className="text-xs text-muted-foreground">Escribiendo...</span>
+                </div>
               </div>
             </div>
           )}
@@ -369,14 +377,18 @@ const ChatBot = () => {
 
         {/* Speaking indicator */}
         {isSpeaking && (
-          <div className="px-4 py-2 bg-olive-light flex items-center justify-between">
+          <div className="px-5 py-3 bg-olive-light/50 backdrop-blur-sm flex items-center justify-between border-t border-olive/20">
             <span className="text-sm text-charcoal flex items-center gap-2">
-              <Volume2 size={16} className="animate-pulse" />
+              <div className="flex gap-1">
+                <span className="w-1.5 h-1.5 bg-wine rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
+                <span className="w-1.5 h-1.5 bg-wine rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
+                <span className="w-1.5 h-1.5 bg-wine rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
+              </div>
               Hablando...
             </span>
             <button
               onClick={stopSpeaking}
-              className="text-xs text-wine hover:underline"
+              className="text-xs text-wine font-medium hover:underline"
             >
               Detener
             </button>
@@ -384,16 +396,16 @@ const ChatBot = () => {
         )}
 
         {/* Input */}
-        <div className="border-t border-border p-3">
+        <div className="border-t border-stone/30 p-4 bg-white/80 backdrop-blur-sm rounded-b-2xl">
           <div className="flex gap-2">
             {/* Microphone button */}
             <button
               onClick={toggleRecording}
               disabled={isLoading}
-              className={`p-2 rounded-lg transition-colors ${
+              className={`p-3 rounded-full transition-all duration-300 ${
                 isRecording 
-                  ? "bg-red-500 text-white animate-pulse" 
-                  : "bg-stone-light text-charcoal hover:bg-stone"
+                  ? "bg-red-500 text-white shadow-lg animate-pulse scale-110" 
+                  : "bg-stone-light text-charcoal hover:bg-stone hover:scale-105"
               } disabled:opacity-50`}
               aria-label={isRecording ? "Detener grabación" : "Grabar voz"}
             >
@@ -405,14 +417,14 @@ const ChatBot = () => {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyPress}
-              placeholder={isRecording ? "Grabando..." : "Escribe o habla tu mensaje..."}
-              className="flex-1 px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-wine/30 focus:border-wine text-sm bg-background"
+              placeholder={isRecording ? "Escuchando..." : "Escribe tu mensaje..."}
+              className="flex-1 px-4 py-3 border border-stone/40 rounded-full focus:outline-none focus:ring-2 focus:ring-wine/30 focus:border-wine text-sm bg-cream/50 placeholder:text-muted-foreground/60"
               disabled={isLoading || isRecording}
             />
             <button
               onClick={handleSend}
               disabled={!input.trim() || isLoading}
-              className="px-4 py-2 bg-wine text-cream rounded-lg hover:bg-wine-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="p-3 bg-gradient-to-br from-wine to-wine-dark text-cream rounded-full hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105"
               aria-label="Enviar mensaje"
             >
               <Send size={18} />
