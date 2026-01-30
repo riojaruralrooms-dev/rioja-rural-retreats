@@ -11,7 +11,8 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-1">{children}</main>
+      {/* pt-36 md:pt-44 compensa la altura del header fijo con el logo grande */}
+      <main className="flex-1 pt-36 md:pt-44">{children}</main>
       <Footer />
       <ChatBot />
     </div>
