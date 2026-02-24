@@ -6,6 +6,11 @@ import tironcilloPueblo from "@/assets/tironcillo-pueblo.jpg";
 import tironcilloRio from "@/assets/tironcillo-rio.jpg";
 import tironcilloDormitorio from "@/assets/tironcillo-dormitorio.jpg";
 import floridaImg from "@/assets/apartamentos-florida.jpg";
+import floridaFachada from "@/assets/florida-fachada.jpg";
+import floridaCocina from "@/assets/florida-cocina.jpg";
+import floridaSalon2 from "@/assets/florida-salon2.jpg";
+import floridaPueblo from "@/assets/florida-pueblo.jpg";
+import floridaComedor2 from "@/assets/florida-comedor2.jpg";
 import haroImg from "@/assets/apartamento-haro.jpg";
 import villaOlivoImg from "@/assets/villa-olivo.jpg";
 
@@ -95,7 +100,8 @@ export const accommodations: Accommodation[] = [
       "Apartamentos situados en la Plaza La Florida de Casalarreina, en una ubicación céntrica y privilegiada. A solo 4 km de Haro.",
     fullDescription:
       "Apartamentos situados en la Plaza La Florida de Casalarreina, en una ubicación céntrica y privilegiada. A solo 4 km de Haro. Alojamiento totalmente equipado, ideal para estancias tranquilas en el corazón del pueblo.",
-    image: floridaImg,
+    image: floridaFachada,
+    images: [floridaFachada, floridaCocina, floridaSalon2, floridaComedor2, floridaPueblo],
     buttonText: "Ver apartamentos",
     apartments: [
       {
