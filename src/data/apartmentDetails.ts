@@ -47,6 +47,7 @@ export interface ApartmentDetail {
   gallery: { src: string; alt: string }[];
   baseBookingUrl: string;
   reviews?: Review[];
+  petFriendly?: boolean;
 }
 
 export const apartmentDetails: ApartmentDetail[] = [
@@ -80,6 +81,7 @@ export const apartmentDetails: ApartmentDetail[] = [
     ],
     baseBookingUrl:
       "https://www.booking.com/hotel/es/apartamentos-virgen-de-tironcillo-cuzcurrita-de-rio-tiron.es.html",
+    petFriendly: true,
   },
   {
     slug: "duplex-1",
@@ -119,6 +121,7 @@ export const apartmentDetails: ApartmentDetail[] = [
         text: "El apartamento está impecable, instalaciones perfectas y muy buena ubicación.",
       },
     ],
+    petFriendly: true,
   },
   {
     slug: "duplex-2",
@@ -156,6 +159,7 @@ export const apartmentDetails: ApartmentDetail[] = [
         text: "Todo muy limpio y bien equipado. Muy buena experiencia.",
       },
     ],
+    petFriendly: true,
   },
   {
     slug: "florida-1",
@@ -183,6 +187,7 @@ export const apartmentDetails: ApartmentDetail[] = [
     ],
     baseBookingUrl:
       "https://www.booking.com/hotel/es/apartamentos-la-florida-casalarreina.es.html",
+    petFriendly: true,
   },
   {
     slug: "florida-2",
@@ -210,5 +215,6 @@ export const apartmentDetails: ApartmentDetail[] = [
     ],
     baseBookingUrl:
       "https://www.booking.com/hotel/es/apartamentos-la-florida-casalarreina.es.html",
+    petFriendly: true,
   },
 ];

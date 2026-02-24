@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ApartmentDetail } from "@/data/apartmentDetails";
+import PetFriendlyBadge from "@/components/PetFriendlyBadge";
 
 interface ApartmentListCardProps {
   apartment: ApartmentDetail;
@@ -12,8 +13,11 @@ const ApartmentListCard = ({ apartment }: ApartmentListCardProps) => {
       style={{ boxShadow: "var(--shadow-soft)" }}
     >
       {/* Price badge */}
-      <div className="absolute top-4 right-4 z-10 bg-orange-500 text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg">
-        Desde {apartment.priceFrom},00 € / noche
+      <div className="absolute top-4 right-4 z-10 flex flex-col items-end gap-2">
+        <span className="bg-orange-500 text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg">
+          Desde {apartment.priceFrom},00 € / noche
+        </span>
+        {apartment.petFriendly && <PetFriendlyBadge />}
       </div>
 
       <div className="flex flex-col md:flex-row">

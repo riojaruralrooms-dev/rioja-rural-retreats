@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Minus, Plus } from "lucide-react";
 import Layout from "@/components/Layout";
+import PetFriendlyBlock from "@/components/PetFriendlyBlock";
 import ReviewCard from "@/components/ReviewCard";
 import { apartmentDetails } from "@/data/apartmentDetails";
 import { useToast } from "@/hooks/use-toast";
@@ -168,6 +169,9 @@ const ApartmentDetailPage = () => {
                     Solicitar reserva directa (-10%)
                   </button>
                 </div>
+
+                {/* Pet Friendly block */}
+                {apt.petFriendly && <PetFriendlyBlock />}
 
                 {/* BLOQUE B — Booking */}
                 <div className="bg-secondary/40 rounded-2xl p-6 md:p-8 border border-border">
