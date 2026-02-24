@@ -124,84 +124,89 @@ const ApartamentoJacuzzi = () => {
 
             {/* Right: Booking panel */}
             <div className="lg:col-span-1">
-              <div className="sticky top-48 bg-card rounded-2xl p-6 md:p-8 border border-border" style={{ boxShadow: "var(--shadow-elevated)" }}>
-                <h3 className="font-serif text-xl text-charcoal mb-1">Reserva tu estancia</h3>
-                <p className="text-muted-foreground text-sm mb-6">
-                  Desde <span className="font-semibold text-primary">{apt.priceFrom} €</span> / noche
-                </p>
-
-                <div className="space-y-4">
-                  {/* Checkin */}
-                  <div>
-                    <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
-                      Entrada
-                    </label>
-                    <input
-                      type="date"
-                      value={checkin}
-                      onChange={(e) => setCheckin(e.target.value)}
-                      min={format(new Date(), "yyyy-MM-dd")}
-                      className="form-input rounded-lg text-sm"
-                    />
-                  </div>
-
-                  {/* Checkout */}
-                  <div>
-                    <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
-                      Salida
-                    </label>
-                    <input
-                      type="date"
-                      value={checkout}
-                      onChange={(e) => setCheckout(e.target.value)}
-                      min={checkin || format(new Date(), "yyyy-MM-dd")}
-                      className="form-input rounded-lg text-sm"
-                    />
-                  </div>
-
-                  {/* Adults */}
-                  <div>
-                    <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
-                      Adultos
-                    </label>
-                    <div className="flex items-center gap-4 border rounded-lg px-4 py-2.5 border-border">
-                      <button
-                        onClick={() => setAdults(Math.max(1, adults - 1))}
-                        className="p-1 rounded-full hover:bg-secondary transition-colors"
-                      >
-                        <Minus size={16} />
-                      </button>
-                      <span className="flex-1 text-center font-medium">{adults}</span>
-                      <button
-                        onClick={() => setAdults(Math.min(6, adults + 1))}
-                        className="p-1 rounded-full hover:bg-secondary transition-colors"
-                      >
-                        <Plus size={16} />
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Primary CTA: Direct Booking */}
+              <div className="sticky top-48 space-y-5">
+                {/* BLOQUE A — Reserva directa */}
+                <div className="bg-card rounded-2xl p-6 md:p-8 border border-primary/20" style={{ boxShadow: "var(--shadow-elevated)" }}>
+                  <h3 className="font-serif text-xl text-charcoal mb-1">Reserva directa (-10%)</h3>
+                  <p className="text-foreground text-base leading-relaxed mb-6">
+                    Reserva directa con <span className="font-bold text-primary">10% de descuento</span>. Te confirmamos disponibilidad por email en menos de 24h.
+                  </p>
                   <button
                     onClick={handleDirectBooking}
-                    className="btn-wine w-full py-3.5 text-sm tracking-wider uppercase rounded-lg mt-2"
+                    className="btn-wine w-full py-4 text-base font-semibold tracking-wider uppercase rounded-lg"
                   >
-                    Reserva directa (-10%)
+                    Solicitar reserva directa (-10%)
                   </button>
-                  <p className="text-xs text-muted-foreground text-center -mt-1">
-                    Reserva directa con 10% de descuento. Te confirmamos disponibilidad por email.
-                  </p>
+                </div>
 
-                  {/* Secondary CTA: Booking.com */}
-                  <a
-                    href={bookingUrl || "#"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={handleBookingClick}
-                    className="btn-outline-wine w-full py-3 text-sm tracking-wider uppercase rounded-lg text-center block"
-                  >
-                    Ver disponibilidad en Booking
-                  </a>
+                {/* BLOQUE B — Booking */}
+                <div className="bg-secondary/40 rounded-2xl p-6 md:p-8 border border-border">
+                  <h3 className="font-serif text-lg text-muted-foreground mb-4">Consultar disponibilidad en Booking</h3>
+
+                  <div className="space-y-4">
+                    {/* Checkin */}
+                    <div>
+                      <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
+                        Entrada
+                      </label>
+                      <input
+                        type="date"
+                        value={checkin}
+                        onChange={(e) => setCheckin(e.target.value)}
+                        min={format(new Date(), "yyyy-MM-dd")}
+                        className="form-input rounded-lg text-sm"
+                      />
+                    </div>
+
+                    {/* Checkout */}
+                    <div>
+                      <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
+                        Salida
+                      </label>
+                      <input
+                        type="date"
+                        value={checkout}
+                        onChange={(e) => setCheckout(e.target.value)}
+                        min={checkin || format(new Date(), "yyyy-MM-dd")}
+                        className="form-input rounded-lg text-sm"
+                      />
+                    </div>
+
+                    {/* Adults */}
+                    <div>
+                      <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
+                        Adultos
+                      </label>
+                      <div className="flex items-center gap-4 border rounded-lg px-4 py-2.5 border-border bg-background">
+                        <button
+                          onClick={() => setAdults(Math.max(1, adults - 1))}
+                          className="p-1 rounded-full hover:bg-secondary transition-colors"
+                        >
+                          <Minus size={16} />
+                        </button>
+                        <span className="flex-1 text-center font-medium">{adults}</span>
+                        <button
+                          onClick={() => setAdults(Math.min(6, adults + 1))}
+                          className="p-1 rounded-full hover:bg-secondary transition-colors"
+                        >
+                          <Plus size={16} />
+                        </button>
+                      </div>
+                    </div>
+
+                    <a
+                      href={bookingUrl || "#"}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={handleBookingClick}
+                      className="btn-outline-wine w-full py-3 text-sm tracking-wider uppercase rounded-lg text-center block"
+                    >
+                      Ver disponibilidad en Booking
+                    </a>
+                    <p className="text-xs text-muted-foreground text-center">
+                      Sin descuento. Reserva y pago gestionados por Booking.com
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
