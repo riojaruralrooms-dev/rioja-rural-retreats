@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, MapPin, Users, Check, Phone, Mail } from "lucide-react";
 import Layout from "@/components/Layout";
 import { accommodations } from "@/data/accommodations";
+import JacuzziCard from "@/components/JacuzziCard";
 
 const AlojamientoDetalle = () => {
   const { id } = useParams<{ id: string }>();
@@ -99,7 +100,9 @@ const AlojamientoDetalle = () => {
                   Apartamentos disponibles
                 </h2>
                 <div className="space-y-6">
-                  {accommodation.apartments.map((apartment) => (
+                  {accommodation.apartments
+                    .filter((a) => a.id !== "apartamento-3")
+                    .map((apartment) => (
                     <div
                       key={apartment.id}
                       className="bg-card rounded-sm p-6 md:p-8 shadow-soft border border-border"
@@ -135,6 +138,13 @@ const AlojamientoDetalle = () => {
                     </div>
                   ))}
                 </div>
+
+                {/* Jacuzzi premium card - only for Tironcillo */}
+                {accommodation.id === "virgen-tironcillo" && (
+                  <div className="mt-8">
+                    <JacuzziCard />
+                  </div>
+                )}
               </div>
             )}
 
