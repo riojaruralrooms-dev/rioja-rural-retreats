@@ -19,6 +19,18 @@ import duplex2Salon from "@/assets/duplex2-salon.jpg";
 import duplex2Dormitorio from "@/assets/duplex2-dormitorio.jpg";
 import duplex2Dormitorio2 from "@/assets/duplex2-dormitorio2.jpg";
 
+import florida1Cover from "@/assets/florida1-cover.jpg";
+import florida1Salon from "@/assets/florida1-salon.jpg";
+import florida1Cocina from "@/assets/florida1-cocina.jpg";
+import florida1Bano from "@/assets/florida1-bano.jpg";
+import florida1Dormitorio from "@/assets/florida1-dormitorio.jpg";
+
+import florida2Cover from "@/assets/florida2-cover.jpg";
+import florida2Salon from "@/assets/florida2-salon.jpg";
+import florida2Comedor from "@/assets/florida2-comedor.jpg";
+import florida2Bano from "@/assets/florida2-bano.jpg";
+import florida2Dormitorio from "@/assets/florida2-dormitorio.jpg";
+
 export interface Review {
   name: string;
   text: string;
@@ -144,5 +156,59 @@ export const apartmentDetails: ApartmentDetail[] = [
         text: "Todo muy limpio y bien equipado. Muy buena experiencia.",
       },
     ],
+  },
+  {
+    slug: "florida-1",
+    title: "Apartamento La Florida – Primer Piso",
+    priceFrom: 90,
+    shortDescription:
+      "Apartamento luminoso situado en primer piso con vistas a la plaza de Casalarreina. Cocina totalmente equipada, salón comedor y baño completo.",
+    longDescription:
+      "Apartamento luminoso situado en primer piso con vistas a la plaza de Casalarreina.\n\nDispone de una habitación con cama de matrimonio y otra habitación con dos camas individuales. Cocina totalmente equipada, salón comedor con sofá cama disponible bajo petición y baño completo. Balcón.\n\nCuna disponible bajo disponibilidad y previo pago de suplemento.",
+    features: [
+      "Cocina equipada",
+      "WiFi gratis",
+      "TV",
+      "Aire acondicionado",
+      "Balcón",
+      "Sofá cama (bajo petición)",
+    ],
+    coverImage: florida1Cover,
+    gallery: [
+      { src: florida1Cover, alt: "Salón comedor con cocina" },
+      { src: florida1Salon, alt: "Salón con sofá" },
+      { src: florida1Cocina, alt: "Cocina equipada" },
+      { src: florida1Dormitorio, alt: "Dormitorio principal" },
+      { src: florida1Bano, alt: "Baño con ducha" },
+    ],
+    baseBookingUrl:
+      "https://www.booking.com/hotel/es/apartamentos-la-florida-casalarreina.es.html",
+  },
+  {
+    slug: "florida-2",
+    title: "Apartamento La Florida – Segundo Piso",
+    priceFrom: 90,
+    shortDescription:
+      "Apartamento luminoso situado en segundo piso con vistas a la plaza de Casalarreina. Cocina totalmente equipada, salón comedor y baño completo.",
+    longDescription:
+      "Apartamento luminoso situado en segundo piso con vistas a la plaza de Casalarreina.\n\nDispone de una habitación con cama de matrimonio y otra habitación con dos camas individuales. Cocina totalmente equipada, salón comedor con sofá cama disponible bajo petición y baño completo. Balcón.\n\nCuna disponible bajo disponibilidad y previo pago de suplemento.",
+    features: [
+      "Cocina equipada",
+      "WiFi gratis",
+      "TV",
+      "Aire acondicionado",
+      "Balcón",
+      "Sofá cama (bajo petición)",
+    ],
+    coverImage: florida2Cover,
+    gallery: [
+      { src: florida2Cover, alt: "Comedor con vistas a la plaza" },
+      { src: florida2Salon, alt: "Salón con sofá" },
+      { src: florida2Comedor, alt: "Zona comedor" },
+      { src: florida2Dormitorio, alt: "Dormitorio con camas individuales" },
+      { src: florida2Bano, alt: "Baño completo" },
+    ],
+    baseBookingUrl:
+      "https://www.booking.com/hotel/es/apartamentos-la-florida-casalarreina.es.html",
   },
 ];

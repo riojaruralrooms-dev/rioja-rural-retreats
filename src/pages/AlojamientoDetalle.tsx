@@ -122,9 +122,11 @@ const AlojamientoDetalle = () => {
                 <div className="space-y-6">
                   {apartmentDetails
                     .filter((a) => {
-                      // Show apartments that belong to this accommodation
                       if (accommodation.id === "virgen-tironcillo") {
                         return ["duplex-1", "duplex-2", "jacuzzi"].includes(a.slug);
+                      }
+                      if (accommodation.id === "la-florida") {
+                        return ["florida-1", "florida-2"].includes(a.slug);
                       }
                       return false;
                     })
