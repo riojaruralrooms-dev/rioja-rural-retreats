@@ -2,7 +2,8 @@ import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, MapPin, Users, Check, Phone, Mail } from "lucide-react";
 import Layout from "@/components/Layout";
 import { accommodations } from "@/data/accommodations";
-import JacuzziCard from "@/components/JacuzziCard";
+import ApartmentListCard from "@/components/ApartmentListCard";
+import { apartmentDetails } from "@/data/apartmentDetails";
 
 const AlojamientoDetalle = () => {
   const { id } = useParams<{ id: string }>();
@@ -100,51 +101,18 @@ const AlojamientoDetalle = () => {
                   Apartamentos disponibles
                 </h2>
                 <div className="space-y-6">
-                  {accommodation.apartments
-                    .filter((a) => a.id !== "apartamento-3")
+                  {apartmentDetails
+                    .filter((a) => {
+                      // Show apartments that belong to this accommodation
+                      if (accommodation.id === "virgen-tironcillo") {
+                        return ["duplex-1", "duplex-2", "jacuzzi"].includes(a.slug);
+                      }
+                      return false;
+                    })
                     .map((apartment) => (
-                    <div
-                      key={apartment.id}
-                      className="bg-card rounded-sm p-6 md:p-8 shadow-soft border border-border"
-                    >
-                      <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
-                        <h3 className="font-serif text-xl text-charcoal">
-                          {apartment.name}
-                        </h3>
-                        <div className="capacity-badge">
-                          <Users size={16} />
-                          <span>
-                            {apartment.capacity}
-                            {apartment.capacityMax &&
-                              ` (${apartment.capacityMax})`}
-                          </span>
-                        </div>
-                      </div>
-                      {apartment.description && (
-                        <p className="text-wine text-sm mb-4 italic">
-                          {apartment.description}
-                        </p>
-                      )}
-                      <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                        {apartment.features.map((feature, idx) => (
-                          <div key={idx} className="feature-item">
-                            <Check className="feature-icon" size={16} />
-                            <span className="text-sm text-muted-foreground">
-                              {feature}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
+                      <ApartmentListCard key={apartment.slug} apartment={apartment} />
+                    ))}
                 </div>
-
-                {/* Jacuzzi premium card - only for Tironcillo */}
-                {accommodation.id === "virgen-tironcillo" && (
-                  <div className="mt-8">
-                    <JacuzziCard />
-                  </div>
-                )}
               </div>
             )}
 
