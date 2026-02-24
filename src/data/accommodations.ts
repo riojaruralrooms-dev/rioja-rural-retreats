@@ -30,6 +30,7 @@ export interface Accommodation {
   apartments?: Apartment[];
   features?: string[];
   capacity?: string;
+  hidden?: boolean;
 }
 
 export const accommodations: Accommodation[] = [
@@ -155,6 +156,7 @@ export const accommodations: Accommodation[] = [
       "Junto a Plaza de la Paz",
     ],
     capacity: "4-6 personas",
+    hidden: true,
   },
   {
     id: "villa-olivo",
@@ -177,5 +179,6 @@ export const accommodations: Accommodation[] = [
       "Billar",
     ],
     capacity: "8 personas",
+    hidden: true,
   },
 ];

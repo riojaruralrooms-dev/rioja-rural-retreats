@@ -28,7 +28,7 @@ const AccommodationCard = ({
     if (!slideImages) return;
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % slideImages.length);
-    }, 4000);
+    }, 3000);
     return () => clearInterval(interval);
   }, [slideImages]);
 
