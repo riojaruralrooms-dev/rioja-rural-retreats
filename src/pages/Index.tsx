@@ -60,7 +60,7 @@ const Index = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-            {accommodations.map((accommodation) => (
+            {accommodations.filter((a) => !a.hidden).map((accommodation) => (
               <AccommodationCard
                 key={accommodation.id}
                 id={accommodation.id}

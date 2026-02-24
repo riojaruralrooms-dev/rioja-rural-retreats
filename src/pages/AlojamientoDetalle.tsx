@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, MapPin, Users, Check, Phone, Mail } from "lucide-react";
 import Layout from "@/components/Layout";
@@ -8,7 +9,16 @@ import { apartmentDetails } from "@/data/apartmentDetails";
 const AlojamientoDetalle = () => {
   const { id } = useParams<{ id: string }>();
   const accommodation = accommodations.find((a) => a.id === id);
+  const slideImages = accommodation?.images && accommodation.images.length > 1 ? accommodation.images : null;
+  const [heroIndex, setHeroIndex] = useState(0);
 
+  useEffect(() => {
+    if (!slideImages) return;
+    const interval = setInterval(() => {
+      setHeroIndex((prev) => (prev + 1) % slideImages.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [slideImages]);
   if (!accommodation) {
     return (
       <Layout>
@@ -31,11 +41,20 @@ const AlojamientoDetalle = () => {
       {/* Hero Section */}
       <section className="relative h-[60vh] min-h-[500px] flex items-end">
         <div className="absolute inset-0">
-          <img
-            src={accommodation.image}
-            alt={accommodation.name}
-            className="w-full h-full object-cover"
-          />
+          {slideImages ? (
+            slideImages.map((img, idx) => (
+              <img
+                key={idx}
+                src={img}
+                alt={`${accommodation.name} ${idx + 1}`}
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
+                  idx === heroIndex ? "opacity-100" : "opacity-0"
+                }`}
+              />
+            ))
+          ) : (
+            <img src={accommodation.image} alt={accommodation.name} className="w-full h-full object-cover" />
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-charcoal/30 to-transparent" />
         </div>
         <div className="relative z-10 container mx-auto px-4 pb-12">
