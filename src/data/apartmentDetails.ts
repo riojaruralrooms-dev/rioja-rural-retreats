@@ -45,7 +45,7 @@ export const apartmentDetails: ApartmentDetail[] = [
     shortDescription:
       "Apartamento con jacuzzi totalmente equipado con salón comedor, cocina completa, dos habitaciones con cama de matrimonio, calefacción y terraza.",
     longDescription:
-      "Apartamento con jacuzzi ideal para escapadas rurales. Dispone de salón comedor amplio, cocina totalmente equipada, dos habitaciones con cama de matrimonio, calefacción, terraza y conexión WiFi gratuita. Perfecto para disfrutar de una estancia cómoda en un entorno natural.",
+      "Apartamento con jacuzzi ideal para escapadas rurales. Dispone de dos habitaciones con cama de matrimonio, sofá cama bajo petición, cocina totalmente equipada, salón comedor y dos pequeños baños. Calefacción, terraza y conexión WiFi gratuita. Perfecto para disfrutar de una estancia cómoda en un entorno natural.",
     features: [
       "Jacuzzi",
       "Cocina equipada",
@@ -76,7 +76,7 @@ export const apartmentDetails: ApartmentDetail[] = [
     shortDescription:
       "Apartamento dúplex con dos dormitorios, salón comedor, cocina equipada y baño completo. Ideal para estancias rurales cómodas.",
     longDescription:
-      "Apartamento dúplex totalmente equipado con salón comedor amplio, cocina completa con lavavajillas, dos habitaciones (una con cama de matrimonio y otra con dos camas), baño con ducha, calefacción y conexión WiFi gratuita.",
+      "Apartamento dúplex totalmente equipado con salón comedor amplio, cocina completa con lavavajillas, dos habitaciones (una con cama de matrimonio y otra con dos camas), baño con ducha, calefacción y conexión WiFi gratuita.\n\nLos apartamentos dúplex disponen de una habitación con cama de matrimonio y otra con dos camas individuales. Cocina totalmente equipada, salón comedor y baño. Aire acondicionado disponible.\n\nLa cama supletoria está disponible bajo petición y previo pago de suplemento.\n\nSofá cama disponible bajo petición.",
     features: [
       "Cocina equipada",
       "WiFi gratis",
@@ -115,7 +115,7 @@ export const apartmentDetails: ApartmentDetail[] = [
     shortDescription:
       "Apartamento dúplex equipado con salón comedor, cocina completa y dos dormitorios. Espacio ideal para familias o grupos pequeños.",
     longDescription:
-      "Apartamento dúplex con cocina totalmente equipada, salón comedor amplio, baño completo con ducha, dos dormitorios y zona de estar cómoda. Perfecto para disfrutar de una escapada rural con todas las comodidades.",
+      "Apartamento dúplex con cocina totalmente equipada, salón comedor amplio, baño completo con ducha, dos dormitorios y zona de estar cómoda. Perfecto para disfrutar de una escapada rural con todas las comodidades.\n\nLos apartamentos dúplex disponen de una habitación con cama de matrimonio y otra con dos camas individuales. Cocina totalmente equipada, salón comedor y baño. Aire acondicionado disponible.\n\nLa cama supletoria está disponible bajo petición y previo pago de suplemento.\n\nEl apartamento no dispone de terraza; cuenta con balcón.",
     features: [
       "Cocina equipada",
       "WiFi gratis",

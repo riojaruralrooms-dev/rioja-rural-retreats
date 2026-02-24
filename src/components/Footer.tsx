@@ -81,14 +81,38 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Legal Links */}
+        {/* Payment Methods & Legal Links */}
         <div className="border-t border-cream/10 mt-12 pt-8">
-          <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-4 text-sm text-cream/50">
-            <Link to="/aviso-legal" className="hover:text-cream transition-colors">Aviso legal</Link>
-            <Link to="/politica-privacidad" className="hover:text-cream transition-colors">Política de privacidad</Link>
-            <Link to="/terminos-condiciones" className="hover:text-cream transition-colors">Términos y condiciones</Link>
-            <Link to="/politica-cookies" className="hover:text-cream transition-colors">Política de cookies</Link>
-          </nav>
+          <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-8 mb-8">
+            {/* Payment Methods */}
+            <div>
+              <h4 className="text-cream/90 font-semibold text-sm uppercase tracking-wider mb-4">Métodos de pago aceptados</h4>
+              <div className="flex items-center gap-3">
+                <span className="bg-white rounded-md px-3 py-1.5 text-xs font-bold text-[#003087] shadow-sm">PayPal</span>
+                <span className="bg-white rounded-md px-3 py-1.5 shadow-sm flex items-center gap-1">
+                  <span className="text-xs font-bold text-[#cc0000]">Master</span><span className="text-xs font-bold text-[#ff9900]">Card</span>
+                </span>
+                <span className="bg-white rounded-md px-3 py-1.5 text-xs font-bold tracking-wide text-[#1a1f71] italic shadow-sm">VISA</span>
+              </div>
+            </div>
+
+            {/* Legal Links */}
+            <nav className="flex flex-col gap-2 text-sm">
+              <Link to="/aviso-legal" className="text-cream/70 hover:text-cream transition-colors flex items-center gap-2">
+                <span className="text-wine-light">›</span> Aviso Legal
+              </Link>
+              <Link to="/politica-privacidad" className="text-cream/70 hover:text-cream transition-colors flex items-center gap-2">
+                <span className="text-wine-light">›</span> Política de privacidad
+              </Link>
+              <Link to="/terminos-condiciones" className="text-cream/70 hover:text-cream transition-colors flex items-center gap-2">
+                <span className="text-wine-light">›</span> Términos y Condiciones
+              </Link>
+              <Link to="/politica-cookies" className="text-cream/70 hover:text-cream transition-colors flex items-center gap-2">
+                <span className="text-wine-light">›</span> Política de cookies (UE)
+              </Link>
+            </nav>
+          </div>
+
           <p className="text-center text-cream/40 text-sm">
             © {new Date().getFullYear()} Rioja Rural Rooms. Todos los derechos reservados.
           </p>
