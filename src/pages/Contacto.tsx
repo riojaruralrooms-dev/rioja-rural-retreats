@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import Layout from "@/components/Layout";
-import { Phone, Mail, MapPin, Send, CheckCircle, AlertCircle } from "lucide-react";
+import { Phone, Mail, MapPin, Send, CheckCircle, AlertCircle, Car } from "lucide-react";
 import { accommodations } from "@/data/accommodations";
 import heroImage from "@/assets/hero-rioja.jpg";
+import transporteImg from "@/assets/transporte-servicio.png";
 
 const Contacto = () => {
   const [searchParams] = useSearchParams();
@@ -100,6 +101,21 @@ const Contacto = () => {
             {/* Contact Info */}
             <div>
               <h2 className="font-serif text-3xl text-charcoal mb-8">¿Cómo podemos ayudarte?</h2>
+
+              {/* Servicio de transporte */}
+              <div className="rounded-2xl overflow-hidden mb-10 border border-border" style={{ boxShadow: "var(--shadow-soft)" }}>
+                <img src={transporteImg} alt="Servicio de transporte Rioja Rural Rooms" className="w-full h-48 object-cover" />
+                <div className="p-5 bg-card">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Car size={18} className="text-primary" />
+                    <h4 className="font-serif text-lg text-charcoal font-semibold">Servicio de transporte</h4>
+                  </div>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    Ofrecemos servicio de transporte para que tu llegada a nuestros alojamientos sea lo más cómoda posible. Olvídate de buscar taxi, nuestro conductor te espera allí donde lo desees.
+                  </p>
+                </div>
+              </div>
+
               <p className="text-muted-foreground mb-10 leading-relaxed">
                 Estamos encantados de atenderte para cualquier consulta sobre disponibilidad, precios o información sobre nuestros alojamientos. No dudes en contactarnos.
               </p>
@@ -136,7 +152,8 @@ const Contacto = () => {
 
             {/* Contact Form */}
             <div className="bg-card rounded-sm p-8 md:p-10 border border-border" style={{ boxShadow: "var(--shadow-soft)" }}>
-              <h3 className="font-serif text-2xl text-charcoal mb-6">Solicitar información</h3>
+              <h3 className="font-serif text-2xl text-charcoal mb-2">Solicita reserva directa con descuento del 10%</h3>
+              <p className="text-sm text-muted-foreground mb-6">Te confirmamos disponibilidad por email en menos de 24h.</p>
 
               {status === "success" ? (
                 <div className="flex flex-col items-center justify-center py-12 text-center gap-4">
