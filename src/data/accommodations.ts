@@ -1,4 +1,10 @@
 import tironcilloImg from "@/assets/apartamentos-tironcillo.jpg";
+import tironcilloFachada from "@/assets/tironcillo-fachada.jpg";
+import tironcilloTerraza from "@/assets/tironcillo-terraza.jpg";
+import tironcilloJacuzzi from "@/assets/tironcillo-jacuzzi.jpg";
+import tironcilloPueblo from "@/assets/tironcillo-pueblo.jpg";
+import tironcilloRio from "@/assets/tironcillo-rio.jpg";
+import tironcilloDormitorio from "@/assets/tironcillo-dormitorio.jpg";
 import floridaImg from "@/assets/apartamentos-florida.jpg";
 import haroImg from "@/assets/apartamento-haro.jpg";
 import villaOlivoImg from "@/assets/villa-olivo.jpg";
@@ -19,6 +25,7 @@ export interface Accommodation {
   description: string;
   fullDescription: string;
   image: string;
+  images?: string[];
   buttonText: string;
   apartments?: Apartment[];
   features?: string[];
@@ -34,7 +41,8 @@ export const accommodations: Accommodation[] = [
       "Conjunto de apartamentos situados junto al río Tirón, en un entorno natural privilegiado. A tan solo 8 km de Haro, capital del vino de Rioja.",
     fullDescription:
       "Conjunto de apartamentos situados junto al río Tirón, en un entorno natural privilegiado. A tan solo 8 km de Haro, capital del vino de Rioja. Todos los apartamentos están totalmente equipados y cuentan con aire acondicionado. Posibilidad de añadir camas supletorias.",
-    image: tironcilloImg,
+    image: tironcilloFachada,
+    images: [tironcilloFachada, tironcilloTerraza, tironcilloJacuzzi, tironcilloPueblo, tironcilloRio, tironcilloDormitorio],
     buttonText: "Ver apartamentos",
     apartments: [
       {

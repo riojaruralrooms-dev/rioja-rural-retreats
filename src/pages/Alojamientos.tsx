@@ -44,6 +44,7 @@ const Alojamientos = () => {
                 location={accommodation.location}
                 description={accommodation.description}
                 image={accommodation.image}
+                images={accommodation.images}
                 buttonText={accommodation.buttonText}
               />
             ))}
