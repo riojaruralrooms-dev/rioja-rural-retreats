@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { ArrowLeft, Check, Users, Minus, Plus } from "lucide-react";
+import { useState, useMemo } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { ArrowLeft, Minus, Plus } from "lucide-react";
 import Layout from "@/components/Layout";
 import { jacuzziApartment } from "@/data/jacuzziApartment";
 import { useToast } from "@/hooks/use-toast";
@@ -9,22 +9,33 @@ import { format } from "date-fns";
 const ApartamentoJacuzzi = () => {
   const apt = jacuzziApartment;
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState(0);
   const [checkin, setCheckin] = useState("");
   const [checkout, setCheckout] = useState("");
   const [adults, setAdults] = useState(2);
 
-  const handleBooking = () => {
+  const bookingUrl = useMemo(() => {
+    if (!checkin || !checkout) return null;
+    if (checkout <= checkin) return null;
+    return `${apt.baseBookingUrl}?checkin=${checkin}&checkout=${checkout}&group_adults=${adults}&submit=`;
+  }, [checkin, checkout, adults, apt.baseBookingUrl]);
+
+  const handleBookingClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!checkin || !checkout) {
+      e.preventDefault();
       toast({ title: "Selecciona las fechas de entrada y salida", variant: "destructive" });
       return;
     }
     if (checkout <= checkin) {
+      e.preventDefault();
       toast({ title: "La fecha de salida debe ser posterior a la de entrada", variant: "destructive" });
       return;
     }
-    const url = `${apt.baseBookingUrl}?checkin=${checkin}&checkout=${checkout}&group_adults=${adults}&submit=`;
-    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
+  const handleDirectBooking = () => {
+    navigate("/contacto?accommodation=Apartamento+con+Jacuzzi&source=direct_booking");
   };
 
   const featureIcons: Record<string, string> = {
@@ -55,7 +66,7 @@ const ApartamentoJacuzzi = () => {
             <h1 className="font-serif text-4xl md:text-5xl text-charcoal">
               {apt.title}
             </h1>
-            <span className="inline-flex self-start md:self-auto items-center bg-orange-500 text-white font-semibold px-5 py-2 rounded-full text-sm shadow-lg">
+            <span className="inline-flex self-start md:self-auto items-center bg-primary text-primary-foreground font-semibold px-5 py-2 rounded-full text-sm" style={{ boxShadow: "var(--shadow-soft)" }}>
               Desde {apt.priceFrom} € / noche
             </span>
           </div>
@@ -80,7 +91,7 @@ const ApartamentoJacuzzi = () => {
                     onClick={() => setSelectedImage(idx)}
                     className={`relative rounded-xl overflow-hidden aspect-square transition-all duration-300 ${
                       selectedImage === idx
-                        ? "ring-2 ring-orange-500 ring-offset-2 opacity-100"
+                        ? "ring-2 ring-primary ring-offset-2 opacity-100"
                         : "opacity-60 hover:opacity-100"
                     }`}
                   >
@@ -116,7 +127,7 @@ const ApartamentoJacuzzi = () => {
               <div className="sticky top-48 bg-card rounded-2xl p-6 md:p-8 border border-border" style={{ boxShadow: "var(--shadow-elevated)" }}>
                 <h3 className="font-serif text-xl text-charcoal mb-1">Reserva tu estancia</h3>
                 <p className="text-muted-foreground text-sm mb-6">
-                  Desde <span className="font-semibold text-orange-500">{apt.priceFrom} €</span> / noche
+                  Desde <span className="font-semibold text-primary">{apt.priceFrom} €</span> / noche
                 </p>
 
                 <div className="space-y-4">
@@ -153,7 +164,7 @@ const ApartamentoJacuzzi = () => {
                     <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
                       Adultos
                     </label>
-                    <div className="flex items-center gap-4 border rounded-lg px-4 py-2.5" style={{ borderColor: "hsl(var(--border))" }}>
+                    <div className="flex items-center gap-4 border rounded-lg px-4 py-2.5 border-border">
                       <button
                         onClick={() => setAdults(Math.max(1, adults - 1))}
                         className="p-1 rounded-full hover:bg-secondary transition-colors"
@@ -170,14 +181,27 @@ const ApartamentoJacuzzi = () => {
                     </div>
                   </div>
 
-                  {/* CTA */}
+                  {/* Primary CTA: Direct Booking */}
                   <button
-                    onClick={handleBooking}
-                    className="w-full py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm tracking-wider uppercase rounded-lg transition-colors duration-300 mt-2"
-                    style={{ boxShadow: "0 4px 14px -3px rgba(249,115,22,0.4)" }}
+                    onClick={handleDirectBooking}
+                    className="btn-wine w-full py-3.5 text-sm tracking-wider uppercase rounded-lg mt-2"
                   >
-                    Ver disponibilidad
+                    Reserva directa (-10%)
                   </button>
+                  <p className="text-xs text-muted-foreground text-center -mt-1">
+                    Reserva directa con 10% de descuento. Te confirmamos disponibilidad por email.
+                  </p>
+
+                  {/* Secondary CTA: Booking.com */}
+                  <a
+                    href={bookingUrl || "#"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={handleBookingClick}
+                    className="btn-outline-wine w-full py-3 text-sm tracking-wider uppercase rounded-lg text-center block"
+                  >
+                    Ver disponibilidad en Booking
+                  </a>
                 </div>
               </div>
             </div>

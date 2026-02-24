@@ -81,11 +81,16 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t border-cream/10 mt-12 pt-8 text-center text-cream/40 text-sm">
-          <p>
-            © {new Date().getFullYear()} Rioja Rural Rooms. Todos los derechos
-            reservados.
+        {/* Legal Links */}
+        <div className="border-t border-cream/10 mt-12 pt-8">
+          <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-4 text-sm text-cream/50">
+            <Link to="/aviso-legal" className="hover:text-cream transition-colors">Aviso legal</Link>
+            <Link to="/politica-privacidad" className="hover:text-cream transition-colors">Política de privacidad</Link>
+            <Link to="/terminos-condiciones" className="hover:text-cream transition-colors">Términos y condiciones</Link>
+            <Link to="/politica-cookies" className="hover:text-cream transition-colors">Política de cookies</Link>
+          </nav>
+          <p className="text-center text-cream/40 text-sm">
+            © {new Date().getFullYear()} Rioja Rural Rooms. Todos los derechos reservados.
           </p>
         </div>
       </div>
