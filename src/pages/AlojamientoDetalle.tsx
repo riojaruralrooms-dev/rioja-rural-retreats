@@ -137,34 +137,10 @@ const AlojamientoDetalle = () => {
               </div>
             )}
 
-            {/* Contact CTA */}
-            <div className="bg-stone-light rounded-sm p-8 md:p-10 text-center">
-              <h3 className="font-serif text-2xl text-charcoal mb-4">
-                ¿Te interesa este alojamiento?
-              </h3>
-              <p className="text-muted-foreground mb-6">
-                Contacta con nosotros para más información y reservas
-              </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a
-                  href="tel:+34640918592"
-                  className="btn-wine flex items-center gap-2"
-                >
-                  <Phone size={18} />
-                  640 918 592
-                </a>
-                <a
-                  href="mailto:info@riojaruralrooms.com"
-                  className="btn-outline-wine flex items-center gap-2"
-                >
-                  <Mail size={18} />
-                  Enviar email
-                </a>
-              </div>
-            </div>
           </div>
         </div>
       </section>
+
     </Layout>
   );
 };
