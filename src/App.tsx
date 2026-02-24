@@ -11,18 +11,17 @@ import ApartamentoJacuzzi from "./pages/ApartamentoJacuzzi";
 import Experiencias from "./pages/Experiencias";
 import Galeria from "./pages/Galeria";
 import Contacto from "./pages/Contacto";
+import AvisoLegal from "./pages/AvisoLegal";
+import PoliticaPrivacidad from "./pages/PoliticaPrivacidad";
+import TerminosCondiciones from "./pages/TerminosCondiciones";
+import PoliticaCookies from "./pages/PoliticaCookies";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-// Scroll to top on route change
 const ScrollToTop = () => {
   const { pathname } = useLocation();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
   return null;
 };
 
@@ -41,6 +40,10 @@ const App = () => (
           <Route path="/experiencias" element={<Experiencias />} />
           <Route path="/galeria" element={<Galeria />} />
           <Route path="/contacto" element={<Contacto />} />
+          <Route path="/aviso-legal" element={<AvisoLegal />} />
+          <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />
+          <Route path="/terminos-condiciones" element={<TerminosCondiciones />} />
+          <Route path="/politica-cookies" element={<PoliticaCookies />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
