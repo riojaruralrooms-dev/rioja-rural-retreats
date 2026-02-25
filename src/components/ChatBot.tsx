@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { X, Send, MessageCircle, Loader2 } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 
 type Message = { role: "user" | "assistant"; content: string; error?: boolean };
 
@@ -101,7 +102,13 @@ const ChatBot = () => {
                     : "bg-white text-charcoal rounded-bl-sm border border-stone/30"
                 }`}
               >
-                <p className="whitespace-pre-wrap">{msg.content}</p>
+                {msg.role === "user" ? (
+                  <p className="whitespace-pre-wrap">{msg.content}</p>
+                ) : (
+                  <div className="prose prose-sm max-w-none prose-p:my-1 prose-ul:my-1 prose-ol:my-1 prose-li:my-0.5 prose-headings:my-1 prose-strong:text-charcoal">
+                    <ReactMarkdown>{msg.content}</ReactMarkdown>
+                  </div>
+                )}
                 {msg.error && (
                   <button
                     onClick={scrollToReserva}
