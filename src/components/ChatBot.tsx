@@ -79,7 +79,7 @@ const ChatBot = () => {
     <div className="fixed inset-0 z-50 flex items-end justify-end p-4 sm:items-center sm:justify-center">
       <div className="absolute inset-0 bg-charcoal/60 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
 
-      <div className="relative w-full max-w-md h-[500px] sm:h-[560px] bg-cream rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-fade-up border border-stone/20">
+      <div className="relative w-full max-w-md lg:max-w-2xl xl:max-w-3xl h-[500px] sm:h-[560px] lg:h-[680px] xl:h-[720px] bg-cream rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-fade-up border border-stone/20 transition-all duration-300">
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 bg-wine text-cream">
           <div className="flex items-center gap-3">
