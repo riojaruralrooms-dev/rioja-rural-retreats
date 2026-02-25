@@ -41,12 +41,11 @@ const Contacto = () => {
         nombre: formData.nombre,
         email: formData.email,
         telefono: formData.telefono,
-        alojamiento_slug: alojamientoSlug,
+        alojamiento_slug: alojamientoSlug || "contacto_directo",
         fecha_entrada: formData.fecha_entrada || null,
         fecha_salida: formData.fecha_salida || null,
         adultos: parseInt(formData.adultos) || 2,
         mensaje: formData.mensaje || null,
-        consentimiento: formData.consent,
       };
 
       const res = await fetch(SUPABASE_URL, {
