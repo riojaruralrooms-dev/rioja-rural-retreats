@@ -3,8 +3,8 @@ import { X, Send, MessageCircle, Loader2 } from "lucide-react";
 
 type Message = { role: "user" | "assistant"; content: string; error?: boolean };
 
-const AGENT_URL = "https://ovyqztmnmpvwpiauxubq.supabase.co/functions/v1/agent";
-const ANON_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92eXF6dG1ubXB2d3BpYXV4dWJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE5MzUxNDQsImV4cCI6MjA4NzUxMTE0NH0.nlOgHQSS5yDNXZEkPRUjqwc38rHhJQaIX6NOsv72QHI";
+const AGENT_URL = `https://${import.meta.env.VITE_SUPABASE_PROJECT_ID}.supabase.co/functions/v1/agent-proxy`;
+const ANON_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
