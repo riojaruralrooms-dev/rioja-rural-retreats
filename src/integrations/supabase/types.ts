@@ -14,7 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      reservas_directas: {
+        Row: {
+          adultos: number | null
+          alojamiento_slug: string | null
+          consentimiento: boolean | null
+          created_at: string
+          email: string
+          fecha_entrada: string | null
+          fecha_salida: string | null
+          id: string
+          mensaje: string | null
+          nombre: string
+          telefono: string
+        }
+        Insert: {
+          adultos?: number | null
+          alojamiento_slug?: string | null
+          consentimiento?: boolean | null
+          created_at?: string
+          email: string
+          fecha_entrada?: string | null
+          fecha_salida?: string | null
+          id?: string
+          mensaje?: string | null
+          nombre: string
+          telefono: string
+        }
+        Update: {
+          adultos?: number | null
+          alojamiento_slug?: string | null
+          consentimiento?: boolean | null
+          created_at?: string
+          email?: string
+          fecha_entrada?: string | null
+          fecha_salida?: string | null
+          id?: string
+          mensaje?: string | null
+          nombre?: string
+          telefono?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
