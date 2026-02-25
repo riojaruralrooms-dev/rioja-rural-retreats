@@ -5,8 +5,8 @@ import { Phone, Mail, MapPin, Send, CheckCircle, AlertCircle, Car } from "lucide
 import heroImage from "@/assets/hero-rioja.jpg";
 import transporteImg from "@/assets/transporte-servicio.png";
 
-const SUPABASE_URL = `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/reservas_directas`;
-const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+const SUPABASE_URL = "https://ovyqztmnmpvwpiauxubq.supabase.co/rest/v1/reservas_directas";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92eXF6dG1ubXB2d3BpYXV4dWJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE5MzUxNDQsImV4cCI6MjA4NzUxMTE0NH0.nlOgHQSS5yDNXZEkPRUjqwc38rHhJQaIX6NOsv72QHI";
 
 const Contacto = () => {
   const [searchParams] = useSearchParams();
