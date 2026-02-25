@@ -7,10 +7,17 @@ import transporteImg from "@/assets/transporte-servicio.png";
 
 const SUPABASE_URL = "https://ovyqztmnmpvwpiauxubq.supabase.co/rest/v1/reservas_directas";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92eXF6dG1ubXB2d3BpYXV4dWJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE5MzUxNDQsImV4cCI6MjA4NzUxMTE0NH0.nlOgHQSS5yDNXZEkPRUjqwc38rHhJQaIX6NOsv72QHI";
+const ALOJAMIENTOS = [
+  { slug: "jacuzzi", label: "Apartamento con Jacuzzi" },
+  { slug: "duplex-1", label: "Apartamento Dúplex 1" },
+  { slug: "duplex-2", label: "Apartamento Dúplex 2" },
+  { slug: "florida-1", label: "Apartamentos La Florida (1º piso)" },
+  { slug: "florida-2", label: "Apartamentos La Florida (2º piso)" },
+];
 
 const Contacto = () => {
   const [searchParams] = useSearchParams();
-  const alojamientoSlug = searchParams.get("apto") || null;
+  const aptoParam = searchParams.get("apto") || "";
 
   const [formData, setFormData] = useState({
     nombre: "",
@@ -19,6 +26,7 @@ const Contacto = () => {
     fecha_entrada: "",
     fecha_salida: "",
     adultos: "2",
+    alojamiento_slug: aptoParam,
     mensaje: "",
     consent: false,
   });
@@ -41,7 +49,7 @@ const Contacto = () => {
         nombre: formData.nombre,
         email: formData.email,
         telefono: formData.telefono,
-        alojamiento_slug: alojamientoSlug || "contacto_directo",
+        alojamiento_slug: formData.alojamiento_slug || "contacto_directo",
         fecha_entrada: formData.fecha_entrada || null,
         fecha_salida: formData.fecha_salida || null,
         adultos: parseInt(formData.adultos) || 2,
@@ -62,7 +70,7 @@ const Contacto = () => {
       if (!res.ok) throw new Error("Error al enviar");
 
       setStatus("success");
-      setFormData({ nombre: "", email: "", telefono: "", fecha_entrada: "", fecha_salida: "", adultos: "2", mensaje: "", consent: false });
+      setFormData({ nombre: "", email: "", telefono: "", fecha_entrada: "", fecha_salida: "", adultos: "2", alojamiento_slug: aptoParam, mensaje: "", consent: false });
     } catch {
       setStatus("error");
     }
@@ -157,7 +165,23 @@ const Contacto = () => {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
-                  <input type="hidden" name="alojamiento_slug" value={alojamientoSlug || ""} />
+                  {/* Alojamiento de interés */}
+                  <div>
+                    <label htmlFor="alojamiento_slug" className="block text-sm font-medium text-charcoal-light mb-2">Alojamiento de interés *</label>
+                    {aptoParam ? (
+                      <>
+                        <select id="alojamiento_slug" name="alojamiento_slug" value={formData.alojamiento_slug} onChange={handleChange} className="form-input bg-card">
+                          {ALOJAMIENTOS.map(a => <option key={a.slug} value={a.slug}>{a.label}</option>)}
+                        </select>
+                        <p className="text-xs text-muted-foreground mt-1">Detectado desde: {ALOJAMIENTOS.find(a => a.slug === aptoParam)?.label || aptoParam}</p>
+                      </>
+                    ) : (
+                      <select id="alojamiento_slug" name="alojamiento_slug" required value={formData.alojamiento_slug} onChange={handleChange} className="form-input bg-card">
+                        <option value="">Selecciona un alojamiento</option>
+                        {ALOJAMIENTOS.map(a => <option key={a.slug} value={a.slug}>{a.label}</option>)}
+                      </select>
+                    )}
+                  </div>
                   <div>
                     <label htmlFor="nombre" className="block text-sm font-medium text-charcoal-light mb-2">Nombre *</label>
                     <input type="text" id="nombre" name="nombre" required value={formData.nombre} onChange={handleChange} className="form-input" placeholder="Tu nombre" maxLength={100} />
