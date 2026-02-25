@@ -65,7 +65,7 @@ const ApartmentDetailPage = () => {
   };
 
   const handleDirectBooking = () => {
-    navigate(`/contacto?apto=${encodeURIComponent(apt.slug)}`);
+    navigate(`/contacto?apto=${apt.slug}`);
   };
 
   return (
