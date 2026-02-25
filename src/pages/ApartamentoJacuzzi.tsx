@@ -35,7 +35,7 @@ const ApartamentoJacuzzi = () => {
   };
 
   const handleDirectBooking = () => {
-    navigate("/contacto?accommodation=Apartamento+con+Jacuzzi&source=direct_booking");
+    navigate("/contacto?apto=jacuzzi");
   };
 
   const featureIcons: Record<string, string> = {

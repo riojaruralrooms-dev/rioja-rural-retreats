@@ -5,8 +5,8 @@ import { Phone, Mail, MapPin, Send, CheckCircle, AlertCircle, Car } from "lucide
 import heroImage from "@/assets/hero-rioja.jpg";
 import transporteImg from "@/assets/transporte-servicio.png";
 
-const SUPABASE_URL = "https://ovyqztmnmpvwpiauxubq.supabase.co/rest/v1/reservas_directas";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92eXF6dG1ubXB2d3BpYXV4dWJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE5MzUxNDQsImV4cCI6MjA4NzUxMTE0NH0.nlOgHQSS5yDNXZEkPRUjqwc38rHhJQaIX6NOsv72QHI";
+const SUPABASE_URL = `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/reservas_directas`;
+const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
 const Contacto = () => {
   const [searchParams] = useSearchParams();
@@ -40,12 +40,13 @@ const Contacto = () => {
       const body = {
         nombre: formData.nombre,
         email: formData.email,
-        telefono: formData.telefono || null,
+        telefono: formData.telefono,
         alojamiento_slug: alojamientoSlug,
         fecha_entrada: formData.fecha_entrada || null,
         fecha_salida: formData.fecha_salida || null,
-        adultos: parseInt(formData.adultos) || null,
-        mensaje: formData.mensaje,
+        adultos: parseInt(formData.adultos) || 2,
+        mensaje: formData.mensaje || null,
+        consentimiento: formData.consent,
       };
 
       const res = await fetch(SUPABASE_URL, {
@@ -167,8 +168,8 @@ const Contacto = () => {
                     <input type="email" id="email" name="email" required value={formData.email} onChange={handleChange} className="form-input" placeholder="tu@email.com" maxLength={255} />
                   </div>
                   <div>
-                    <label htmlFor="telefono" className="block text-sm font-medium text-charcoal-light mb-2">Teléfono</label>
-                    <input type="tel" id="telefono" name="telefono" value={formData.telefono} onChange={handleChange} className="form-input" placeholder="Tu teléfono" maxLength={20} />
+                    <label htmlFor="telefono" className="block text-sm font-medium text-charcoal-light mb-2">Teléfono *</label>
+                    <input type="tel" id="telefono" name="telefono" required value={formData.telefono} onChange={handleChange} className="form-input" placeholder="Tu teléfono" maxLength={20} />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
@@ -187,8 +188,8 @@ const Contacto = () => {
                     </select>
                   </div>
                   <div>
-                    <label htmlFor="mensaje" className="block text-sm font-medium text-charcoal-light mb-2">Mensaje *</label>
-                    <textarea id="mensaje" name="mensaje" required rows={4} value={formData.mensaje} onChange={handleChange} className="form-input resize-none" placeholder="¿En qué podemos ayudarte?" maxLength={1000} />
+                    <label htmlFor="mensaje" className="block text-sm font-medium text-charcoal-light mb-2">Mensaje</label>
+                    <textarea id="mensaje" name="mensaje" rows={4} value={formData.mensaje} onChange={handleChange} className="form-input resize-none" placeholder="¿En qué podemos ayudarte? (opcional)" maxLength={1000} />
                   </div>
                   <div className="flex items-start gap-3">
                     <input type="checkbox" id="consent" name="consent" checked={formData.consent} onChange={handleChange} required className="mt-1 accent-primary" />
