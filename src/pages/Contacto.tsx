@@ -1,37 +1,28 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import Layout from "@/components/Layout";
 import { Phone, Mail, MapPin, Send, CheckCircle, AlertCircle, Car } from "lucide-react";
-import { accommodations } from "@/data/accommodations";
 import heroImage from "@/assets/hero-rioja.jpg";
 import transporteImg from "@/assets/transporte-servicio.png";
 
+const SUPABASE_URL = "https://ovyqztmnmpvwpiauxubq.supabase.co/rest/v1/reservas_directas";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92eXF6dG1ubXB2d3BpYXV4dWJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE5MzUxNDQsImV4cCI6MjA4NzUxMTE0NH0.nlOgHQSS5yDNXZEkPRUjqwc38rHhJQaIX6NOsv72QHI";
+
 const Contacto = () => {
   const [searchParams] = useSearchParams();
+  const alojamientoSlug = searchParams.get("apto") || null;
+
   const [formData, setFormData] = useState({
     nombre: "",
     email: "",
     telefono: "",
-    alojamiento: "",
+    fecha_entrada: "",
+    fecha_salida: "",
+    adultos: "2",
     mensaje: "",
     consent: false,
   });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-
-  // Pre-select accommodation from query params
-  useEffect(() => {
-    const accommodation = searchParams.get("accommodation");
-    const source = searchParams.get("source");
-    if (accommodation) {
-      setFormData((prev) => ({
-        ...prev,
-        alojamiento: accommodation,
-        mensaje: source === "direct_booking"
-          ? `Me gustaría reservar con el descuento del 10% de reserva directa.`
-          : prev.mensaje,
-      }));
-    }
-  }, [searchParams]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -47,35 +38,35 @@ const Contacto = () => {
 
     try {
       const body = {
-        name: formData.nombre,
+        nombre: formData.nombre,
         email: formData.email,
-        phone: formData.telefono,
-        accommodation: formData.alojamiento,
-        message: formData.mensaje,
-        source: searchParams.get("source") || "contact_form",
-        consent: formData.consent,
-        created_at: new Date().toISOString(),
+        telefono: formData.telefono || null,
+        alojamiento_slug: alojamientoSlug,
+        fecha_entrada: formData.fecha_entrada || null,
+        fecha_salida: formData.fecha_salida || null,
+        adultos: parseInt(formData.adultos) || null,
+        mensaje: formData.mensaje,
       };
 
-      const res = await fetch("/api/leads", {
+      const res = await fetch(SUPABASE_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": SUPABASE_KEY,
+          "Authorization": `Bearer ${SUPABASE_KEY}`,
+          "Prefer": "return=minimal",
+        },
         body: JSON.stringify(body),
       });
 
       if (!res.ok) throw new Error("Error al enviar");
 
       setStatus("success");
-      setFormData({ nombre: "", email: "", telefono: "", alojamiento: "", mensaje: "", consent: false });
+      setFormData({ nombre: "", email: "", telefono: "", fecha_entrada: "", fecha_salida: "", adultos: "2", mensaje: "", consent: false });
     } catch {
       setStatus("error");
     }
   };
-
-  const allAccommodations = [
-    ...accommodations.map((a) => a.name),
-    "Apartamento con Jacuzzi",
-  ];
 
   return (
     <Layout>
@@ -159,13 +150,14 @@ const Contacto = () => {
                 <div className="flex flex-col items-center justify-center py-12 text-center gap-4">
                   <CheckCircle size={48} className="text-accent" />
                   <p className="font-serif text-xl text-charcoal">Solicitud enviada</p>
-                  <p className="text-muted-foreground text-sm">Te contactamos en breve.</p>
+                  <p className="text-muted-foreground text-sm">Solicitud de reserva enviada correctamente. Te contactaremos en breve.</p>
                   <button onClick={() => setStatus("idle")} className="btn-outline-wine mt-4 text-xs px-6 py-2">
                     Enviar otra consulta
                   </button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
+                  <input type="hidden" name="alojamiento_slug" value={alojamientoSlug || ""} />
                   <div>
                     <label htmlFor="nombre" className="block text-sm font-medium text-charcoal-light mb-2">Nombre *</label>
                     <input type="text" id="nombre" name="nombre" required value={formData.nombre} onChange={handleChange} className="form-input" placeholder="Tu nombre" maxLength={100} />
@@ -178,13 +170,20 @@ const Contacto = () => {
                     <label htmlFor="telefono" className="block text-sm font-medium text-charcoal-light mb-2">Teléfono</label>
                     <input type="tel" id="telefono" name="telefono" value={formData.telefono} onChange={handleChange} className="form-input" placeholder="Tu teléfono" maxLength={20} />
                   </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label htmlFor="fecha_entrada" className="block text-sm font-medium text-charcoal-light mb-2">Fecha entrada</label>
+                      <input type="date" id="fecha_entrada" name="fecha_entrada" value={formData.fecha_entrada} onChange={handleChange} className="form-input" />
+                    </div>
+                    <div>
+                      <label htmlFor="fecha_salida" className="block text-sm font-medium text-charcoal-light mb-2">Fecha salida</label>
+                      <input type="date" id="fecha_salida" name="fecha_salida" value={formData.fecha_salida} onChange={handleChange} className="form-input" />
+                    </div>
+                  </div>
                   <div>
-                    <label htmlFor="alojamiento" className="block text-sm font-medium text-charcoal-light mb-2">Alojamiento de interés</label>
-                    <select id="alojamiento" name="alojamiento" value={formData.alojamiento} onChange={handleChange} className="form-input">
-                      <option value="">Selecciona un alojamiento</option>
-                      {allAccommodations.map((name) => (
-                        <option key={name} value={name}>{name}</option>
-                      ))}
+                    <label htmlFor="adultos" className="block text-sm font-medium text-charcoal-light mb-2">Nº de adultos</label>
+                    <select id="adultos" name="adultos" value={formData.adultos} onChange={handleChange} className="form-input">
+                      {[1,2,3,4,5,6].map(n => <option key={n} value={n}>{n}</option>)}
                     </select>
                   </div>
                   <div>
@@ -206,7 +205,7 @@ const Contacto = () => {
                   )}
 
                   <button type="submit" disabled={status === "loading"} className="btn-wine w-full flex items-center justify-center gap-2 disabled:opacity-70">
-                    {status === "loading" ? "Enviando..." : (<><Send size={18} />Solicitar información</>)}
+                    {status === "loading" ? "Enviando..." : (<><Send size={18} />Solicitar reserva</>)}
                   </button>
                 </form>
               )}
