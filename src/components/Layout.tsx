@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
-import ChatBot from "./ChatBot";
 
 interface LayoutProps {
   children: ReactNode;
@@ -14,7 +13,6 @@ const Layout = ({ children }: LayoutProps) => {
       {/* pt-36 md:pt-44 compensa la altura del header fijo con el logo grande */}
       <main className="flex-1 pt-36 md:pt-44">{children}</main>
       <Footer />
-      <ChatBot />
     </div>
   );
 };
