@@ -65,10 +65,22 @@ const AlojamientoDetalle = () => {
             <ArrowLeft size={18} />
             Volver a alojamientos
           </Link>
-          <div className="location-badge text-cream/80 mb-3">
-            <MapPin size={16} />
-            <span>{accommodation.location}</span>
-          </div>
+          {accommodation.locationUrl ? (
+            <a
+              href={accommodation.locationUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="location-badge text-cream/80 hover:text-cream mb-3 transition-colors"
+            >
+              <MapPin size={16} />
+              <span className="underline underline-offset-2">{accommodation.location}</span>
+            </a>
+          ) : (
+            <div className="location-badge text-cream/80 mb-3">
+              <MapPin size={16} />
+              <span>{accommodation.location}</span>
+            </div>
+          )}
           <h1 className="hero-title text-cream text-3xl md:text-4xl lg:text-5xl">
             {accommodation.name}
           </h1>

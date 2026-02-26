@@ -42,6 +42,7 @@ const Alojamientos = () => {
                 id={accommodation.id}
                 name={accommodation.name}
                 location={accommodation.location}
+                locationUrl={accommodation.locationUrl}
                 description={accommodation.description}
                 image={accommodation.image}
                 images={accommodation.images}
