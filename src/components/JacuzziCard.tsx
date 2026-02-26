@@ -9,7 +9,7 @@ const JacuzziCard = () => {
       style={{ boxShadow: "var(--shadow-soft)" }}
     >
       {/* Price badge */}
-      <div className="absolute top-4 right-4 z-10 bg-orange-500 text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg">
+      <div className="absolute top-4 right-4 z-10 bg-wine text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg">
         Desde {apt.priceFrom},00 € / noche
       </div>
 
@@ -48,7 +48,7 @@ const JacuzziCard = () => {
 
           <Link
             to={`/apartamento/${apt.slug}`}
-            className="inline-flex items-center justify-center w-full md:w-auto px-8 py-3 text-sm font-semibold tracking-wider uppercase rounded-lg bg-orange-500 text-white hover:bg-orange-600 transition-colors duration-300"
+            className="inline-flex items-center justify-center w-full md:w-auto px-8 py-3 text-sm font-semibold tracking-wider uppercase rounded-lg bg-wine text-white hover:bg-wine-dark transition-colors duration-300"
           >
             Más detalles
           </Link>

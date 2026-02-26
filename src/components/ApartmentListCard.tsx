@@ -14,7 +14,7 @@ const ApartmentListCard = ({ apartment }: ApartmentListCardProps) => {
     >
       {/* Price badge */}
       <div className="absolute top-4 right-4 z-10 flex flex-col items-end gap-2">
-        <span className="bg-orange-500 text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg">
+        <span className="bg-wine text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg">
           Desde {apartment.priceFrom},00 € / noche
         </span>
         {apartment.petFriendly && <PetFriendlyBadge />}
@@ -55,7 +55,7 @@ const ApartmentListCard = ({ apartment }: ApartmentListCardProps) => {
 
           <Link
             to={`/apartamento/${apartment.slug}`}
-            className="inline-flex items-center justify-center w-full md:w-auto px-8 py-3 text-sm font-semibold tracking-wider uppercase rounded-lg bg-orange-500 text-white hover:bg-orange-600 transition-colors duration-300"
+            className="inline-flex items-center justify-center w-full md:w-auto px-8 py-3 text-sm font-semibold tracking-wider uppercase rounded-lg bg-wine text-white hover:bg-wine-dark transition-colors duration-300"
           >
             Más detalles
           </Link>
