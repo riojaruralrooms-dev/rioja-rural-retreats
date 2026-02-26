@@ -10,6 +10,8 @@ interface AccommodationCardProps {
   image: string;
   images?: string[];
   buttonText?: string;
+  externalUrl?: string;
+  note?: string;
 }
 
 const AccommodationCard = ({
@@ -20,6 +22,8 @@ const AccommodationCard = ({
   image,
   images,
   buttonText = "Ver alojamiento",
+  externalUrl,
+  note,
 }: AccommodationCardProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const slideImages = images && images.length > 1 ? images : null;
@@ -31,6 +35,10 @@ const AccommodationCard = ({
     }, 3000);
     return () => clearInterval(interval);
   }, [slideImages]);
+
+  const linkProps = externalUrl
+    ? { as: "a" as const, href: externalUrl, target: "_blank", rel: "noopener noreferrer" }
+    : { as: Link, to: `/alojamientos/${id}` };
 
   return (
     <div className="card-accommodation group bg-card">
@@ -72,16 +80,33 @@ const AccommodationCard = ({
         <h3 className="font-serif text-2xl md:text-3xl text-charcoal mb-3">
           {name}
         </h3>
-        <p className="text-muted-foreground leading-relaxed mb-6">
+        <p className="text-muted-foreground leading-relaxed mb-4">
           {description}
         </p>
-        <Link
-          to={`/alojamientos/${id}`}
-          className="inline-flex items-center gap-2 text-wine font-medium tracking-wide uppercase text-sm group-hover:gap-3 transition-all duration-300"
-        >
-          {buttonText}
-          <ArrowRight size={16} />
-        </Link>
+        {note && (
+          <p className="text-xs text-muted-foreground/70 italic mb-4">
+            {note}
+          </p>
+        )}
+        {externalUrl ? (
+          <a
+            href={externalUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-wine font-medium tracking-wide uppercase text-sm group-hover:gap-3 transition-all duration-300"
+          >
+            {buttonText}
+            <ArrowRight size={16} />
+          </a>
+        ) : (
+          <Link
+            to={`/alojamientos/${id}`}
+            className="inline-flex items-center gap-2 text-wine font-medium tracking-wide uppercase text-sm group-hover:gap-3 transition-all duration-300"
+          >
+            {buttonText}
+            <ArrowRight size={16} />
+          </Link>
+        )}
       </div>
     </div>
   );

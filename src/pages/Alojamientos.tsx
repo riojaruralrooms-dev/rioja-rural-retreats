@@ -46,6 +46,8 @@ const Alojamientos = () => {
                 image={accommodation.image}
                 images={accommodation.images}
                 buttonText={accommodation.buttonText}
+                externalUrl={accommodation.externalUrl}
+                note={accommodation.note}
               />
             ))}
           </div>

@@ -17,6 +17,11 @@ import haroSalonImg from "@/assets/haro-salon.jpg";
 import haroCocinaImg from "@/assets/haro-cocina.jpg";
 import haroExteriorImg from "@/assets/haro-exterior.jpg";
 import villaOlivoImg from "@/assets/villa-olivo.jpg";
+import carmeloCoverImg from "@/assets/carmelo-cover.jpg";
+import carmeloFachadaImg from "@/assets/carmelo-fachada.jpg";
+import carmeloCaladoImg from "@/assets/carmelo-calado.jpg";
+import carmeloSalonImg from "@/assets/carmelo-salon.jpg";
+import carmeloHabitacionImg from "@/assets/carmelo-habitacion.jpg";
 
 export interface Apartment {
   id: string;
@@ -40,6 +45,8 @@ export interface Accommodation {
   features?: string[];
   capacity?: string;
   hidden?: boolean;
+  externalUrl?: string;
+  note?: string;
 }
 
 export const accommodations: Accommodation[] = [
@@ -196,5 +203,27 @@ export const accommodations: Accommodation[] = [
     ],
     capacity: "8 personas",
     hidden: true,
+  },
+  {
+    id: "el-sitio-de-carmelo",
+    name: "El sitio de Carmelo",
+    location: "Plaza Campillo, 8, 26214 – Cuzcurrita de Río Tirón (La Rioja)",
+    description:
+      "Alojamiento rural rehabilitado con piedra y madera, con calado centenario y espacios amplios para estancias, reuniones y experiencias en La Rioja.",
+    fullDescription:
+      "Alojamiento rural rehabilitado con piedra y madera, con calado centenario y espacios amplios para estancias, reuniones y experiencias en La Rioja.",
+    image: carmeloFachadaImg,
+    images: [carmeloFachadaImg, carmeloCoverImg, carmeloCaladoImg, carmeloSalonImg, carmeloHabitacionImg],
+    buttonText: "Ver alojamiento",
+    externalUrl: "https://elsitiodecarmelo.com",
+    note: "No se reserva para despedidas de soltero.",
+    features: [
+      "Piedra y madera (rehabilitado)",
+      "Calado centenario",
+      "Cocina equipada",
+      "Comedor y salón amplios",
+      "Baño adaptado",
+      "Zonas comunes y terraza",
+    ],
   },
 ];
