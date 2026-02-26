@@ -6,6 +6,7 @@ interface AccommodationCardProps {
   id: string;
   name: string;
   location: string;
+  locationUrl?: string;
   description: string;
   image: string;
   images?: string[];
@@ -18,6 +19,7 @@ const AccommodationCard = ({
   id,
   name,
   location,
+  locationUrl,
   description,
   image,
   images,
@@ -73,10 +75,22 @@ const AccommodationCard = ({
         )}
       </div>
       <div className="p-6 md:p-8">
-        <div className="location-badge mb-3">
-          <MapPin size={14} />
-          <span>{location}</span>
-        </div>
+        {locationUrl ? (
+          <a
+            href={locationUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="location-badge mb-3 hover:text-wine transition-colors"
+          >
+            <MapPin size={14} />
+            <span className="underline underline-offset-2">{location}</span>
+          </a>
+        ) : (
+          <div className="location-badge mb-3">
+            <MapPin size={14} />
+            <span>{location}</span>
+          </div>
+        )}
         <h3 className="font-serif text-2xl md:text-3xl text-charcoal mb-3">
           {name}
         </h3>

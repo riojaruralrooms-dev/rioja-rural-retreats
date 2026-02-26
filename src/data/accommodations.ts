@@ -47,13 +47,15 @@ export interface Accommodation {
   hidden?: boolean;
   externalUrl?: string;
   note?: string;
+  locationUrl?: string;
 }
 
 export const accommodations: Accommodation[] = [
   {
     id: "virgen-tironcillo",
     name: "Apartamentos Virgen de Tironcillo",
-    location: "Cuzcurrita de Río Tirón (La Rioja)",
+    location: "C. Tirgo, 26-28, 26214 – Cuzcurrita de Río Tirón (La Rioja)",
+    locationUrl: "https://www.google.com/maps/search/?api=1&query=C.+Tirgo+26-28+26214+Cuzcurrita+de+Rio+Tiron+La+Rioja",
     description:
       "Conjunto de apartamentos situados junto al río Tirón, en un entorno natural privilegiado. A tan solo 8 km de Haro, capital del vino de Rioja.",
     fullDescription:
@@ -106,7 +108,8 @@ export const accommodations: Accommodation[] = [
   {
     id: "la-florida",
     name: "Apartamentos La Florida",
-    location: "Casalarreina (La Rioja)",
+    location: "Plaza de la Florida, 6, 26230 – Casalarreina (La Rioja)",
+    locationUrl: "https://www.google.com/maps/search/?api=1&query=Plaza+de+la+Florida+6+26230+Casalarreina+La+Rioja",
     description:
       "Apartamentos situados en la Plaza La Florida de Casalarreina, en una ubicación céntrica y privilegiada. A solo 4 km de Haro.",
     fullDescription:
@@ -158,6 +161,7 @@ export const accommodations: Accommodation[] = [
     id: "centro-haro",
     name: "Apartamento en el centro de Haro",
     location: "Calle Siervas de Jesús, 33 – 2º, Haro (La Rioja)",
+    locationUrl: "https://www.google.com/maps/search/?api=1&query=Calle+Siervas+de+Jesus+33+Haro+La+Rioja",
     description:
       "Alojamiento espacioso y luminoso en el centro de Haro con 3 dormitorios, 2 baños, gran salón comedor con vistas y cocina equipada. Capacidad hasta 6 personas.",
     fullDescription:
@@ -208,6 +212,7 @@ export const accommodations: Accommodation[] = [
     id: "el-sitio-de-carmelo",
     name: "El sitio de Carmelo",
     location: "Plaza Campillo, 8, 26214 – Cuzcurrita de Río Tirón (La Rioja)",
+    locationUrl: "https://www.google.com/maps/search/?api=1&query=Plaza+Campillo+8+26214+Cuzcurrita+de+Rio+Tiron+La+Rioja",
     description:
       "Alojamiento rural rehabilitado con piedra y madera, con calado centenario y espacios amplios para estancias, reuniones y experiencias en La Rioja.",
     fullDescription:
