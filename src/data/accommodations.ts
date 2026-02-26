@@ -162,7 +162,6 @@ export const accommodations: Accommodation[] = [
       "Junto a Plaza de la Paz",
     ],
     capacity: "4-6 personas",
-    hidden: true,
   },
   {
     id: "villa-olivo",
