@@ -11,7 +11,7 @@ import floridaCocina from "@/assets/florida-cocina.jpg";
 import floridaSalon2 from "@/assets/florida-salon2.jpg";
 import floridaPueblo from "@/assets/florida-pueblo.jpg";
 import floridaComedor2 from "@/assets/florida-comedor2.jpg";
-import haroImg from "@/assets/apartamento-haro.jpg";
+
 import haroCoverImg from "@/assets/haro-cover.jpg";
 import haroSalonImg from "@/assets/haro-salon.jpg";
 import haroCocinaImg from "@/assets/haro-cocina.jpg";
@@ -155,8 +155,8 @@ export const accommodations: Accommodation[] = [
       "Alojamiento espacioso y luminoso en el centro de Haro con 3 dormitorios, 2 baños, gran salón comedor con vistas y cocina equipada. Capacidad hasta 6 personas.",
     fullDescription:
       "Alojamiento espacioso y muy luminoso situado en el centro de Haro (capital del vino). Tiene capacidad para 6 personas y ofrece 3 dormitorios (2 con cama de matrimonio y 1 con dos camas individuales), 2 baños completos, un gran salón comedor con vistas a la montaña y a la ciudad y balcón. Incluye amplia cocina totalmente equipada. Dispone de registro de entrada y salida privado (24h). Cerca de bodegas centenarias y del Barrio de la Estación.",
-    image: haroImg,
-    images: [haroImg, haroCoverImg, haroSalonImg, haroCocinaImg, haroExteriorImg],
+    image: haroCoverImg,
+    images: [haroCoverImg, haroSalonImg, haroCocinaImg, haroExteriorImg],
     buttonText: "Ver apartamento",
     capacity: "Hasta 6 personas",
     apartments: [
