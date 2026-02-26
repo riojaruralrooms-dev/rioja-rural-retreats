@@ -13,6 +13,7 @@ const ALOJAMIENTOS = [
   { slug: "duplex-2", label: "Apartamento Dúplex 2" },
   { slug: "florida-1", label: "Apartamentos La Florida (1º piso)" },
   { slug: "florida-2", label: "Apartamentos La Florida (2º piso)" },
+  { slug: "haro-centro", label: "Apartamento en el centro de Haro" },
 ];
 
 const Contacto = () => {

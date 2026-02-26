@@ -128,6 +128,9 @@ const AlojamientoDetalle = () => {
                       if (accommodation.id === "la-florida") {
                         return ["florida-1", "florida-2"].includes(a.slug);
                       }
+                      if (accommodation.id === "centro-haro") {
+                        return ["haro-centro"].includes(a.slug);
+                      }
                       return false;
                     })
                     .map((apartment) => (
