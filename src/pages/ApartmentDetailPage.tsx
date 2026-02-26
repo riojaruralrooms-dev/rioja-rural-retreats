@@ -20,6 +20,20 @@ const featureIcons: Record<string, string> = {
   "Cuna disponible": "🍼",
   Cafetera: "☕",
   "Secador de pelo": "💇",
+  "3 dormitorios": "🛏️",
+  "2 baños completos": "🚿",
+  Balcón: "🏠",
+  "Check-in/out privado 24h": "🔑",
+};
+
+// Map slugs to their parent accommodation for back navigation
+const slugToParent: Record<string, { path: string; label: string }> = {
+  "duplex-1": { path: "/alojamientos/virgen-tironcillo", label: "Volver a alojamientos" },
+  "duplex-2": { path: "/alojamientos/virgen-tironcillo", label: "Volver a alojamientos" },
+  jacuzzi: { path: "/alojamientos/virgen-tironcillo", label: "Volver a alojamientos" },
+  "florida-1": { path: "/alojamientos/la-florida", label: "Volver a alojamientos" },
+  "florida-2": { path: "/alojamientos/la-florida", label: "Volver a alojamientos" },
+  "haro-centro": { path: "/alojamientos/centro-haro", label: "Volver a alojamientos" },
 };
 
 const ApartmentDetailPage = () => {
@@ -74,11 +88,11 @@ const ApartmentDetailPage = () => {
         <div className="container mx-auto px-4">
           {/* Back link */}
           <Link
-            to="/alojamientos/virgen-tironcillo"
+            to={slugToParent[slug || ""]?.path || "/alojamientos"}
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-wine mb-8 transition-colors text-sm"
           >
             <ArrowLeft size={16} />
-            Volver a alojamientos
+            {slugToParent[slug || ""]?.label || "Volver a alojamientos"}
           </Link>
 
           {/* Header */}

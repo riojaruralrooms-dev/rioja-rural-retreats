@@ -31,6 +31,16 @@ import florida2Comedor from "@/assets/florida2-comedor.jpg";
 import florida2Bano from "@/assets/florida2-bano.jpg";
 import florida2Dormitorio from "@/assets/florida2-dormitorio.jpg";
 
+import haroCover from "@/assets/haro-cover.jpg";
+import haroSalon from "@/assets/haro-salon.jpg";
+import haroDormitorio1 from "@/assets/haro-dormitorio1.jpg";
+import haroDormitorio2 from "@/assets/haro-dormitorio2.jpg";
+import haroDormitorio3 from "@/assets/haro-dormitorio3.jpg";
+import haroBano1 from "@/assets/haro-bano1.jpg";
+import haroBano2 from "@/assets/haro-bano2.jpg";
+import haroCocina from "@/assets/haro-cocina.jpg";
+import haroExterior from "@/assets/haro-exterior.jpg";
+
 export interface Review {
   name: string;
   text: string;
@@ -215,6 +225,40 @@ export const apartmentDetails: ApartmentDetail[] = [
     ],
     baseBookingUrl:
       "https://www.booking.com/hotel/es/apartamentos-la-florida-casalarreina.es.html",
+    petFriendly: true,
+  },
+  {
+    slug: "haro-centro",
+    title: "Apartamento en el centro de Haro",
+    priceFrom: 110,
+    shortDescription:
+      "Alojamiento espacioso y luminoso en el centro de Haro con 3 dormitorios, 2 baños, gran salón comedor con vistas y cocina equipada. Capacidad hasta 6 personas.",
+    longDescription:
+      "Alojamiento espacioso y muy luminoso situado en el centro de Haro (capital del vino). Tiene capacidad para 6 personas y ofrece 3 dormitorios (2 con cama de matrimonio y 1 con dos camas individuales), 2 baños completos, un gran salón comedor con vistas a la montaña y a la ciudad y balcón. Incluye amplia cocina totalmente equipada.\n\nDispone de registro de entrada y salida privado (24h). Cerca de bodegas centenarias y del Barrio de la Estación. A 42 km del aeropuerto de Vitoria y cerca de Rioja Alavesa (27 km).\n\nCocina equipada con fogones, horno, nevera, tostadora, cafetera, copas de vino y menaje completo. Calefacción incluida. Baños con ducha a ras de suelo.\n\nSe admiten mascotas bajo petición y con suplemento.",
+    features: [
+      "Cocina equipada",
+      "Calefacción",
+      "WiFi gratis",
+      "TV",
+      "3 dormitorios",
+      "2 baños completos",
+      "Balcón",
+      "Check-in/out privado 24h",
+    ],
+    coverImage: haroCover,
+    gallery: [
+      { src: haroCover, alt: "Salón comedor con vistas" },
+      { src: haroSalon, alt: "Salón con TV y comedor" },
+      { src: haroDormitorio1, alt: "Dormitorio con dos camas individuales" },
+      { src: haroDormitorio2, alt: "Dormitorio con cama de matrimonio" },
+      { src: haroDormitorio3, alt: "Dormitorio principal" },
+      { src: haroCocina, alt: "Cocina totalmente equipada" },
+      { src: haroBano1, alt: "Baño completo con ducha" },
+      { src: haroBano2, alt: "Segundo baño completo" },
+      { src: haroExterior, alt: "Vistas exteriores desde el apartamento" },
+    ],
+    baseBookingUrl:
+      "https://www.booking.com/hotel/es/apartamento-centro-haro.es.html",
     petFriendly: true,
   },
 ];

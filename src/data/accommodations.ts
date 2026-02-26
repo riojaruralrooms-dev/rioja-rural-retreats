@@ -12,6 +12,10 @@ import floridaSalon2 from "@/assets/florida-salon2.jpg";
 import floridaPueblo from "@/assets/florida-pueblo.jpg";
 import floridaComedor2 from "@/assets/florida-comedor2.jpg";
 import haroImg from "@/assets/apartamento-haro.jpg";
+import haroCoverImg from "@/assets/haro-cover.jpg";
+import haroSalonImg from "@/assets/haro-salon.jpg";
+import haroCocinaImg from "@/assets/haro-cocina.jpg";
+import haroExteriorImg from "@/assets/haro-exterior.jpg";
 import villaOlivoImg from "@/assets/villa-olivo.jpg";
 
 export interface Apartment {
@@ -146,22 +150,29 @@ export const accommodations: Accommodation[] = [
   {
     id: "centro-haro",
     name: "Apartamento en el centro de Haro",
-    location: "Haro (La Rioja)",
+    location: "Calle Siervas de Jesús, 33 – 2º, Haro (La Rioja)",
     description:
-      "Apartamento amplio situado en pleno centro de Haro, muy cerca de la Plaza de la Paz y del casco antiguo. A un paso del barrio de las bodegas centenarias.",
+      "Alojamiento espacioso y luminoso en el centro de Haro con 3 dormitorios, 2 baños, gran salón comedor con vistas y cocina equipada. Capacidad hasta 6 personas.",
     fullDescription:
-      "Apartamento amplio situado en pleno centro de Haro, muy cerca de la Plaza de la Paz y del casco antiguo. A un paso del barrio de las bodegas centenarias. Totalmente equipado, con dos baños y gran amplitud.",
+      "Alojamiento espacioso y muy luminoso situado en el centro de Haro (capital del vino). Tiene capacidad para 6 personas y ofrece 3 dormitorios (2 con cama de matrimonio y 1 con dos camas individuales), 2 baños completos, un gran salón comedor con vistas a la montaña y a la ciudad y balcón. Incluye amplia cocina totalmente equipada. Dispone de registro de entrada y salida privado (24h). Cerca de bodegas centenarias y del Barrio de la Estación.",
     image: haroImg,
+    images: [haroImg, haroCoverImg, haroSalonImg, haroCocinaImg, haroExteriorImg],
     buttonText: "Ver apartamento",
-    features: [
-      "Ubicación céntrica",
-      "Dos baños",
-      "Gran amplitud",
-      "Totalmente equipado",
-      "Cerca de bodegas centenarias",
-      "Junto a Plaza de la Paz",
+    capacity: "Hasta 6 personas",
+    apartments: [
+      {
+        id: "haro-centro",
+        name: "Apartamento en el centro de Haro",
+        capacity: "6 personas",
+        features: [
+          "3 dormitorios",
+          "2 baños completos",
+          "Cocina equipada",
+          "Balcón con vistas",
+          "Check-in/out privado 24h",
+        ],
+      },
     ],
-    capacity: "4-6 personas",
   },
   {
     id: "villa-olivo",
