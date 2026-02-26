@@ -9,26 +9,49 @@ const ANON_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(() => {
+    return sessionStorage.getItem("rrr-welcome-dismissed") !== "true";
+  });
   const [messages, setMessages] = useState<Message[]>([
     { role: "assistant", content: "¡Hola! 👋 Soy el asistente de Rioja Rural Rooms. ¿En qué puedo ayudarte?" },
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [welcomeVisible, setWelcomeVisible] = useState(false);
+
+  // Delay welcome panel appearance for a smooth entrance
+  useEffect(() => {
+    if (showWelcome) {
+      const timer = setTimeout(() => setWelcomeVisible(true), 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [showWelcome]);
+
+  const dismissWelcome = () => {
+    setWelcomeVisible(false);
+    setTimeout(() => {
+      setShowWelcome(false);
+      sessionStorage.setItem("rrr-welcome-dismissed", "true");
+    }, 300);
+  };
+
+  const handleWelcomeOption = (message: string) => {
+    dismissWelcome();
+    setTimeout(() => {
+      setIsOpen(true);
+      setMessages((prev) => [...prev, { role: "user", content: message }]);
+      // Trigger the send
+      sendMessage(message);
+    }, 350);
+  };
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const handleSend = async () => {
-    const text = input.trim();
-    if (!text || isLoading) return;
-
-    const userMsg: Message = { role: "user", content: text };
-    setMessages((prev) => [...prev, userMsg]);
-    setInput("");
+  const sendMessage = async (text: string) => {
     setIsLoading(true);
-
     try {
       const res = await fetch(AGENT_URL, {
         method: "POST",
@@ -39,9 +62,7 @@ const ChatBot = () => {
         },
         body: JSON.stringify({ message: text }),
       });
-
       if (!res.ok) throw new Error("status " + res.status);
-
       const data = await res.json();
       setMessages((prev) => [...prev, { role: "assistant", content: data.reply || "Sin respuesta." }]);
     } catch (err) {
@@ -49,6 +70,14 @@ const ChatBot = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleSend = async () => {
+    const text = input.trim();
+    if (!text || isLoading) return;
+    setMessages((prev) => [...prev, { role: "user", content: text }]);
+    setInput("");
+    sendMessage(text);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -62,6 +91,53 @@ const ChatBot = () => {
     setIsOpen(false);
     window.location.href = "/contacto";
   };
+
+  // Welcome panel
+  if (!isOpen && showWelcome && welcomeVisible) {
+    return (
+      <div
+        className="fixed bottom-6 right-6 z-50 w-[340px] rounded-2xl border border-stone/20 bg-cream shadow-elevated overflow-hidden animate-fade-up"
+      >
+        {/* Close */}
+        <button
+          onClick={dismissWelcome}
+          className="absolute top-3 right-3 p-1.5 rounded-full hover:bg-stone/20 transition-colors text-charcoal-light"
+          aria-label="Cerrar"
+        >
+          <X size={16} />
+        </button>
+
+        <div className="px-6 pt-7 pb-5 text-center">
+          <div className="w-10 h-10 mx-auto mb-3 rounded-full bg-wine flex items-center justify-center">
+            <MessageCircle size={20} className="text-cream" />
+          </div>
+          <h3 className="font-serif text-xl font-semibold text-charcoal mb-1">
+            ¡Bienvenido/a a Rioja Rural Rooms! 👋
+          </h3>
+          <p className="text-sm text-charcoal-light">
+            ¿En qué podemos ayudarte hoy?
+          </p>
+        </div>
+
+        <div className="px-6 pb-6 space-y-2.5">
+          <button
+            onClick={() => handleWelcomeOption("Ver alojamientos")}
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border border-stone/30 bg-white hover:border-wine/40 hover:shadow-md transition-all duration-200 text-left group"
+          >
+            <span className="text-base">🏡</span>
+            <span className="text-sm font-medium text-charcoal group-hover:text-wine transition-colors">Ver alojamientos</span>
+          </button>
+          <button
+            onClick={() => handleWelcomeOption("Descubrir planes y experiencias")}
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border border-stone/30 bg-white hover:border-wine/40 hover:shadow-md transition-all duration-200 text-left group"
+          >
+            <span className="text-base">🍷</span>
+            <span className="text-sm font-medium text-charcoal group-hover:text-wine transition-colors">Descubrir planes y experiencias</span>
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (!isOpen) {
     return (
