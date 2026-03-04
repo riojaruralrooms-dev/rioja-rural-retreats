@@ -105,8 +105,18 @@ const ApartmentDetailPage = () => {
               >
                 Desde {apt.priceFrom} € / noche
               </span>
-              {apt.priceDetails && (
-                <span className="text-xs text-muted-foreground text-right">{apt.priceDetails}</span>
+              {apt.priceTiers && apt.priceTiers.length > 0 && (
+                <div className="flex gap-2 mt-1">
+                  {apt.priceTiers.map((tier) => (
+                    <div
+                      key={tier.people}
+                      className="flex flex-col items-center bg-secondary/50 rounded-lg px-3 py-1.5 min-w-[80px]"
+                    >
+                      <span className="text-[11px] text-muted-foreground">{tier.people}</span>
+                      <span className="text-sm font-bold text-foreground">{tier.price}€</span>
+                    </div>
+                  ))}
+                </div>
               )}
             </div>
           </div>
