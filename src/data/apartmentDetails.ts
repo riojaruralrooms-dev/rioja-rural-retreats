@@ -50,6 +50,7 @@ export interface ApartmentDetail {
   slug: string;
   title: string;
   priceFrom: number;
+  priceDetails?: string;
   shortDescription: string;
   longDescription: string;
   features: string[];
@@ -96,7 +97,7 @@ export const apartmentDetails: ApartmentDetail[] = [
   {
     slug: "duplex-1",
     title: "Apartamento Dúplex 1",
-    priceFrom: 97,
+    priceFrom: 110,
     shortDescription:
       "Apartamento dúplex con dos dormitorios, salón comedor, cocina equipada y baño completo. Ideal para estancias rurales cómodas.",
     longDescription:
@@ -136,7 +137,7 @@ export const apartmentDetails: ApartmentDetail[] = [
   {
     slug: "duplex-2",
     title: "Apartamento Dúplex 2",
-    priceFrom: 97,
+    priceFrom: 110,
     shortDescription:
       "Apartamento dúplex equipado con salón comedor, cocina completa y dos dormitorios. Espacio ideal para familias o grupos pequeños.",
     longDescription:
@@ -174,7 +175,7 @@ export const apartmentDetails: ApartmentDetail[] = [
   {
     slug: "florida-1",
     title: "Apartamento La Florida – Primer Piso",
-    priceFrom: 90,
+    priceFrom: 110,
     shortDescription:
       "Apartamento luminoso situado en primer piso con vistas a la plaza de Casalarreina. Cocina totalmente equipada, salón comedor y baño completo.",
     longDescription:
@@ -202,7 +203,7 @@ export const apartmentDetails: ApartmentDetail[] = [
   {
     slug: "florida-2",
     title: "Apartamento La Florida – Segundo Piso",
-    priceFrom: 90,
+    priceFrom: 110,
     shortDescription:
       "Apartamento luminoso situado en segundo piso con vistas a la plaza de Casalarreina. Cocina totalmente equipada, salón comedor y baño completo.",
     longDescription:
@@ -230,7 +231,8 @@ export const apartmentDetails: ApartmentDetail[] = [
   {
     slug: "haro-centro",
     title: "Apartamento en el centro de Haro",
-    priceFrom: 110,
+    priceFrom: 180,
+    priceDetails: "2 personas: desde 180€ · 4 personas: desde 210€ · 6 personas: desde 240€",
     shortDescription:
       "Alojamiento espacioso y luminoso en el centro de Haro con 3 dormitorios, 2 baños, gran salón comedor con vistas y cocina equipada. Capacidad hasta 6 personas.",
     longDescription:
