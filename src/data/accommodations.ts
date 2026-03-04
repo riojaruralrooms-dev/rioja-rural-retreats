@@ -214,9 +214,9 @@ export const accommodations: Accommodation[] = [
     location: "Plaza Campillo, 8, 26214 – Cuzcurrita de Río Tirón (La Rioja)",
     locationUrl: "https://www.google.com/maps/search/?api=1&query=Plaza+Campillo+8+26214+Cuzcurrita+de+Rio+Tiron+La+Rioja",
     description:
-      "Alojamiento rural rehabilitado con piedra y madera, con calado centenario y espacios amplios para estancias, reuniones y experiencias en La Rioja.",
+      "Alojamiento rural rehabilitado con piedra y madera, con calado centenario y espacios amplios para estancias, reuniones y experiencias en La Rioja. Habitación con baño compartido desde 65€/noche · Habitación con baño privado desde 85€/noche · Casa completa desde 850€/noche.",
     fullDescription:
-      "Alojamiento rural rehabilitado con piedra y madera, con calado centenario y espacios amplios para estancias, reuniones y experiencias en La Rioja.",
+      "Alojamiento rural rehabilitado con piedra y madera, con calado centenario y espacios amplios para estancias, reuniones y experiencias en La Rioja.\n\nHabitación con baño compartido: desde 65€/noche\nHabitación con baño privado: desde 85€/noche\nCasa completa: desde 850€/noche",
     image: carmeloFachadaImg,
     images: [carmeloFachadaImg, carmeloCoverImg, carmeloCaladoImg, carmeloSalonImg, carmeloHabitacionImg],
     buttonText: "Ver alojamiento",
