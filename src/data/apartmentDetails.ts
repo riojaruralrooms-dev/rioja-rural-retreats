@@ -50,6 +50,7 @@ export interface ApartmentDetail {
   slug: string;
   title: string;
   priceFrom: number;
+  priceDetails?: string;
   shortDescription: string;
   longDescription: string;
   features: string[];
