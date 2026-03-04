@@ -98,12 +98,17 @@ const ApartmentDetailPage = () => {
           {/* Header */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-10">
             <h1 className="font-serif text-4xl md:text-5xl text-charcoal">{apt.title}</h1>
-            <span
-              className="inline-flex self-start md:self-auto items-center bg-primary text-primary-foreground font-semibold px-5 py-2 rounded-full text-sm"
-              style={{ boxShadow: "var(--shadow-soft)" }}
-            >
-              Desde {apt.priceFrom} € / noche
-            </span>
+            <div className="inline-flex flex-col self-start md:self-auto items-end gap-1">
+              <span
+                className="inline-flex items-center bg-primary text-primary-foreground font-semibold px-5 py-2 rounded-full text-sm"
+                style={{ boxShadow: "var(--shadow-soft)" }}
+              >
+                Desde {apt.priceFrom} € / noche
+              </span>
+              {apt.priceDetails && (
+                <span className="text-xs text-muted-foreground text-right">{apt.priceDetails}</span>
+              )}
+            </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
