@@ -50,7 +50,7 @@ export interface ApartmentDetail {
   slug: string;
   title: string;
   priceFrom: number;
-  priceDetails?: string;
+  priceTiers?: { people: string; price: number }[];
   shortDescription: string;
   longDescription: string;
   features: string[];
@@ -232,7 +232,11 @@ export const apartmentDetails: ApartmentDetail[] = [
     slug: "haro-centro",
     title: "Apartamento en el centro de Haro",
     priceFrom: 180,
-    priceDetails: "2 personas: desde 180€ · 4 personas: desde 210€ · 6 personas: desde 240€",
+    priceTiers: [
+      { people: "2 personas", price: 180 },
+      { people: "4 personas", price: 210 },
+      { people: "6 personas", price: 240 },
+    ],
     shortDescription:
       "Alojamiento espacioso y luminoso en el centro de Haro con 3 dormitorios, 2 baños, gran salón comedor con vistas y cocina equipada. Capacidad hasta 6 personas.",
     longDescription:
