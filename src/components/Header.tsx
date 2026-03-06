@@ -27,8 +27,21 @@ const Header = () => {
   const isActive = (href: string) => location.pathname === href;
 
   return (
+    <>
+      {/* Instagram Banner */}
+      <div className="fixed top-0 left-0 right-0 z-[60] bg-wine text-cream text-center py-2 px-4">
+        <a
+          href="https://www.instagram.com/tironcillo/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 text-sm font-medium tracking-wide hover:opacity-80 transition-opacity"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+          Síguenos en Instagram — @tironcillo
+        </a>
+      </div>
     <header
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-cream/95 backdrop-blur-md shadow-soft py-3"
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-cream/95 backdrop-blur-md shadow-soft py-3 mt-9"
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
