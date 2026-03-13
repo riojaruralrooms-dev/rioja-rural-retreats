@@ -164,8 +164,11 @@ export const apartmentDetails: ApartmentDetail[] = [
     gallery: [
       { src: duplex2Cover, alt: "Salón comedor con escalera" },
       { src: duplex2Salon, alt: "Sala de estar con TV" },
+      { src: duplex2Cocina, alt: "Cocina y comedor" },
       { src: duplex2Dormitorio, alt: "Dormitorio principal" },
       { src: duplex2Dormitorio2, alt: "Segundo dormitorio" },
+      { src: duplex2Dormitorio3, alt: "Dormitorio individual" },
+      { src: duplex2Bano, alt: "Baño completo con ducha" },
     ],
     baseBookingUrl:
       "https://www.booking.com/hotel/es/apartamentos-virgen-de-tironcillo-cuzcurrita-de-rio-tiron.es.html",
