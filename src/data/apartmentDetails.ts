@@ -272,6 +272,8 @@ export const apartmentDetails: ApartmentDetail[] = [
       { src: haroDormitorio1, alt: "Dormitorio con dos camas individuales" },
       { src: haroDormitorio2, alt: "Dormitorio con cama de matrimonio" },
       { src: haroDormitorio3, alt: "Dormitorio principal" },
+      { src: haroDormitorio4, alt: "Tercera habitación con cama de matrimonio" },
+      { src: haroDormitorio5, alt: "Detalle habitación con armario" },
       { src: haroCocina, alt: "Cocina totalmente equipada" },
       { src: haroBano1, alt: "Baño completo con ducha" },
       { src: haroBano2, alt: "Segundo baño completo" },
