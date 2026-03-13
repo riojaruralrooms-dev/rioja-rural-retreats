@@ -125,6 +125,7 @@ export const apartmentDetails: ApartmentDetail[] = [
       { src: duplex1Salon, alt: "Salón con zona de estar" },
       { src: duplex1Cocina, alt: "Cocina y comedor desde escalera" },
       { src: duplex1Dormitorio, alt: "Dormitorio con escritorio" },
+      { src: duplex1Dormitorio2, alt: "Dormitorio con cama de matrimonio" },
       { src: duplex1Bano, alt: "Baño completo con ducha" },
       { src: duplex1Terraza, alt: "Terraza con vistas al río" },
     ],
