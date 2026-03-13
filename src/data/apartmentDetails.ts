@@ -46,6 +46,8 @@ import haroBano1 from "@/assets/haro-bano1.jpg";
 import haroBano2 from "@/assets/haro-bano2.jpg";
 import haroCocina from "@/assets/haro-cocina.jpg";
 import haroExterior from "@/assets/haro-exterior.jpg";
+import haroDormitorio4 from "@/assets/haro-dormitorio4.jpg";
+import haroDormitorio5 from "@/assets/haro-dormitorio5.jpg";
 
 export interface Review {
   name: string;
