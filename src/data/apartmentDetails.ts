@@ -13,6 +13,7 @@ import duplex1Cocina from "@/assets/duplex1-cocina.jpg";
 import duplex1Dormitorio from "@/assets/duplex1-dormitorio.jpg";
 import duplex1Bano from "@/assets/duplex1-bano.jpg";
 import duplex1Terraza from "@/assets/duplex1-terraza.jpg";
+import duplex1Dormitorio2 from "@/assets/duplex1-dormitorio2.jpg";
 
 import duplex2Cover from "@/assets/duplex2-cover.jpg";
 import duplex2Salon from "@/assets/duplex2-salon.jpg";
