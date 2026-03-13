@@ -35,6 +35,7 @@ import florida2Salon from "@/assets/florida2-salon.jpg";
 import florida2Comedor from "@/assets/florida2-comedor.jpg";
 import florida2Bano from "@/assets/florida2-bano.jpg";
 import florida2Dormitorio from "@/assets/florida2-dormitorio.jpg";
+import florida2Dormitorio2 from "@/assets/florida2-dormitorio2.jpg";
 
 import haroCover from "@/assets/haro-cover.jpg";
 import haroSalon from "@/assets/haro-salon.jpg";
