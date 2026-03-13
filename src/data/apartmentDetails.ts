@@ -206,6 +206,7 @@ export const apartmentDetails: ApartmentDetail[] = [
       { src: florida1Salon, alt: "Salón con sofá" },
       { src: florida1Cocina, alt: "Cocina equipada" },
       { src: florida1Dormitorio, alt: "Dormitorio principal" },
+      { src: florida1Dormitorio2, alt: "Dormitorio con camas individuales" },
       { src: florida1Bano, alt: "Baño con ducha" },
     ],
     baseBookingUrl:
