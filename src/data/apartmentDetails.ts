@@ -18,6 +18,9 @@ import duplex2Cover from "@/assets/duplex2-cover.jpg";
 import duplex2Salon from "@/assets/duplex2-salon.jpg";
 import duplex2Dormitorio from "@/assets/duplex2-dormitorio.jpg";
 import duplex2Dormitorio2 from "@/assets/duplex2-dormitorio2.jpg";
+import duplex2Bano from "@/assets/duplex2-bano.jpg";
+import duplex2Dormitorio3 from "@/assets/duplex2-dormitorio3.jpg";
+import duplex2Cocina from "@/assets/duplex2-cocina.jpg";
 
 import florida1Cover from "@/assets/florida1-cover.jpg";
 import florida1Salon from "@/assets/florida1-salon.jpg";
