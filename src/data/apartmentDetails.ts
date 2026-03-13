@@ -13,23 +13,29 @@ import duplex1Cocina from "@/assets/duplex1-cocina.jpg";
 import duplex1Dormitorio from "@/assets/duplex1-dormitorio.jpg";
 import duplex1Bano from "@/assets/duplex1-bano.jpg";
 import duplex1Terraza from "@/assets/duplex1-terraza.jpg";
+import duplex1Dormitorio2 from "@/assets/duplex1-dormitorio2.jpg";
 
 import duplex2Cover from "@/assets/duplex2-cover.jpg";
 import duplex2Salon from "@/assets/duplex2-salon.jpg";
 import duplex2Dormitorio from "@/assets/duplex2-dormitorio.jpg";
 import duplex2Dormitorio2 from "@/assets/duplex2-dormitorio2.jpg";
+import duplex2Bano from "@/assets/duplex2-bano.jpg";
+import duplex2Dormitorio3 from "@/assets/duplex2-dormitorio3.jpg";
+import duplex2Cocina from "@/assets/duplex2-cocina.jpg";
 
 import florida1Cover from "@/assets/florida1-cover.jpg";
 import florida1Salon from "@/assets/florida1-salon.jpg";
 import florida1Cocina from "@/assets/florida1-cocina.jpg";
 import florida1Bano from "@/assets/florida1-bano.jpg";
 import florida1Dormitorio from "@/assets/florida1-dormitorio.jpg";
+import florida1Dormitorio2 from "@/assets/florida1-dormitorio2.jpg";
 
 import florida2Cover from "@/assets/florida2-cover.jpg";
 import florida2Salon from "@/assets/florida2-salon.jpg";
 import florida2Comedor from "@/assets/florida2-comedor.jpg";
 import florida2Bano from "@/assets/florida2-bano.jpg";
 import florida2Dormitorio from "@/assets/florida2-dormitorio.jpg";
+import florida2Dormitorio2 from "@/assets/florida2-dormitorio2.jpg";
 
 import haroCover from "@/assets/haro-cover.jpg";
 import haroSalon from "@/assets/haro-salon.jpg";
@@ -40,6 +46,8 @@ import haroBano1 from "@/assets/haro-bano1.jpg";
 import haroBano2 from "@/assets/haro-bano2.jpg";
 import haroCocina from "@/assets/haro-cocina.jpg";
 import haroExterior from "@/assets/haro-exterior.jpg";
+import haroDormitorio4 from "@/assets/haro-dormitorio4.jpg";
+import haroDormitorio5 from "@/assets/haro-dormitorio5.jpg";
 
 export interface Review {
   name: string;
@@ -117,6 +125,7 @@ export const apartmentDetails: ApartmentDetail[] = [
       { src: duplex1Salon, alt: "Salón con zona de estar" },
       { src: duplex1Cocina, alt: "Cocina y comedor desde escalera" },
       { src: duplex1Dormitorio, alt: "Dormitorio con escritorio" },
+      { src: duplex1Dormitorio2, alt: "Dormitorio con cama de matrimonio" },
       { src: duplex1Bano, alt: "Baño completo con ducha" },
       { src: duplex1Terraza, alt: "Terraza con vistas al río" },
     ],
@@ -155,8 +164,11 @@ export const apartmentDetails: ApartmentDetail[] = [
     gallery: [
       { src: duplex2Cover, alt: "Salón comedor con escalera" },
       { src: duplex2Salon, alt: "Sala de estar con TV" },
+      { src: duplex2Cocina, alt: "Cocina y comedor" },
       { src: duplex2Dormitorio, alt: "Dormitorio principal" },
       { src: duplex2Dormitorio2, alt: "Segundo dormitorio" },
+      { src: duplex2Dormitorio3, alt: "Dormitorio individual" },
+      { src: duplex2Bano, alt: "Baño completo con ducha" },
     ],
     baseBookingUrl:
       "https://www.booking.com/hotel/es/apartamentos-virgen-de-tironcillo-cuzcurrita-de-rio-tiron.es.html",
@@ -194,6 +206,7 @@ export const apartmentDetails: ApartmentDetail[] = [
       { src: florida1Salon, alt: "Salón con sofá" },
       { src: florida1Cocina, alt: "Cocina equipada" },
       { src: florida1Dormitorio, alt: "Dormitorio principal" },
+      { src: florida1Dormitorio2, alt: "Dormitorio con camas individuales" },
       { src: florida1Bano, alt: "Baño con ducha" },
     ],
     baseBookingUrl:
@@ -222,6 +235,7 @@ export const apartmentDetails: ApartmentDetail[] = [
       { src: florida2Salon, alt: "Salón con sofá" },
       { src: florida2Comedor, alt: "Zona comedor" },
       { src: florida2Dormitorio, alt: "Dormitorio con camas individuales" },
+      { src: florida2Dormitorio2, alt: "Dormitorio con cama de matrimonio" },
       { src: florida2Bano, alt: "Baño completo" },
     ],
     baseBookingUrl:
@@ -258,6 +272,8 @@ export const apartmentDetails: ApartmentDetail[] = [
       { src: haroDormitorio1, alt: "Dormitorio con dos camas individuales" },
       { src: haroDormitorio2, alt: "Dormitorio con cama de matrimonio" },
       { src: haroDormitorio3, alt: "Dormitorio principal" },
+      { src: haroDormitorio4, alt: "Tercera habitación con cama de matrimonio" },
+      { src: haroDormitorio5, alt: "Detalle habitación con armario" },
       { src: haroCocina, alt: "Cocina totalmente equipada" },
       { src: haroBano1, alt: "Baño completo con ducha" },
       { src: haroBano2, alt: "Segundo baño completo" },
