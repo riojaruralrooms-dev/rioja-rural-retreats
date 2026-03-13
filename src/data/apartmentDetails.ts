@@ -28,6 +28,7 @@ import florida1Salon from "@/assets/florida1-salon.jpg";
 import florida1Cocina from "@/assets/florida1-cocina.jpg";
 import florida1Bano from "@/assets/florida1-bano.jpg";
 import florida1Dormitorio from "@/assets/florida1-dormitorio.jpg";
+import florida1Dormitorio2 from "@/assets/florida1-dormitorio2.jpg";
 
 import florida2Cover from "@/assets/florida2-cover.jpg";
 import florida2Salon from "@/assets/florida2-salon.jpg";
