@@ -77,6 +77,9 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Guest Reviews Section */}
+      <GuestReviews />
+
       {/* Experiences Preview Section */}
       <section className="section-padding bg-stone-light">
         <div className="container mx-auto px-4">
