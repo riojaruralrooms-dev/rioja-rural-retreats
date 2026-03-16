@@ -26,9 +26,16 @@ const Header = () => {
   const isActive = (href: string) => location.pathname === href;
 
   const scrollToOpiniones = () => {
+    if (location.pathname !== "/") {
+      // Navigate to home first, then scroll after render
+      window.location.href = "/#nuestros-huespedes";
+      return;
+    }
     const element = document.getElementById("nuestros-huespedes");
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const headerOffset = 200;
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top: elementPosition - headerOffset, behavior: "smooth" });
     }
     setIsMobileMenuOpen(false);
   };
