@@ -42,7 +42,7 @@ const reviewGroups: ReviewGroup[] = [
     buttonUrl: "https://search.google.com/local/writereview?placeid=ChIJ_7wcMnuHTw0Ri4mUZHDNcG0",
   },
   {
-    title: "Descanso en El Tironcillo",
+    title: "Descanso en los apartamentos Virgen del Tironcillo",
     reviews: [
       { name: "Florina Enache", text: "Apartamento muy bonito con vista al río. Me ha gustado tanto que en un mes repetiré" },
       { name: "Alberto Arranz", text: "Perfecta ubicación. Apartamento muy limpio y muy cómodo. Repetiremos. 👌🏻" },
