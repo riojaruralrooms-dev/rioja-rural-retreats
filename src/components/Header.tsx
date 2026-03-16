@@ -4,11 +4,10 @@ import { Menu, X } from "lucide-react";
 import logo from "@/assets/logo-nuevo.png";
 
 const navItems = [
-  { label: "Inicio", href: "/" },
-  { label: "Alojamientos", href: "/alojamientos" },
-  { label: "Experiencias", href: "/experiencias" },
-  { label: "Galería", href: "/galeria" },
-  { label: "Contacto", href: "/contacto" },
+  { label: "Inicio", href: "/", isAnchor: false },
+  { label: "Alojamientos", href: "/alojamientos", isAnchor: false },
+  { label: "Experiencias", href: "/experiencias", isAnchor: false },
+  { label: "Contacto", href: "/contacto", isAnchor: false },
 ];
 
 const Header = () => {
@@ -25,6 +24,14 @@ const Header = () => {
   }, []);
 
   const isActive = (href: string) => location.pathname === href;
+
+  const scrollToOpiniones = () => {
+    const element = document.getElementById("nuestros-huespedes");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+    setIsMobileMenuOpen(false);
+  };
 
   return (
     <>
@@ -56,7 +63,8 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-10">
-            {navItems.map((item) => (
+            {/* Links de navegación normales */}
+            {navItems.filter(item => !item.isAnchor).map((item) => (
               <Link
                 key={item.href}
                 to={item.href}
@@ -65,6 +73,14 @@ const Header = () => {
                 {item.label}
               </Link>
             ))}
+            
+            {/* Botón OPINIONES destacado - después de Alojamientos */}
+            <button
+              onClick={scrollToOpiniones}
+              className="btn-nav-opinions"
+            >
+              Opiniones
+            </button>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -87,18 +103,45 @@ const Header = () => {
         }`}
       >
         <nav className="container mx-auto px-4 py-6 flex flex-col gap-4">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              to={item.href}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className={`nav-link text-base py-2 ${
-                isActive(item.href) ? "active" : ""
-              }`}
-            >
-              {item.label}
-            </Link>
-          ))}
+          {/* Inicio */}
+          <Link
+            to="/"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className={`nav-link text-base py-2 ${isActive("/") ? "active" : ""}`}
+          >
+            Inicio
+          </Link>
+          {/* Alojamientos */}
+          <Link
+            to="/alojamientos"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className={`nav-link text-base py-2 ${isActive("/alojamientos") ? "active" : ""}`}
+          >
+            Alojamientos
+          </Link>
+          {/* Opiniones - destacado en móvil */}
+          <button
+            onClick={scrollToOpiniones}
+            className="btn-nav-opinions-mobile"
+          >
+            Opiniones
+          </button>
+          {/* Experiencias */}
+          <Link
+            to="/experiencias"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className={`nav-link text-base py-2 ${isActive("/experiencias") ? "active" : ""}`}
+          >
+            Experiencias
+          </Link>
+          {/* Contacto */}
+          <Link
+            to="/contacto"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className={`nav-link text-base py-2 ${isActive("/contacto") ? "active" : ""}`}
+          >
+            Contacto
+          </Link>
         </nav>
       </div>
     </header>
