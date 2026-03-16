@@ -3,6 +3,7 @@ import { ArrowRight, Wine, Mountain, Users } from "lucide-react";
 import Layout from "@/components/Layout";
 import AccommodationCard from "@/components/AccommodationCard";
 import ExperienceCard from "@/components/ExperienceCard";
+import GuestReviews from "@/components/GuestReviews";
 import { accommodations } from "@/data/accommodations";
 
 import heroImage from "@/assets/hero-rioja.jpg";
