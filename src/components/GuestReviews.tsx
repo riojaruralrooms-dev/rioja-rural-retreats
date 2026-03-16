@@ -74,7 +74,7 @@ const reviewGroups: ReviewGroup[] = [
 
 const GuestReviews = () => {
   return (
-    <section className="section-padding" style={{ backgroundColor: "#FCFBF9" }}>
+    <section id="nuestros-huespedes" className="section-padding" style={{ backgroundColor: "#FCFBF9" }}>
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="section-title">Nuestros Huéspedes</h2>

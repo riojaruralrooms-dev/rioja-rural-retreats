@@ -258,6 +258,34 @@
     @apply w-full;
   }
 
+  /* Botón Opiniones destacado en nav - Desktop */
+  .btn-nav-opinions {
+    @apply relative px-5 py-2 text-sm font-semibold tracking-wider uppercase transition-all duration-300 rounded-full;
+    color: hsl(var(--wine));
+    border: 1.5px solid hsl(var(--wine));
+    background: transparent;
+  }
+
+  .btn-nav-opinions:hover {
+    background: hsl(var(--wine));
+    color: hsl(var(--cream));
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px hsl(var(--wine) / 0.3);
+  }
+
+  /* Botón Opiniones destacado en nav - Mobile */
+  .btn-nav-opinions-mobile {
+    @apply relative px-5 py-3 text-sm font-semibold tracking-wider uppercase transition-all duration-300 rounded-full text-center w-full;
+    color: hsl(var(--wine));
+    border: 1.5px solid hsl(var(--wine));
+    background: hsl(var(--wine) / 0.05);
+  }
+
+  .btn-nav-opinions-mobile:hover {
+    background: hsl(var(--wine));
+    color: hsl(var(--cream));
+  }
+
   /* Form styles */
   .form-input {
     @apply w-full px-4 py-3 border rounded-sm transition-all duration-300 bg-background;
