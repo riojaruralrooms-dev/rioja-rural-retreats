@@ -280,7 +280,7 @@ export const apartmentDetails: ApartmentDetail[] = [
       { src: haroExterior, alt: "Vistas exteriores desde el apartamento" },
     ],
     baseBookingUrl:
-      "https://www.booking.com/hotel/es/apartamento-centro-haro.es.html",
+      "https://www.booking.com/hotel/es/apartamento-centro-de-haro.es.html",
     petFriendly: true,
   },
 ];
