@@ -45,7 +45,7 @@ const Header = () => {
       {/* Instagram Banner */}
       <div className="fixed top-0 left-0 right-0 z-[60] bg-wine text-cream text-center py-1.5 px-4">
         <a
-          href="https://www.instagram.com/tironcillo/"
+          href="https://www.instagram.com/riojaruralrooms?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 font-serif text-xs md:text-sm italic tracking-[0.12em] hover:opacity-80 transition-opacity"
