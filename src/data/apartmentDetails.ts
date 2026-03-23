@@ -210,7 +210,7 @@ export const apartmentDetails: ApartmentDetail[] = [
       { src: florida1Bano, alt: "Baño con ducha" },
     ],
     baseBookingUrl:
-      "https://www.booking.com/hotel/es/apartamentos-la-florida-casalarreina.es.html",
+      "https://www.booking.com/hotel/es/apartamentos-la-florida.es.html",
     petFriendly: true,
   },
   {
@@ -239,7 +239,7 @@ export const apartmentDetails: ApartmentDetail[] = [
       { src: florida2Bano, alt: "Baño completo" },
     ],
     baseBookingUrl:
-      "https://www.booking.com/hotel/es/apartamentos-la-florida-casalarreina.es.html",
+      "https://www.booking.com/hotel/es/apartamentos-la-florida.es.html",
     petFriendly: true,
   },
   {
