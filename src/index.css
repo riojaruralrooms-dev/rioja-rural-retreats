@@ -394,7 +394,7 @@
   .pre-modal__overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.7);
+    background: hsl(var(--wine) / 0.75);
     backdrop-filter: blur(4px);
   }
 
