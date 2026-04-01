@@ -185,6 +185,28 @@ const Header = () => {
         </nav>
       </div>
     </header>
+
+    {/* Modal Pre-reserva IA */}
+    {isModalOpen && (
+      <div
+        className="pre-modal"
+        role="dialog"
+        aria-hidden={!isModalOpen}
+        aria-label="Pre-reserva con IA"
+      >
+        <div className="pre-modal__overlay" onClick={closeModal} />
+        <div className="pre-modal__panel">
+          <button className="pre-modal__close" onClick={closeModal} aria-label="Cerrar">
+            ✕
+          </button>
+          <iframe
+            src="/chat_prueba_rioja_rural_oracle.html"
+            title="Pre-reserva con IA"
+            className="w-full h-full border-0 rounded-lg"
+          />
+        </div>
+      </div>
+    )}
     </>
   );
 };
