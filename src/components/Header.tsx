@@ -105,12 +105,17 @@ const Header = () => {
               </Link>
             ))}
             
-            {/* Botón OPINIONES destacado - después de Alojamientos */}
+            {/* Botón OPINIONES destacado */}
             <button
               onClick={scrollToOpiniones}
               className="btn-nav-opinions"
             >
               Opiniones
+            </button>
+
+            {/* Botón Pre-reserva con IA */}
+            <button onClick={openModal} className="pre-btn">
+              ✨ Pre-reserva con IA <span className="badge-10">-10%</span> 🍷
             </button>
           </nav>
 
