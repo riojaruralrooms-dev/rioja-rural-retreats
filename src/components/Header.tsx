@@ -1,7 +1,11 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import logo from "@/assets/logo-nuevo.png";
+
+interface HeaderProps {
+  onOpenChat?: () => void;
+}
 
 const navItems = [
   { label: "Inicio", href: "/", isAnchor: false },
