@@ -107,7 +107,7 @@ const ChatBot = ({ forceOpen, onForceClose }: ChatBotProps) => {
   };
 
   const scrollToReserva = () => {
-    setIsOpen(false);
+    closeChat();
     window.location.href = "/contacto";
   };
 
