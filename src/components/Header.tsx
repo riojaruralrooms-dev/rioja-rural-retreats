@@ -13,6 +13,7 @@ const navItems = [
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -23,11 +24,34 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const openModal = useCallback(() => {
+    setIsModalOpen(true);
+    document.body.style.overflow = "hidden";
+  }, []);
+
+  const closeModal = useCallback(() => {
+    setIsModalOpen(false);
+    document.body.style.overflow = "";
+  }, []);
+
+  useEffect(() => {
+    if (!isModalOpen) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeModal();
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [isModalOpen, closeModal]);
+
+  // Cleanup overflow on unmount
+  useEffect(() => {
+    return () => { document.body.style.overflow = ""; };
+  }, []);
+
   const isActive = (href: string) => location.pathname === href;
 
   const scrollToOpiniones = () => {
     if (location.pathname !== "/") {
-      // Navigate to home first, then scroll after render
       window.location.href = "/#nuestros-huespedes";
       return;
     }
