@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rioja Rural — Concierge IA</title>
+  <style>
+    :root {
+      --wine: #722f37;
+      --wine-dark: #4a1f24;
+      --cream: #faf6f0;
+      --paper: #fff;
+      --text: #2c2420;
+      --muted: #6b5e56;
+      --accent: #c9a227;
+      --bubble-user: #e8dfd4;
+      --bubble-bot: #fff;
+      --radius: 14px;
+      --shadow: 0 8px 32px rgba(44, 36, 32, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      background: linear-gradient(160deg, #3d1a1e 0%, var(--wine) 45%, #8b3a42 100%);
+      color: var(--text);
+    }
+
+    .wrap {
+      max-width: 560px;
+      margin: 0 auto;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+    }
+
+    header {
+      text-align: center;
+      color: #fff;
+      padding: 12px 0 20px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.35rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    header p {
+      margin: 6px 0 0;
+      font-size: 0.85rem;
+      opacity: 0.88;
+    }
+
+    .hero-cta {
+      margin-top: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 2px solid rgba(201, 162, 39, 0.95);
+      border-radius: 999px;
+      padding: 10px 16px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+      box-shadow: 0 10px 28px rgba(20, 8, 10, 0.2);
+      animation: heartbeatGlow 1.7s ease-in-out infinite;
+    }
+
+    .hero-cta:hover {
+      transform: translateY(-1px) scale(1.01);
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 16px 34px rgba(20, 8, 10, 0.3);
+    }
+
+    .hero-cta:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    @keyframes heartbeatGlow {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 10px 28px rgba(20, 8, 10, 0.2), 0 0 0 0 rgba(201, 162, 39, 0.45);
+      }
+      14% {
+        transform: scale(1.035);
+        box-shadow: 0 14px 32px rgba(20, 8, 10, 0.32), 0 0 0 8px rgba(201, 162, 39, 0.2);
+      }
+      28% {
+        transform: scale(1);
+        box-shadow: 0 10px 28px rgba(20, 8, 10, 0.2), 0 0 0 0 rgba(201, 162, 39, 0);
+      }
+      42% {
+        transform: scale(1.02);
+        box-shadow: 0 13px 30px rgba(20, 8, 10, 0.28), 0 0 0 6px rgba(201, 162, 39, 0.16);
+      }
+      70% {
+        transform: scale(1);
+        box-shadow: 0 10px 28px rgba(20, 8, 10, 0.2), 0 0 0 0 rgba(201, 162, 39, 0);
+      }
+    }
+
+    .cta-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 48px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #d7b649 0%, #b98e18 100%);
+      color: #2c2420;
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.02em;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    }
+
+    .chat-shell {
+      transform: translateY(14px) scale(0.985);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 280ms ease, opacity 260ms ease;
+    }
+
+    .chat-shell.is-open {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .card {
+      background: var(--paper);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+      border: 1px solid rgba(114, 47, 55, 0.08);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px 0;
+      border-bottom: 1px solid #eee8e0;
+    }
+
+    .card-note {
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.3;
+      padding-bottom: 10px;
+    }
+
+    .close-chat {
+      border: 1px solid #e4dbd1;
+      background: #fff;
+      color: var(--wine-dark);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .close-chat:hover {
+      border-color: #c9bfb5;
+    }
+
+    .client-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 14px 14px 0;
+      border-bottom: 1px solid #eee8e0;
+    }
+
+    @media (max-width: 480px) {
+      .client-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    label {
+      display: block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #e0d8cf;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      background: var(--cream);
+    }
+
+    input:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 0;
+      border-color: transparent;
+    }
+
+    .messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      background: var(--cream);
+      min-height: 220px;
+    }
+
+    .msg {
+      max-width: 92%;
+      margin-bottom: 12px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      font-size: 0.95rem;
+      line-height: 1.45;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .msg.user {
+      margin-left: auto;
+      background: var(--bubble-user);
+      border-bottom-right-radius: 4px;
+    }
+
+    .msg.bot {
+      background: var(--bubble-bot);
+      border: 1px solid #ebe5dd;
+      border-bottom-left-radius: 4px;
+    }
+
+    .msg.bot .body {
+      line-height: 1.5;
+    }
+
+    .msg.bot .body p {
+      margin: 0 0 9px;
+    }
+
+    .msg.bot .body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .msg.bot .body strong {
+      color: var(--wine-dark);
+      font-weight: 700;
+    }
+
+    .msg.error {
+      background: #fdeaea;
+      border-color: #f0c4c4;
+      color: #8b1a1a;
+    }
+
+    .msg .meta {
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .msg-more-btn {
+      margin-top: 10px;
+      border: 1px solid rgba(201, 162, 39, 0.65);
+      background: linear-gradient(180deg, #d7b649 0%, #b98e18 100%);
+      color: #2c2420;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 140ms ease, box-shadow 140ms ease;
+      box-shadow: 0 4px 10px rgba(44, 36, 32, 0.14);
+    }
+
+    .msg-more-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(44, 36, 32, 0.2);
+    }
+
+    .msg-more-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .composer {
+      padding: 12px 14px 14px;
+      border-top: 1px solid #eee8e0;
+      background: var(--paper);
+    }
+
+    .composer textarea {
+      width: 100%;
+      min-height: 72px;
+      resize: vertical;
+      padding: 12px;
+      border: 1px solid #e0d8cf;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      margin-bottom: 10px;
+      touch-action: manipulation;
+    }
+
+    .composer textarea:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 0;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    button[type="submit"] {
+      background: linear-gradient(180deg, var(--wine) 0%, var(--wine-dark) 100%);
+      color: #fff;
+      border: none;
+      padding: 12px 22px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    button[type="submit"]:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .hint {
+      font-size: 0.75rem;
+      color: var(--muted);
+      flex: 1;
+      min-width: 140px;
+    }
+
+    .quick-prompts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .quick-prompts button {
+      border: 1px solid #e2d7cb;
+      background: #fff;
+      color: #503530;
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 0.76rem;
+      cursor: pointer;
+      transition: transform 130ms ease, border-color 130ms ease, box-shadow 130ms ease;
+    }
+
+    .quick-prompts button:hover {
+      transform: translateY(-1px);
+      border-color: #c8ad5f;
+      box-shadow: 0 5px 10px rgba(44, 36, 32, 0.12);
+    }
+
+    .status {
+      font-size: 0.8rem;
+      color: var(--muted);
+      padding: 0 14px 10px;
+      min-height: 24px;
+    }
+
+    .status--loading {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--wine-dark);
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      background: linear-gradient(90deg, rgba(201, 162, 39, 0.14), rgba(114, 47, 55, 0.09));
+      border: 1px solid rgba(201, 162, 39, 0.35);
+      border-radius: 999px;
+      padding: 4px 10px;
+      animation: statusGlow 1.8s ease-in-out infinite;
+    }
+
+    .status-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 rgba(201, 162, 39, 0.5);
+      animation: statusPulse 1.2s ease-in-out infinite;
+    }
+
+    .status-text::after {
+      content: "...";
+      display: inline-block;
+      width: 14px;
+      overflow: hidden;
+      vertical-align: bottom;
+      animation: dotsStep 1.4s steps(4, end) infinite;
+    }
+
+    .wine-loader {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      font-size: 0.92rem;
+      transform-origin: center;
+      animation: wineCheers 1.6s ease-in-out infinite;
+    }
+
+    .status-reminder {
+      font-size: 0.74rem;
+      color: var(--wine-dark);
+      opacity: 0;
+      transform: translateY(-3px);
+      transition: opacity 320ms ease, transform 320ms ease;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px dashed rgba(114, 47, 55, 0.22);
+      border-radius: 8px;
+      padding: 4px 8px;
+    }
+
+    .status-reminder.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes statusPulse {
+      0%, 100% {
+        transform: scale(0.9);
+        opacity: 0.65;
+        box-shadow: 0 0 0 0 rgba(201, 162, 39, 0.45);
+      }
+      50% {
+        transform: scale(1.2);
+        opacity: 1;
+        box-shadow: 0 0 0 7px rgba(201, 162, 39, 0);
+      }
+    }
+
+    @keyframes statusGlow {
+      0%, 100% {
+        box-shadow: 0 0 0 rgba(114, 47, 55, 0);
+      }
+      50% {
+        box-shadow: 0 6px 16px rgba(114, 47, 55, 0.15);
+      }
+    }
+
+    @keyframes dotsStep {
+      0% {
+        width: 0;
+      }
+      100% {
+        width: 14px;
+      }
+    }
+
+    @keyframes wineCheers {
+      0%, 100% {
+        transform: rotate(0deg) translateY(0);
+      }
+      25% {
+        transform: rotate(-8deg) translateY(-1px);
+      }
+      50% {
+        transform: rotate(5deg) translateY(0);
+      }
+      75% {
+        transform: rotate(-4deg) translateY(-1px);
+      }
+    }
+
+    footer {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.65);
+      font-size: 0.75rem;
+      padding: 14px 8px;
+    }
+
+    footer a {
+      color: rgba(255, 255, 255, 0.9);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Rioja Rural</h1>
+      <p>Reserva guiada por IA con un toque humano</p>
+      <button id="openChatBtn" class="hero-cta" type="button" aria-controls="chatShell" aria-expanded="false">
+        ✨ Pre-reserva con IA <span class="cta-badge">-10%</span> 🍷
+      </button>
+    </header>
+
+    <section class="chat-shell" id="chatShell" aria-hidden="true">
+      <div class="card">
+        <div class="card-top">
+          <div class="card-note">
+            Cuéntame fechas, personas o apartamento y te preparo opciones al instante.
+          </div>
+          <button type="button" class="close-chat" id="closeChatBtn" aria-label="Cerrar chat">
+            Cerrar
+          </button>
+        </div>
+
+        <div class="messages" id="messages" aria-live="off"></div>
+        <div class="status" id="status"></div>
+
+        <form class="composer" id="form">
+          <label for="message">Mensaje</label>
+          <textarea
+            id="message"
+            name="message"
+            placeholder="Ej.: ¿Hay disponibilidad en Tironcillo – Jacuzzi del 15 al 18 de abril de 2026?"
+            required
+          ></textarea>
+          <div class="actions">
+            <button type="submit" id="sendBtn">Enviar</button>
+            <span class="hint">Mi prioridad: pre-reserva y disponibilidad. También puedes preguntar por apartamentos, lugares y planes.</span>
+          </div>
+          <div class="quick-prompts" aria-label="Preguntas rápidas">
+            <button type="button" data-prompt="Quiero hacer una pre-reserva para 2 personas del 12 al 14 de mayo.">✨ Pre-reserva</button>
+            <button type="button" data-prompt="¿Qué disponibilidad tenéis para 4 personas con perro del 7 al 10 de septiembre?">📅 Disponibilidad</button>
+            <button type="button" data-prompt="¿Qué apartamentos me recomiendas para pareja con jacuzzi?">🏡 Apartamentos</button>
+            <button type="button" data-prompt="¿Qué apartamentos y alojamientos tenéis en total? Dame una visión general.">🏘️ Todos los alojamientos</button>
+            <button type="button" data-prompt="¿Qué lugares puedo visitar cerca y qué planes recomendáis para fin de semana?">🗺️ Lugares y planes</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <footer>
+      Webhook:
+      <a href="#" id="webhookLink" target="_blank" rel="noopener">ver URL</a>
+      · Si el navegador bloquea la petición (CORS), abre este HTML desde el mismo dominio que n8n o usa una extensión CORS solo en desarrollo.
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      var APP_VERSION = "v2026-03-25-duckdns";
+      var WEBHOOK_URL =
+        "https://alfredito1981.duckdns.org/webhook/444122be-1b01-467c-bf50-e16c5d6c11c3";
+
+      var form = document.getElementById("form");
+      var messageEl = document.getElementById("message");
+      var messagesEl = document.getElementById("messages");
+      var statusEl = document.getElementById("status");
+      var sendBtn = document.getElementById("sendBtn");
+      var openChatBtn = document.getElementById("openChatBtn");
+      var closeChatBtn = document.getElementById("closeChatBtn");
+      var chatShell = document.getElementById("chatShell");
+      var quickPromptButtons = Array.prototype.slice.call(document.querySelectorAll(".quick-prompts button"));
+      var webhookLink = document.getElementById("webhookLink");
+      var activeController = null;
+      var REQUEST_TIMEOUT_MS = 60000;
+      var loadingReminderInterval = null;
+      var loadingReminderTimeout = null;
+      var yearRecoveryInProgress = false;
+      var MORE_DETAILS_TRIGGER =
+        "Por favor, desarrolla toda la información anterior con todo lujo de detalles para que no tarde tanto a la primera";
+      var YEAR_AUTO_CONTINUE_TRIGGER =
+        "Continua con la consulta anterior asumiendo que las fechas son de los proximos meses. No pidas el ano y ofrece disponibilidad, precio o siguiente paso de reserva directamente.";
+      var ASSISTANT_STYLE_RULE =
+        "No preguntes nunca el año al cliente. Asume siempre que la reserva es para los próximos meses y continúa con disponibilidad/precio directamente. " +
+        "Cuando el usuario pregunte de forma general por todos los apartamentos, alojamientos o una visión global del parque, incluye siempre El sitio de Carmelo en el listado. " +
+        "Aclara con naturalidad que la gestión y reservas de ese alojamiento se hacen en su propia web (no a través de este chat), pero el cliente debe conocerlo para tener el panorama completo.";
+      var NO_YEAR_FALLBACK_TEXT =
+        "Estoy revisando disponibilidad con esas fechas y te muestro opciones en un momento.";
+      var FALLBACK_CONTACT_MESSAGE =
+        "Lo siento, ahora mismo no puedo completar la pre-reserva por aquí. " +
+        "Por favor, hazlo desde el formulario de la web o contacta con nosotros en el 640 918 592 " +
+        "o en riojaruralrooms@gmail.com.";
+      webhookLink.href = WEBHOOK_URL;
+      webhookLink.textContent = "rioja-rural-reserva (" + APP_VERSION + ")";
+      var profile = {
+        nombre: "",
+        email: "",
+        telefono: "",
+      };
+
+      function appendMsg(role, text, isError) {
+        var div = document.createElement("div");
+        div.className = "msg " + (isError ? "error" : role === "user" ? "user" : "bot");
+        var meta = document.createElement("div");
+        meta.className = "meta";
+        meta.textContent = role === "user" ? "Tú" : isError ? "Error" : "Conserje";
+        div.appendChild(meta);
+        var body = document.createElement("div");
+        body.className = "body";
+        var rawText = String(text || "");
+        var showMoreButton =
+          role === "bot" && !isError && /\[VER_MAS\]\s*$/i.test(rawText);
+        if (showMoreButton) {
+          rawText = rawText.replace(/\s*\[VER_MAS\]\s*$/i, "");
+        }
+        if (role === "bot" && !isError) {
+          body.innerHTML = formatBotMessage(rawText);
+        } else {
+          body.textContent = rawText;
+        }
+        div.appendChild(body);
+
+        if (showMoreButton) {
+          var moreBtn = document.createElement("button");
+          moreBtn.type = "button";
+          moreBtn.className = "msg-more-btn";
+          moreBtn.textContent = "Quiero más detalles";
+          moreBtn.addEventListener("click", function () {
+            moreBtn.disabled = true;
+            moreBtn.textContent = "Preparando más detalles...";
+            sendToWebhook(MORE_DETAILS_TRIGGER, { silentUserMessage: true });
+          });
+          div.appendChild(moreBtn);
+        }
+
+        messagesEl.appendChild(div);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      }
+
+      function setLoading(on) {
+        if (loadingReminderInterval) {
+          clearInterval(loadingReminderInterval);
+          loadingReminderInterval = null;
+        }
+        if (loadingReminderTimeout) {
+          clearTimeout(loadingReminderTimeout);
+          loadingReminderTimeout = null;
+        }
+
+        if (on) {
+          statusEl.innerHTML =
+            '<div class="status-wrap">' +
+              '<span class="status--loading">' +
+                '<span class="wine-loader" aria-hidden="true">🍾🍷</span>' +
+                '<span class="status-dot" aria-hidden="true"></span>' +
+                '<span class="status-text">La información está en proceso</span>' +
+              '</span>' +
+              '<span class="status-reminder" id="statusReminder"></span>' +
+            '</div>';
+
+          loadingReminderInterval = setInterval(function () {
+            var reminderEl = document.getElementById("statusReminder");
+            if (!reminderEl) return;
+            reminderEl.textContent = "Si es una pregunta genérica, puede tardar un poquito más.";
+            reminderEl.classList.add("is-visible");
+            if (loadingReminderTimeout) clearTimeout(loadingReminderTimeout);
+            loadingReminderTimeout = setTimeout(function () {
+              if (reminderEl) reminderEl.classList.remove("is-visible");
+            }, 4200);
+          }, 10000);
+          return;
+        }
+        statusEl.textContent = "";
+      }
+
+      function escapeHtml(text) {
+        return String(text || "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function formatBotMessage(text) {
+        var escaped = escapeHtml(text);
+        escaped = escaped.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+        var paragraphs = escaped
+          .split(/\n{2,}/)
+          .map(function (block) {
+            var lines = block.split(/\n/).map(function (line) { return line.trim(); }).filter(Boolean);
+            if (!lines.length) return "";
+            var rendered = lines.map(function (line) {
+              if (/^[-*]\s+/.test(line)) return "• " + line.replace(/^[-*]\s+/, "");
+              return line;
+            }).join("<br>");
+            return "<p>" + rendered + "</p>";
+          })
+          .filter(Boolean);
+        return paragraphs.join("");
+      }
+
+      function setChatOpen(isOpen) {
+        chatShell.classList.toggle("is-open", isOpen);
+        chatShell.setAttribute("aria-hidden", isOpen ? "false" : "true");
+        openChatBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        if (isOpen) {
+          setTimeout(function () {
+            messageEl.focus();
+          }, 180);
+        }
+      }
+
+      function extractBotOutputText(payloadText) {
+        var data = null;
+        try {
+          data = payloadText ? JSON.parse(payloadText) : null;
+        } catch (e) {
+          data = null;
+        }
+        if (!data) return payloadText || "";
+        if (typeof data === "string") return data;
+        return data.respuesta || data.output || data.message || JSON.stringify(data, null, 2);
+      }
+
+      function botAsksYear(text) {
+        return /(que\s+ano|qué\s+año|de\s+que\s+ano|de\s+qué\s+año|me\s+indicas\s+el\s+ano|me\s+indicas\s+el\s+año|confirmas\s+el\s+ano|confirmas\s+el\s+año|necesito\s+saber\s+de\s+que\s+ano|necesito\s+saber\s+de\s+qué\s+año|verificar\s+la\s+disponibilidad[^.!?]*ano|verificar\s+la\s+disponibilidad[^.!?]*año)/i.test(String(text || ""));
+      }
+
+      function sanitizeBotText(botText) {
+        var text = String(botText || "");
+        if (!text) return text;
+
+        var asksYear = botAsksYear(text);
+
+        if (!asksYear) return text;
+
+        // Elimina cualquier frase que pida año aunque no esté en formato de pregunta.
+        var cleaned = text
+          .split(/\n+/)
+          .map(function (line) {
+            return line
+              .split(/(?<=[.!?])\s+/)
+              .filter(function (chunk) {
+                return !/\b(año|ano)\b/i.test(chunk);
+              })
+              .join(" ")
+              .trim();
+          })
+          .filter(Boolean)
+          .join("\n")
+          .replace(/\s{2,}/g, " ")
+          .trim();
+
+        if (!cleaned) return NO_YEAR_FALLBACK_TEXT;
+        return cleaned;
+      }
+
+      function extractContactDataFromMessage(message) {
+        var text = String(message || "").trim();
+        if (!text) return;
+
+        var emailMatch = text.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i);
+        if (emailMatch) {
+          profile.email = emailMatch[0].trim();
+        }
+
+        var phoneMatch = text.match(/(?:\+?\d[\d\s-]{7,}\d)/);
+        if (phoneMatch) {
+          profile.telefono = phoneMatch[0].trim();
+        }
+
+        function setNombreSiValido(raw) {
+          var n = String(raw || "").trim();
+          if (!n || looksLikeGreetingOrNoise(n)) return;
+          profile.nombre = n;
+        }
+
+        var nombreCampo = text.match(/(?:^|\n)\s*nombre\s*:\s*([^\n,]+)/i);
+        if (nombreCampo) {
+          setNombreSiValido(nombreCampo[1]);
+          return;
+        }
+        var meLlamo = text.match(/\bme\s+llamo\s+([^\n,.]+)/i);
+        if (meLlamo) {
+          setNombreSiValido(meLlamo[1]);
+          return;
+        }
+        var soy = text.match(/\bsoy\s+([^\n,.]+)/i);
+        if (soy && !/^(una|un|el|la|los|las)\s/i.test(soy[1])) {
+          setNombreSiValido(soy[1]);
+        }
+
+        if (emailMatch && !profile.nombre) {
+          var lines = text.split(/\r?\n/).map(function (l) { return l.trim(); }).filter(Boolean);
+          for (var i = 0; i < lines.length; i++) {
+            var line = lines[i];
+            if (line.indexOf("@") !== -1) continue;
+            if (/^\+?\d[\d\s.-]{8,}$/.test(line.replace(/\s/g, ""))) continue;
+            var nm = line.match(/^(?:nombre|me llamo|soy)\s*:\s*(.+)$/i);
+            if (nm) {
+              setNombreSiValido(nm[1]);
+              break;
+            }
+            if (/^[A-Za-zÁÉÍÓÚÜáéíóúüñÑ\s'.-]{2,55}$/.test(line) && line.split(/\s+/).length <= 4) {
+              if (!looksLikeGreetingOrNoise(line)) {
+                profile.nombre = line;
+                break;
+              }
+            }
+          }
+        }
+
+        if (emailMatch && !profile.nombre) {
+          var beforeEmail = text.split(emailMatch[0])[0].replace(/[,;]\s*$/, "").trim();
+          if (beforeEmail && /^[A-Za-zÁÉÍÓÚÜáéíóúüñÑ\s'.-]{2,55}$/.test(beforeEmail) && beforeEmail.split(/\s+/).length <= 4) {
+            if (!looksLikeGreetingOrNoise(beforeEmail)) profile.nombre = beforeEmail;
+          }
+        }
+      }
+
+      function looksLikeGreetingOrNoise(t) {
+        var s = String(t || "")
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .trim();
+        var greetings = [
+          "hola", "buenas", "buenos dias", "buenas tardes", "buenas noches",
+          "hey", "hi", "hello", "gracias", "vale", "ok", "si", "no", "perfecto", "genial",
+        ];
+        if (greetings.indexOf(s) !== -1) return true;
+        if (s.length <= 2) return true;
+        return false;
+      }
+
+      function sendToWebhook(message, options) {
+        var opts = options || {};
+        var msg = String(message || "").trim();
+        if (!msg) return;
+
+        if (!opts.silentUserMessage) {
+          appendMsg("user", msg);
+        }
+        setLoading(true);
+        activeController = new AbortController();
+        var timeoutId = setTimeout(function () {
+          if (activeController) activeController.abort();
+        }, REQUEST_TIMEOUT_MS);
+
+        fetch(WEBHOOK_URL, {
+          method: "POST",
+          signal: activeController.signal,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            message: msg,
+            nombre: profile.nombre || "No indicado",
+            email: profile.email || "no-indicado@riojarural.local",
+            telefono: profile.telefono || "No indicado",
+            instrucciones_asistente: ASSISTANT_STYLE_RULE,
+          }),
+        })
+          .then(function (res) {
+            return res.text().then(function (text) {
+              return { ok: res.ok, status: res.status, text: text };
+            });
+          })
+          .then(function (r) {
+            clearTimeout(timeoutId);
+            activeController = null;
+            setLoading(false);
+            if (!r.ok) {
+              appendMsg(
+                "bot",
+                "Disculpa, hemos tenido un problema técnico (HTTP " + r.status + "). " + FALLBACK_CONTACT_MESSAGE,
+                true
+              );
+              return;
+            }
+            var botText = extractBotOutputText(r.text);
+            if (!String(botText || "").trim()) {
+              appendMsg("bot", "Disculpa, no he podido generar una respuesta. " + FALLBACK_CONTACT_MESSAGE, true);
+              return;
+            }
+            if (botAsksYear(botText)) {
+              if (!yearRecoveryInProgress) {
+                yearRecoveryInProgress = true;
+                appendMsg("bot", NO_YEAR_FALLBACK_TEXT);
+                sendToWebhook(YEAR_AUTO_CONTINUE_TRIGGER, { silentUserMessage: true });
+                return;
+              }
+              yearRecoveryInProgress = false;
+              appendMsg("bot", "Perfecto, sigo con tu pre-reserva sin pedirte el año.");
+              return;
+            }
+            yearRecoveryInProgress = false;
+            appendMsg("bot", sanitizeBotText(botText));
+          })
+          .catch(function (err) {
+            clearTimeout(timeoutId);
+            activeController = null;
+            yearRecoveryInProgress = false;
+            setLoading(false);
+            appendMsg(
+              "bot",
+              err && err.name === "AbortError"
+                ? "Disculpa, el agente está tardando demasiado en responder. " + FALLBACK_CONTACT_MESSAGE
+                : "Disculpa, el agente no está disponible ahora mismo. " + FALLBACK_CONTACT_MESSAGE,
+              true
+            );
+          });
+      }
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var message = messageEl.value.trim();
+        if (!message) return;
+        messageEl.value = "";
+        extractContactDataFromMessage(message);
+        sendToWebhook(message);
+      });
+
+      quickPromptButtons.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var prompt = btn.getAttribute("data-prompt") || "";
+          if (!prompt.trim()) return;
+          messageEl.value = prompt;
+          messageEl.focus();
+        });
+      });
+
+      openChatBtn.addEventListener("click", function () {
+        setChatOpen(true);
+      });
+
+      closeChatBtn.addEventListener("click", function () {
+        setChatOpen(false);
+      });
+
+      function isTypingInComposer(el) {
+        if (!el || !el.closest) return false;
+        return !!el.closest(".composer");
+      }
+
+      messageEl.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          e.stopPropagation();
+        }
+      });
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key !== "Escape") return;
+        if (isTypingInComposer(e.target)) return;
+        setChatOpen(false);
+      });
+
+      appendMsg(
+        "bot",
+        "¡Hola! Soy tu asistente de Rioja Rural Rooms 🍷\n\n" +
+          "**Mi prioridad:** ayudarte con tu **pre-reserva** y la **disponibilidad** de nuestros apartamentos.\n\n" +
+          "Si reservas directamente por aquí, te aplicamos un **10% de descuento** ✨\n\n" +
+          "Además, también puedo recomendarte:\n" +
+          "- nuestra variedad de alojamientos en función de vuestro plan\n" +
+          "- lugares para visitar cerca\n" +
+          "- distancias entre los diferentes lugares de interés y nuestros apartamentos\n" +
+          "- ideas de planes y experiencias"
+      );
+    })();
+  </script>
+</body>
+</html>

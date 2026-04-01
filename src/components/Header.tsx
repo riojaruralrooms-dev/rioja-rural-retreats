@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import logo from "@/assets/logo-nuevo.png";
@@ -13,6 +13,7 @@ const navItems = [
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -23,11 +24,34 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const openModal = useCallback(() => {
+    setIsModalOpen(true);
+    document.body.style.overflow = "hidden";
+  }, []);
+
+  const closeModal = useCallback(() => {
+    setIsModalOpen(false);
+    document.body.style.overflow = "";
+  }, []);
+
+  useEffect(() => {
+    if (!isModalOpen) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeModal();
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [isModalOpen, closeModal]);
+
+  // Cleanup overflow on unmount
+  useEffect(() => {
+    return () => { document.body.style.overflow = ""; };
+  }, []);
+
   const isActive = (href: string) => location.pathname === href;
 
   const scrollToOpiniones = () => {
     if (location.pathname !== "/") {
-      // Navigate to home first, then scroll after render
       window.location.href = "/#nuestros-huespedes";
       return;
     }
@@ -81,12 +105,17 @@ const Header = () => {
               </Link>
             ))}
             
-            {/* Botón OPINIONES destacado - después de Alojamientos */}
+            {/* Botón OPINIONES destacado */}
             <button
               onClick={scrollToOpiniones}
               className="btn-nav-opinions"
             >
               Opiniones
+            </button>
+
+            {/* Botón Pre-reserva con IA */}
+            <button onClick={openModal} className="pre-btn">
+              ✨ Pre-reserva con IA <span className="badge-10">-10%</span> 🍷
             </button>
           </nav>
 
@@ -133,6 +162,10 @@ const Header = () => {
           >
             Opiniones
           </button>
+          {/* Pre-reserva IA - móvil */}
+          <button onClick={() => { setIsMobileMenuOpen(false); openModal(); }} className="pre-btn pre-btn--mobile">
+            ✨ Pre-reserva con IA <span className="badge-10">-10%</span> 🍷
+          </button>
           {/* Experiencias */}
           <Link
             to="/experiencias"
@@ -152,6 +185,28 @@ const Header = () => {
         </nav>
       </div>
     </header>
+
+    {/* Modal Pre-reserva IA */}
+    {isModalOpen && (
+      <div
+        className="pre-modal"
+        role="dialog"
+        aria-hidden={!isModalOpen}
+        aria-label="Pre-reserva con IA"
+      >
+        <div className="pre-modal__overlay" onClick={closeModal} />
+        <div className="pre-modal__panel">
+          <button className="pre-modal__close" onClick={closeModal} aria-label="Cerrar">
+            ✕
+          </button>
+          <iframe
+            src="/chat_prueba_rioja_rural_oracle.html"
+            title="Pre-reserva con IA"
+            className="w-full h-full border-0 rounded-lg"
+          />
+        </div>
+      </div>
+    )}
     </>
   );
 };
