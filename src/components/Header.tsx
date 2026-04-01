@@ -162,6 +162,10 @@ const Header = () => {
           >
             Opiniones
           </button>
+          {/* Pre-reserva IA - móvil */}
+          <button onClick={() => { setIsMobileMenuOpen(false); openModal(); }} className="pre-btn pre-btn--mobile">
+            ✨ Pre-reserva con IA <span className="badge-10">-10%</span> 🍷
+          </button>
           {/* Experiencias */}
           <Link
             to="/experiencias"
