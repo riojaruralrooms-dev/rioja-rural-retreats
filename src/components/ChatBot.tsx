@@ -7,7 +7,12 @@ type Message = { role: "user" | "assistant"; content: string; error?: boolean };
 const AGENT_URL = `https://${import.meta.env.VITE_SUPABASE_PROJECT_ID}.supabase.co/functions/v1/agent-proxy`;
 const ANON_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
-const ChatBot = () => {
+interface ChatBotProps {
+  forceOpen?: boolean;
+  onForceClose?: () => void;
+}
+
+const ChatBot = ({ forceOpen, onForceClose }: ChatBotProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [showWelcome, setShowWelcome] = useState(() => {
     return sessionStorage.getItem("rrr-welcome-dismissed") !== "true";

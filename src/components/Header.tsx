@@ -14,10 +14,9 @@ const navItems = [
   { label: "Contacto", href: "/contacto", isAnchor: false },
 ];
 
-const Header = () => {
+const Header = ({ onOpenChat }: HeaderProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -26,30 +25,6 @@ const Header = () => {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const openModal = useCallback(() => {
-    setIsModalOpen(true);
-    document.body.style.overflow = "hidden";
-  }, []);
-
-  const closeModal = useCallback(() => {
-    setIsModalOpen(false);
-    document.body.style.overflow = "";
-  }, []);
-
-  useEffect(() => {
-    if (!isModalOpen) return;
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeModal();
-    };
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, [isModalOpen, closeModal]);
-
-  // Cleanup overflow on unmount
-  useEffect(() => {
-    return () => { document.body.style.overflow = ""; };
   }, []);
 
   const isActive = (href: string) => location.pathname === href;
@@ -98,7 +73,6 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-10">
-            {/* Links de navegación normales */}
             {navItems.filter(item => !item.isAnchor).map((item) => (
               <Link
                 key={item.href}
@@ -109,7 +83,6 @@ const Header = () => {
               </Link>
             ))}
             
-            {/* Botón OPINIONES destacado */}
             <button
               onClick={scrollToOpiniones}
               className="btn-nav-opinions"
@@ -118,7 +91,7 @@ const Header = () => {
             </button>
 
             {/* Botón Pre-reserva con IA */}
-            <button onClick={openModal} className="pre-btn">
+            <button onClick={onOpenChat} className="pre-btn">
               ✨ Pre-reserva con IA <span className="badge-10">-10%</span> 🍷
             </button>
           </nav>
@@ -143,74 +116,17 @@ const Header = () => {
         }`}
       >
         <nav className="container mx-auto px-4 py-6 flex flex-col gap-4">
-          {/* Inicio */}
-          <Link
-            to="/"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className={`nav-link text-base py-2 ${isActive("/") ? "active" : ""}`}
-          >
-            Inicio
-          </Link>
-          {/* Alojamientos */}
-          <Link
-            to="/alojamientos"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className={`nav-link text-base py-2 ${isActive("/alojamientos") ? "active" : ""}`}
-          >
-            Alojamientos
-          </Link>
-          {/* Opiniones - destacado en móvil */}
-          <button
-            onClick={scrollToOpiniones}
-            className="btn-nav-opinions-mobile"
-          >
-            Opiniones
-          </button>
-          {/* Pre-reserva IA - móvil */}
-          <button onClick={() => { setIsMobileMenuOpen(false); openModal(); }} className="pre-btn pre-btn--mobile">
+          <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className={`nav-link text-base py-2 ${isActive("/") ? "active" : ""}`}>Inicio</Link>
+          <Link to="/alojamientos" onClick={() => setIsMobileMenuOpen(false)} className={`nav-link text-base py-2 ${isActive("/alojamientos") ? "active" : ""}`}>Alojamientos</Link>
+          <button onClick={scrollToOpiniones} className="btn-nav-opinions-mobile">Opiniones</button>
+          <button onClick={() => { setIsMobileMenuOpen(false); onOpenChat?.(); }} className="pre-btn pre-btn--mobile">
             ✨ Pre-reserva con IA <span className="badge-10">-10%</span> 🍷
           </button>
-          {/* Experiencias */}
-          <Link
-            to="/experiencias"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className={`nav-link text-base py-2 ${isActive("/experiencias") ? "active" : ""}`}
-          >
-            Experiencias
-          </Link>
-          {/* Contacto */}
-          <Link
-            to="/contacto"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className={`nav-link text-base py-2 ${isActive("/contacto") ? "active" : ""}`}
-          >
-            Contacto
-          </Link>
+          <Link to="/experiencias" onClick={() => setIsMobileMenuOpen(false)} className={`nav-link text-base py-2 ${isActive("/experiencias") ? "active" : ""}`}>Experiencias</Link>
+          <Link to="/contacto" onClick={() => setIsMobileMenuOpen(false)} className={`nav-link text-base py-2 ${isActive("/contacto") ? "active" : ""}`}>Contacto</Link>
         </nav>
       </div>
     </header>
-
-    {/* Modal Pre-reserva IA */}
-    {isModalOpen && (
-      <div
-        className="pre-modal"
-        role="dialog"
-        aria-hidden={!isModalOpen}
-        aria-label="Pre-reserva con IA"
-      >
-        <div className="pre-modal__overlay" onClick={closeModal} />
-        <div className="pre-modal__panel">
-          <button className="pre-modal__close" onClick={closeModal} aria-label="Cerrar">
-            ✕
-          </button>
-          <iframe
-            src="/chat_prueba_rioja_rural_oracle.html"
-            title="Pre-reserva con IA"
-            className="w-full h-full border-0 rounded-lg"
-          />
-        </div>
-      </div>
-    )}
     </>
   );
 };
