@@ -7,7 +7,12 @@ type Message = { role: "user" | "assistant"; content: string; error?: boolean };
 const AGENT_URL = `https://${import.meta.env.VITE_SUPABASE_PROJECT_ID}.supabase.co/functions/v1/agent-proxy`;
 const ANON_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
-const ChatBot = () => {
+interface ChatBotProps {
+  forceOpen?: boolean;
+  onForceClose?: () => void;
+}
+
+const ChatBot = ({ forceOpen, onForceClose }: ChatBotProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [showWelcome, setShowWelcome] = useState(() => {
     return sessionStorage.getItem("rrr-welcome-dismissed") !== "true";
@@ -20,7 +25,21 @@ const ChatBot = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [welcomeVisible, setWelcomeVisible] = useState(false);
 
-  // Delay welcome panel appearance for a smooth entrance
+  // Sync forceOpen from header button
+  useEffect(() => {
+    if (forceOpen) {
+      setShowWelcome(false);
+      setWelcomeVisible(false);
+      sessionStorage.setItem("rrr-welcome-dismissed", "true");
+      setIsOpen(true);
+    }
+  }, [forceOpen]);
+
+  const closeChat = () => {
+    setIsOpen(false);
+    onForceClose?.();
+  };
+
   useEffect(() => {
     if (showWelcome) {
       const timer = setTimeout(() => setWelcomeVisible(true), 1500);
@@ -88,7 +107,7 @@ const ChatBot = () => {
   };
 
   const scrollToReserva = () => {
-    setIsOpen(false);
+    closeChat();
     window.location.href = "/contacto";
   };
 
@@ -153,7 +172,7 @@ const ChatBot = () => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-end p-4 sm:items-center sm:justify-center">
-      <div className="absolute inset-0 bg-charcoal/60 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
+      <div className="absolute inset-0 bg-wine/70 backdrop-blur-sm" onClick={closeChat} />
 
       <div className="relative w-full max-w-md lg:max-w-2xl xl:max-w-3xl h-[500px] sm:h-[560px] lg:h-[680px] xl:h-[720px] bg-cream rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-fade-up border border-stone/20 transition-all duration-300">
         {/* Header */}
@@ -162,7 +181,7 @@ const ChatBot = () => {
             <MessageCircle size={20} />
             <span className="font-serif font-semibold text-lg">Asistente Virtual</span>
           </div>
-          <button onClick={() => setIsOpen(false)} className="p-2 hover:bg-cream/20 rounded-full transition-colors" aria-label="Cerrar">
+          <button onClick={closeChat} className="p-2 hover:bg-cream/20 rounded-full transition-colors" aria-label="Cerrar">
             <X size={20} />
           </button>
         </div>
