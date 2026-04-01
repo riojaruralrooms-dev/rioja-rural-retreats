@@ -154,7 +154,7 @@ const Header = () => {
             ✕
           </button>
           <iframe
-            src="/chat_prueba_rioja_rural_oracle.html"
+            src="/chat_prueba_rioja_rural_oracle.html?embed=1"
             title="Pre-reserva con IA"
             className="w-full h-full border-0 rounded-lg"
           />

@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Rioja Rural — Concierge IA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
   <style>
     :root {
       --wine: #722f37;
@@ -154,18 +157,24 @@
 
     .card-top {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
       gap: 10px;
-      padding: 12px 14px 0;
-      border-bottom: 1px solid #eee8e0;
+      padding: 0;
+      border-bottom: none;
+      background: linear-gradient(135deg, #722f37 0%, #4a1f24 100%);
     }
 
     .card-note {
-      color: var(--muted);
-      font-size: 0.78rem;
-      line-height: 1.3;
-      padding-bottom: 10px;
+      color: #faf6f0;
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+      font-style: italic;
+      letter-spacing: 0.04em;
+      line-height: 1.4;
+      text-align: center;
+      padding: 14px 20px;
     }
 
     .close-chat {
@@ -268,6 +277,14 @@
     .msg.bot .body strong {
       color: var(--wine-dark);
       font-weight: 700;
+    }
+
+    .msg.bot:first-child .body p:first-child strong {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--wine);
+      letter-spacing: 0.02em;
     }
 
     .msg.error {
@@ -516,7 +533,56 @@
     footer a {
       color: rgba(255, 255, 255, 0.9);
     }
+
+    /* Modo incrustado (modal de la web): ir directo al chat, sin landing */
+    html.embed-mode body {
+      background: var(--cream);
+      min-height: 100%;
+    }
+
+    html.embed-mode .wrap {
+      max-width: none;
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      height: 100dvh;
+    }
+
+    html.embed-mode .chat-shell .card {
+      border-radius: 0;
+      border: none;
+      box-shadow: none;
+      height: 100%;
+    }
+
+    html.embed-mode header,
+    html.embed-mode footer {
+      display: none !important;
+    }
+
+    html.embed-mode .chat-shell {
+      transform: none;
+      opacity: 1;
+      pointer-events: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    html.embed-mode .close-chat {
+      display: none;
+    }
   </style>
+  <script>
+    (function () {
+      try {
+        if (new URLSearchParams(window.location.search).get("embed") === "1") {
+          document.documentElement.classList.add("embed-mode");
+        }
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
   <div class="wrap">
@@ -574,6 +640,11 @@
 
   <script>
     (function () {
+      var isEmbed = false;
+      try {
+        isEmbed = new URLSearchParams(window.location.search).get("embed") === "1";
+      } catch (e) {}
+
       var APP_VERSION = "v2026-03-25-duckdns";
       var WEBHOOK_URL =
         "https://alfredito1981.duckdns.org/webhook/444122be-1b01-467c-bf50-e16c5d6c11c3";
@@ -620,7 +691,7 @@
         div.className = "msg " + (isError ? "error" : role === "user" ? "user" : "bot");
         var meta = document.createElement("div");
         meta.className = "meta";
-        meta.textContent = role === "user" ? "Tú" : isError ? "Error" : "Conserje";
+        meta.textContent = role === "user" ? "Tú" : isError ? "Error" : "";
         div.appendChild(meta);
         var body = document.createElement("div");
         body.className = "body";
@@ -718,6 +789,7 @@
       }
 
       function setChatOpen(isOpen) {
+        if (isEmbed && !isOpen) return;
         chatShell.classList.toggle("is-open", isOpen);
         chatShell.setAttribute("aria-hidden", isOpen ? "false" : "true");
         openChatBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
@@ -976,15 +1048,19 @@
 
       appendMsg(
         "bot",
-        "¡Hola! Soy tu asistente de Rioja Rural Rooms 🍷\n\n" +
+        "**¡Hola! Soy tu asistente de Rioja Rural Rooms** 🍷\n\n" +
           "**Mi prioridad:** ayudarte con tu **pre-reserva** y la **disponibilidad** de nuestros apartamentos.\n\n" +
           "Si reservas directamente por aquí, te aplicamos un **10% de descuento** ✨\n\n" +
-          "Además, también puedo recomendarte:\n" +
-          "- nuestra variedad de alojamientos en función de vuestro plan\n" +
-          "- lugares para visitar cerca\n" +
-          "- distancias entre los diferentes lugares de interés y nuestros apartamentos\n" +
-          "- ideas de planes y experiencias"
+          "Además, también puedo recomendarte:\n\n" +
+          "- Nuestra variedad de alojamientos en función de vuestro plan\n\n" +
+          "- Lugares para visitar cerca\n\n" +
+          "- Distancias entre los diferentes lugares de interés y nuestros apartamentos\n\n" +
+          "- Ideas de planes y experiencias"
       );
+
+      if (isEmbed) {
+        setChatOpen(true);
+      }
     })();
   </script>
 </body>

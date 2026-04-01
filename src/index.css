@@ -394,16 +394,21 @@
   .pre-modal__overlay {
     position: absolute;
     inset: 0;
-    background: hsl(var(--wine) / 0.75);
-    backdrop-filter: blur(4px);
+    background: transparent;
+  }
+
+  .pre-modal__overlay--wine {
+    background: hsl(var(--wine) / 0.68);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
   }
 
   .pre-modal__panel {
     position: relative;
     width: 100%;
-    max-width: 600px;
-    height: 85vh;
-    max-height: 800px;
+    max-width: min(92vw, 880px);
+    height: 90vh;
+    max-height: 920px;
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
