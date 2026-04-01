@@ -25,7 +25,21 @@ const ChatBot = ({ forceOpen, onForceClose }: ChatBotProps) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [welcomeVisible, setWelcomeVisible] = useState(false);
 
-  // Delay welcome panel appearance for a smooth entrance
+  // Sync forceOpen from header button
+  useEffect(() => {
+    if (forceOpen) {
+      setShowWelcome(false);
+      setWelcomeVisible(false);
+      sessionStorage.setItem("rrr-welcome-dismissed", "true");
+      setIsOpen(true);
+    }
+  }, [forceOpen]);
+
+  const closeChat = () => {
+    setIsOpen(false);
+    onForceClose?.();
+  };
+
   useEffect(() => {
     if (showWelcome) {
       const timer = setTimeout(() => setWelcomeVisible(true), 1500);
