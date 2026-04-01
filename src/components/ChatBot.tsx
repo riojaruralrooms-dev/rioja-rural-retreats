@@ -118,11 +118,13 @@ const ChatBot = () => {
 
         <div className="px-6 pb-6 space-y-2.5">
           <button
-            onClick={() => handleWelcomeOption("Ver alojamientos")}
+            onClick={() => handleWelcomeOption("Cuéntame todo sobre vuestros alojamientos")}
             className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border border-stone/30 bg-white hover:border-wine/40 hover:shadow-md transition-all duration-200 text-left group"
           >
             <span className="text-base">🏡</span>
-            <span className="text-sm font-medium text-charcoal group-hover:text-wine transition-colors">Ver alojamientos</span>
+            <span className="text-sm font-medium text-charcoal group-hover:text-wine transition-colors">
+              Te cuento todo sobre nuestros alojamientos
+            </span>
           </button>
           <button
             onClick={() => handleWelcomeOption("Descubrir planes y experiencias")}
