@@ -181,7 +181,7 @@ const ChatBot = ({ forceOpen, onForceClose }: ChatBotProps) => {
             <MessageCircle size={20} />
             <span className="font-serif font-semibold text-lg">Asistente Virtual</span>
           </div>
-          <button onClick={() => setIsOpen(false)} className="p-2 hover:bg-cream/20 rounded-full transition-colors" aria-label="Cerrar">
+          <button onClick={closeChat} className="p-2 hover:bg-cream/20 rounded-full transition-colors" aria-label="Cerrar">
             <X size={20} />
           </button>
         </div>
