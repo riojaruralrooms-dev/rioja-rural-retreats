@@ -158,7 +158,7 @@ const ChatBot = ({ forceOpen, onForceClose }: ChatBotProps) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-end p-4 sm:items-center sm:justify-center">
-      <div className="absolute inset-0 bg-charcoal/60 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
+      <div className="absolute inset-0 bg-wine/70 backdrop-blur-sm" onClick={closeChat} />
 
       <div className="relative w-full max-w-md lg:max-w-2xl xl:max-w-3xl h-[500px] sm:h-[560px] lg:h-[680px] xl:h-[720px] bg-cream rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-fade-up border border-stone/20 transition-all duration-300">
         {/* Header */}
