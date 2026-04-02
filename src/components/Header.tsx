@@ -3,6 +3,9 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import logo from "@/assets/logo-nuevo.png";
 
+/** Solo en local (`npm run dev`). En build de producción no se muestra. */
+const SHOW_PRE_RESERVA_IA = import.meta.env.DEV;
+
 const navItems = [
   { label: "Inicio", href: "/", isAnchor: false },
   { label: "Alojamientos", href: "/alojamientos", isAnchor: false },
@@ -105,9 +108,11 @@ const Header = () => {
               Opiniones
             </button>
 
-            <button onClick={openModal} className="pre-btn">
-              ✨ Pre-reserva con IA <span className="badge-10">-10%</span> 🍷
-            </button>
+            {SHOW_PRE_RESERVA_IA && (
+              <button onClick={openModal} className="pre-btn">
+                ✨ Pre-reserva con IA <span className="badge-10">-10%</span> 🍷
+              </button>
+            )}
           </nav>
 
           <button
@@ -131,9 +136,11 @@ const Header = () => {
           <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className={`nav-link text-base py-2 ${isActive("/") ? "active" : ""}`}>Inicio</Link>
           <Link to="/alojamientos" onClick={() => setIsMobileMenuOpen(false)} className={`nav-link text-base py-2 ${isActive("/alojamientos") ? "active" : ""}`}>Alojamientos</Link>
           <button onClick={scrollToOpiniones} className="btn-nav-opinions-mobile">Opiniones</button>
-          <button onClick={() => { setIsMobileMenuOpen(false); openModal(); }} className="pre-btn pre-btn--mobile">
-            ✨ Pre-reserva con IA <span className="badge-10">-10%</span> 🍷
-          </button>
+          {SHOW_PRE_RESERVA_IA && (
+            <button onClick={() => { setIsMobileMenuOpen(false); openModal(); }} className="pre-btn pre-btn--mobile">
+              ✨ Pre-reserva con IA <span className="badge-10">-10%</span> 🍷
+            </button>
+          )}
           <Link to="/experiencias" onClick={() => setIsMobileMenuOpen(false)} className={`nav-link text-base py-2 ${isActive("/experiencias") ? "active" : ""}`}>Experiencias</Link>
           <Link to="/contacto" onClick={() => setIsMobileMenuOpen(false)} className={`nav-link text-base py-2 ${isActive("/contacto") ? "active" : ""}`}>Contacto</Link>
         </nav>
@@ -141,7 +148,7 @@ const Header = () => {
     </header>
 
     {/* Modal Pre-reserva IA con overlay burdeos */}
-    {isModalOpen && (
+    {SHOW_PRE_RESERVA_IA && isModalOpen && (
       <div
         className="pre-modal"
         role="dialog"
