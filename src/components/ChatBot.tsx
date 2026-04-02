@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { X, Send, MessageCircle, Loader2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 
@@ -6,6 +6,8 @@ type Message = { role: "user" | "assistant"; content: string; error?: boolean };
 
 const AGENT_URL = `https://${import.meta.env.VITE_SUPABASE_PROJECT_ID}.supabase.co/functions/v1/agent-proxy`;
 const ANON_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+
+const WELCOME_AUTO_DISMISS_MS = 15_000;
 
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,13 +29,21 @@ const ChatBot = () => {
     }
   }, [showWelcome]);
 
-  const dismissWelcome = () => {
+  const dismissWelcome = useCallback(() => {
     setWelcomeVisible(false);
     setTimeout(() => {
       setShowWelcome(false);
       sessionStorage.setItem("rrr-welcome-dismissed", "true");
     }, 300);
-  };
+  }, []);
+
+  useEffect(() => {
+    if (!showWelcome || !welcomeVisible) return;
+    const id = window.setTimeout(() => {
+      dismissWelcome();
+    }, WELCOME_AUTO_DISMISS_MS);
+    return () => clearTimeout(id);
+  }, [showWelcome, welcomeVisible, dismissWelcome]);
 
   const handleWelcomeOption = (message: string) => {
     dismissWelcome();

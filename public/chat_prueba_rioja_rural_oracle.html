@@ -671,7 +671,12 @@
       var ASSISTANT_STYLE_RULE =
         "No preguntes nunca el año al cliente. Asume siempre que la reserva es para los próximos meses y continúa con disponibilidad/precio directamente. " +
         "Cuando el usuario pregunte de forma general por todos los apartamentos, alojamientos o una visión global del parque, incluye siempre El sitio de Carmelo en el listado. " +
-        "Aclara con naturalidad que la gestión y reservas de ese alojamiento se hacen en su propia web (no a través de este chat), pero el cliente debe conocerlo para tener el panorama completo.";
+        "Aclara con naturalidad que la gestión y reservas de ese alojamiento se hacen en su propia web (no a través de este chat), pero el cliente debe conocerlo para tener el panorama completo. " +
+        "CALENDARIO Y ESTANCIAS: Si tienes datos de calendario (p. ej. días CLOSED / no disponibles), al evaluar un rango que pide el cliente (entrada–salida) distingue siempre tres casos y dilo con claridad: " +
+        "(1) Disponibilidad completa: ninguna noche del rango está cerrada. " +
+        "(2) Ocupación total del rango: todo el periodo pedido queda bloqueado o no encaja con noches libres consecutivas. " +
+        "(3) Ocupación parcial o solapamiento: solo algunas fechas o noches del rango están ocupadas/cerradas y otras libres — en este caso debes especificarlo sí o sí: qué días concretos están ocupados y cuáles siguen disponibles dentro de lo que pidió; no digas que «todo el periodo está ocupado» si solo coincide en parte. " +
+        "Si aplica, sugiere ajustar fechas (por ejemplo quitar solo la noche conflictiva), acortar/alargar la estancia o consultar otra unidad, sin inventar disponibilidad que no figure en los datos.";
       var NO_YEAR_FALLBACK_TEXT =
         "Estoy revisando disponibilidad con esas fechas y te muestro opciones en un momento.";
       var FALLBACK_CONTACT_MESSAGE =
