@@ -573,6 +573,60 @@
     html.embed-mode .close-chat {
       display: none;
     }
+
+    /*
+      Móvil + embed: solo suavizar lo que aparece al “ofrecer” (carga o botón [VER_MAS]).
+      El compositor y las preguntas rápidas se dejan como en escritorio.
+    */
+    @media (max-width: 640px) {
+      html.embed-mode .status {
+        padding: 0 12px 6px;
+      }
+
+      html.embed-mode .status-wrap {
+        gap: 4px;
+        max-width: 100%;
+      }
+
+      html.embed-mode .status--loading {
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+        padding: 4px 9px;
+        gap: 6px;
+        animation: none;
+        border-color: rgba(201, 162, 39, 0.22);
+        background: rgba(201, 162, 39, 0.08);
+      }
+
+      html.embed-mode .wine-loader {
+        font-size: 0.78rem;
+      }
+
+      html.embed-mode .status-text::after {
+        animation: none;
+        width: 10px;
+      }
+
+      html.embed-mode .status-reminder {
+        font-size: 0.68rem;
+        line-height: 1.25;
+        padding: 3px 7px;
+        max-width: 100%;
+        border-style: solid;
+        border-color: rgba(114, 47, 55, 0.12);
+      }
+
+      html.embed-mode .msg-more-btn {
+        margin-top: 8px;
+        padding: 6px 12px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        width: fit-content;
+        max-width: 100%;
+        box-shadow: 0 2px 6px rgba(44, 36, 32, 0.1);
+      }
+    }
   </style>
   <script>
     (function () {
@@ -661,6 +715,8 @@
       var webhookLink = document.getElementById("webhookLink");
       var activeController = null;
       var REQUEST_TIMEOUT_MS = 60000;
+      /** Tiempo que el recordatorio secundario permanece visible antes de ocultarse (móvil y web). */
+      var LOADING_REMINDER_VISIBLE_MS = 10000;
       var loadingReminderInterval = null;
       var loadingReminderTimeout = null;
       var yearRecoveryInProgress = false;
@@ -765,12 +821,17 @@
           loadingReminderInterval = setInterval(function () {
             var reminderEl = document.getElementById("statusReminder");
             if (!reminderEl) return;
-            reminderEl.textContent = "Si es una pregunta genérica, puede tardar un poquito más.";
+            var narrow =
+              typeof window.matchMedia === "function" &&
+              window.matchMedia("(max-width: 640px)").matches;
+            reminderEl.textContent = narrow
+              ? "Si la consulta es amplia, puede tardar un poco más."
+              : "Si es una pregunta genérica, puede tardar un poquito más.";
             reminderEl.classList.add("is-visible");
             if (loadingReminderTimeout) clearTimeout(loadingReminderTimeout);
             loadingReminderTimeout = setTimeout(function () {
               if (reminderEl) reminderEl.classList.remove("is-visible");
-            }, 4200);
+            }, LOADING_REMINDER_VISIBLE_MS);
           }, 10000);
           return;
         }
