@@ -668,6 +668,9 @@
         "Por favor, desarrolla toda la información anterior con todo lujo de detalles para que no tarde tanto a la primera";
       var YEAR_AUTO_CONTINUE_TRIGGER =
         "Continua con la consulta anterior asumiendo que las fechas son de los proximos meses. No pidas el ano y ofrece disponibilidad, precio o siguiente paso de reserva directamente.";
+      /* Mismo texto al final de instrucciones_asistente y en campo aparte para que n8n lo pueda poner AL INICIO del system prompt (los modelos a veces ignoran reglas largas pero obedecen la primera línea). */
+      var REFUERZO_CALENDARIO_PARCIAL =
+        "ÚLTIMA INSTRUCCIÓN ANTES DE RESPONDER AL USUARIO: Tras Verificar_Disponibilidad y/o el archivo de calendario, si queda alguna noche LIBRE en el rango pedido para la unidad preguntada, no puedes empezar con «Lo siento, pero», ni decir que no está disponible para todo el rango, ni priorizar la lista de otros alojamientos. Anuncia ocupación parcial, indica la noche o día que bloquea, y ofrece ya la estancia ajustada en la MISMA unidad. Prohibido contradecirte en el mismo mensaje.";
       var ASSISTANT_STYLE_RULE =
         "PRIORIDAD MÁXIMA (por encima de cualquier plantilla de respuesta): Si los datos de calendario o Verificar_Disponibilidad muestran que en la unidad preguntada quedan noches LIBRES dentro o pegadas al rango que pide el cliente, está TERMINANTEMENTE PROHIBIDO empezar la respuesta con «Lo siento, pero», «no está disponible para las fechas del», o pasar enseguida a listar otros alojamientos sin haber dicho antes qué día/noche concreta choca y sin haber ofrecido un rango ajustado en la MISMA unidad. " +
         "No preguntes nunca el año al cliente. Asume siempre que la reserva es para los próximos meses y continúa con disponibilidad/precio directamente. " +
@@ -683,7 +686,8 @@
         "Para estancias con entrada y salida, razona por noches consecutivas necesarias: si solo falla la primera noche, propón entrada un día después en esa misma unidad antes de ofrecer otros alojamientos. " +
         "PROHIBIDO usar como respuesta principal la plantilla «Lo siento, pero [esta unidad] no está disponible para las fechas del X al Y» seguida solo de otros alojamientos, si según el calendario en ESA misma unidad quedan noches libres dentro o pegadas al rango que pidió el cliente. " +
         "ORDEN OBLIGATORIO ante conflicto parcial en la unidad consultada: (1) decir con precisión qué día o noche del calendario choca; (2) ofrecer ya el rango alternativo en la MISMA unidad (p. ej. entrada el día siguiente si el primero está CLOSED y el resto libre); (3) solo después, como opción secundaria, mencionar otras unidades si quieren mantener fechas imposibles en la primera. " +
-        "EJEMPLO DE LO QUE NO DEBES HACER: consultan «La Florida segundo piso del 13 al 15 de junio» y el archivo solo marca ocupado el 13 (o la franja que incluye el 13) pero 14 y 15 libres — entonces NO afirmes que no hay disponibilidad para el 13–15 sin matizar; explica el bloqueo del 13 y propón estancia desde el 14 hasta el 15 (ajustando entrada/salida según cómo interpretes noches en el calendario, siempre alineado con los datos).";
+        "EJEMPLO DE LO QUE NO DEBES HACER: consultan «La Florida segundo piso del 13 al 15 de junio» y el archivo solo marca ocupado el 13 (o la franja que incluye el 13) pero 14 y 15 libres — entonces NO afirmes que no hay disponibilidad para el 13–15 sin matizar; explica el bloqueo del 13 y propón estancia desde el 14 hasta el 15 (ajustando entrada/salida según cómo interpretes noches en el calendario, siempre alineado con los datos). " +
+        REFUERZO_CALENDARIO_PARCIAL;
       var NO_YEAR_FALLBACK_TEXT =
         "Estoy revisando disponibilidad con esas fechas y te muestro opciones en un momento.";
       var FALLBACK_CONTACT_MESSAGE =
@@ -962,6 +966,7 @@
             email: profile.email || "no-indicado@riojarural.local",
             telefono: profile.telefono || "No indicado",
             instrucciones_asistente: ASSISTANT_STYLE_RULE,
+            refuerzo_calendario_parcial: REFUERZO_CALENDARIO_PARCIAL,
           }),
         })
           .then(function (res) {
