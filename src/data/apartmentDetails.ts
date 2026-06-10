@@ -1,6 +1,4 @@
 import jacuzziCover from "@/assets/jacuzzi-cover.jpg";
-import jacuzziBath from "@/assets/jacuzzi-bath.jpg";
-import jacuzziRoom from "@/assets/jacuzzi-room.jpg";
 import jacuzziRio from "@/assets/jacuzzi-rio.jpg";
 import jacuzziBano from "@/assets/jacuzzi-bano.jpg";
 import jacuzziDormitorio from "@/assets/jacuzzi-dormitorio.jpg";
@@ -8,7 +6,6 @@ import jacuzziTerraza from "@/assets/jacuzzi-terraza.jpg";
 
 import duplex1Cover from "@/assets/duplex1-cover.jpg";
 import duplex1Salon from "@/assets/duplex1-salon.jpg";
-import duplex1Cocina from "@/assets/duplex1-cocina.jpg";
 import duplex1Dormitorio from "@/assets/duplex1-dormitorio.jpg";
 import duplex1Dormitorio2 from "@/assets/duplex1-dormitorio2.jpg";
 import duplex1Bano from "@/assets/duplex1-bano.jpg";
@@ -89,8 +86,6 @@ export const apartmentDetails: ApartmentDetail[] = [
     coverImage: jacuzziCover,
     gallery: [
       { src: jacuzziCover, alt: "Salón con jacuzzi y chimenea" },
-      { src: jacuzziBath, alt: "Jacuzzi con pétalos" },
-      { src: jacuzziRoom, alt: "Habitación con jacuzzi" },
       { src: jacuzziDormitorio, alt: "Dormitorio principal" },
       { src: jacuzziBano, alt: "Baño completo" },
       { src: jacuzziTerraza, alt: "Terraza exterior" },
@@ -121,7 +116,6 @@ export const apartmentDetails: ApartmentDetail[] = [
     gallery: [
       { src: duplex1Cover, alt: "Salón, comedor y cocina" },
       { src: duplex1Salon, alt: "Salón con zona de estar y balcón" },
-      { src: duplex1Cocina, alt: "Cocina y comedor" },
       { src: duplex1Dormitorio, alt: "Dormitorio con cama de matrimonio" },
       { src: duplex1Dormitorio2, alt: "Dormitorio con cama individual" },
       { src: duplex1Bano, alt: "Baño completo con ducha" },
