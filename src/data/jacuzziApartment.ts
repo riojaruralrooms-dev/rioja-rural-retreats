@@ -3,7 +3,6 @@ import bathImg from "@/assets/jacuzzi-bath.jpg";
 import roomImg from "@/assets/jacuzzi-room.jpg";
 import rioImg from "@/assets/jacuzzi-rio.jpg";
 import banoImg from "@/assets/jacuzzi-bano.jpg";
-import salonImg from "@/assets/jacuzzi-salon.jpg";
 import dormitorioImg from "@/assets/jacuzzi-dormitorio.jpg";
 import terrazaImg from "@/assets/jacuzzi-terraza.jpg";
 
@@ -39,7 +38,6 @@ export const jacuzziApartment: JacuzziApartment = {
   coverImage: coverImg,
   gallery: [
     { src: coverImg, alt: "Salón con jacuzzi y chimenea" },
-    { src: salonImg, alt: "Salón con jacuzzi y vistas" },
     { src: bathImg, alt: "Jacuzzi con pétalos" },
     { src: roomImg, alt: "Habitación con jacuzzi" },
     { src: dormitorioImg, alt: "Dormitorio principal" },
