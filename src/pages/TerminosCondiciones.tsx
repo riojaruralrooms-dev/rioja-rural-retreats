@@ -31,7 +31,7 @@ const TerminosCondiciones = () => (
 
           <h3 className="font-serif text-xl text-charcoal !mt-8 !mb-4">Tarifa predeterminada</h3>
           <p>
-            El cliente puede cancelar la reserva de forma gratuita hasta 7 días antes de la fecha de llegada. El cliente tendrá que pagar un 50% del precio total si cancela durante los 7 días antes de la fecha de llegada. Si cancela en las 48 horas previas a la llegada o no se presenta el día de la reserva, se cobrará el 100% del importe correspondiente a la reserva. Se paga durante el check in.
+            El cliente puede cancelar la reserva de forma gratuita hasta 14 días antes de la fecha de llegada. El cliente tendrá que pagar un 50% del precio total si cancela durante los 14 días antes de la fecha de llegada. Si cancela en las 48 horas previas a la llegada o no se presenta el día de la reserva, se cobrará el 100% del importe correspondiente a la reserva. Se paga durante el check in.
           </p>
 
           <h3 className="font-serif text-xl text-charcoal !mt-8 !mb-4">Tarifa no reembolsable</h3>
