@@ -2,6 +2,8 @@ import coverImg from "@/assets/jacuzzi-cover.jpg";
 import rioImg from "@/assets/jacuzzi-rio.jpg";
 import banoImg from "@/assets/jacuzzi-bano.jpg";
 import dormitorioImg from "@/assets/jacuzzi-dormitorio.jpg";
+import dormitorio2Img from "@/assets/jacuzzi-dormitorio2.jpg";
+import cocinaImg from "@/assets/jacuzzi-cocina.jpg";
 import terrazaImg from "@/assets/jacuzzi-terraza.jpg";
 
 export interface JacuzziApartment {
@@ -36,7 +38,9 @@ export const jacuzziApartment: JacuzziApartment = {
   coverImage: coverImg,
   gallery: [
     { src: coverImg, alt: "Salón con jacuzzi y chimenea" },
+    { src: cocinaImg, alt: "Cocina y comedor" },
     { src: dormitorioImg, alt: "Dormitorio principal" },
+    { src: dormitorio2Img, alt: "Segundo dormitorio" },
     { src: banoImg, alt: "Baño completo" },
     { src: terrazaImg, alt: "Terraza exterior" },
     { src: rioImg, alt: "Río Tirón - entorno natural" },
