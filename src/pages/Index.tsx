@@ -67,10 +67,13 @@ const Index = () => {
                 id={accommodation.id}
                 name={accommodation.name}
                 location={accommodation.location}
+                locationUrl={accommodation.locationUrl}
                 description={accommodation.description}
                 image={accommodation.image}
                 images={accommodation.images}
                 buttonText={accommodation.buttonText}
+                externalUrl={accommodation.externalUrl}
+                note={accommodation.note}
               />
             ))}
           </div>

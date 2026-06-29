@@ -38,10 +38,6 @@ const AccommodationCard = ({
     return () => clearInterval(interval);
   }, [slideImages]);
 
-  const linkProps = externalUrl
-    ? { as: "a" as const, href: externalUrl, target: "_blank", rel: "noopener noreferrer" }
-    : { as: Link, to: `/alojamientos/${id}` };
-
   return (
     <div className="card-accommodation group bg-card">
       <div className="relative h-72 md:h-80 overflow-hidden">

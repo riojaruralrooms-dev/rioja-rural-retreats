@@ -19,6 +19,13 @@ const AlojamientoDetalle = () => {
     }, 3000);
     return () => clearInterval(interval);
   }, [slideImages]);
+
+  useEffect(() => {
+    if (accommodation?.externalUrl) {
+      window.location.replace(accommodation.externalUrl);
+    }
+  }, [accommodation?.externalUrl]);
+
   if (!accommodation) {
     return (
       <Layout>
@@ -31,6 +38,16 @@ const AlojamientoDetalle = () => {
               Volver a alojamientos
             </Link>
           </div>
+        </div>
+      </Layout>
+    );
+  }
+
+  if (accommodation.externalUrl) {
+    return (
+      <Layout>
+        <div className="min-h-screen flex items-center justify-center">
+          <p className="text-muted-foreground">Redirigiendo a {accommodation.name}…</p>
         </div>
       </Layout>
     );
