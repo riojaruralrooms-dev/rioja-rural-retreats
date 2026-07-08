@@ -257,6 +257,21 @@
     transform: translateY(-1px) scale(1.01);
   }
 
+  .btn-amenitiz-reserve--nav {
+    padding: 0.625rem 1.5rem;
+    font-size: 0.8125rem;
+    border-radius: 9999px;
+    letter-spacing: 0.1em;
+  }
+
+  .btn-amenitiz-reserve--mobile {
+    width: 100%;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    font-size: 0.9375rem;
+    border-radius: 0.75rem;
+  }
+
   /* Section styles */
   .section-padding {
     @apply py-16 md:py-24 lg:py-32;

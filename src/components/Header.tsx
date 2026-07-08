@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { CalendarCheck, Menu, X } from "lucide-react";
+import AmenitizBookingModal from "@/components/AmenitizBookingModal";
 import logo from "@/assets/logo-nuevo.png";
 
 const navItems = [
@@ -13,7 +14,8 @@ const navItems = [
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+  const [isPreReservaModalOpen, setIsPreReservaModalOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -24,24 +26,28 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const openModal = useCallback(() => {
-    setIsModalOpen(true);
+  const openPreReservaModal = useCallback(() => {
+    setIsPreReservaModalOpen(true);
     document.body.style.overflow = "hidden";
   }, []);
 
-  const closeModal = useCallback(() => {
-    setIsModalOpen(false);
+  const closePreReservaModal = useCallback(() => {
+    setIsPreReservaModalOpen(false);
     document.body.style.overflow = "";
   }, []);
 
+  const openBookingModal = useCallback(() => {
+    setIsBookingModalOpen(true);
+  }, []);
+
   useEffect(() => {
-    if (!isModalOpen) return;
+    if (!isPreReservaModalOpen) return;
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeModal();
+      if (e.key === "Escape") closePreReservaModal();
     };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  }, [isModalOpen, closeModal]);
+  }, [isPreReservaModalOpen, closePreReservaModal]);
 
   useEffect(() => {
     return () => { document.body.style.overflow = ""; };
@@ -105,8 +111,17 @@ const Header = () => {
               Opiniones
             </button>
 
-            <button onClick={openModal} className="pre-btn">
-              ✨ Pre-reserva con IA <span className="badge-10">-10%</span> 🍷
+            <button
+              type="button"
+              onClick={openBookingModal}
+              className="btn-amenitiz-reserve btn-amenitiz-reserve--nav group inline-flex items-center gap-2"
+            >
+              <CalendarCheck
+                size={18}
+                strokeWidth={2.5}
+                className="shrink-0 transition-transform duration-300 group-hover:scale-110"
+              />
+              <span>Reservar ahora</span>
             </button>
           </nav>
 
@@ -128,29 +143,47 @@ const Header = () => {
         }`}
       >
         <nav className="container mx-auto px-4 py-6 flex flex-col gap-4">
+          <button
+            type="button"
+            onClick={() => {
+              setIsMobileMenuOpen(false);
+              openBookingModal();
+            }}
+            className="btn-amenitiz-reserve btn-amenitiz-reserve--nav btn-amenitiz-reserve--mobile group inline-flex items-center justify-center gap-2"
+          >
+            <CalendarCheck
+              size={20}
+              strokeWidth={2.5}
+              className="shrink-0 transition-transform duration-300 group-hover:scale-110"
+            />
+            <span>Reservar ahora</span>
+          </button>
           <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className={`nav-link text-base py-2 ${isActive("/") ? "active" : ""}`}>Inicio</Link>
           <Link to="/alojamientos" onClick={() => setIsMobileMenuOpen(false)} className={`nav-link text-base py-2 ${isActive("/alojamientos") ? "active" : ""}`}>Alojamientos</Link>
-          <button onClick={scrollToOpiniones} className="btn-nav-opinions-mobile">Opiniones</button>
-          <button onClick={() => { setIsMobileMenuOpen(false); openModal(); }} className="pre-btn pre-btn--mobile">
-            ✨ Pre-reserva con IA <span className="badge-10">-10%</span> 🍷
-          </button>
           <Link to="/experiencias" onClick={() => setIsMobileMenuOpen(false)} className={`nav-link text-base py-2 ${isActive("/experiencias") ? "active" : ""}`}>Experiencias</Link>
           <Link to="/contacto" onClick={() => setIsMobileMenuOpen(false)} className={`nav-link text-base py-2 ${isActive("/contacto") ? "active" : ""}`}>Contacto</Link>
+          <button onClick={scrollToOpiniones} className="btn-nav-opinions-mobile">Opiniones</button>
         </nav>
       </div>
     </header>
 
+    <AmenitizBookingModal
+      open={isBookingModalOpen}
+      onOpenChange={setIsBookingModalOpen}
+      onPreReservaClick={openPreReservaModal}
+    />
+
     {/* Modal Pre-reserva IA con overlay burdeos */}
-    {isModalOpen && (
+    {isPreReservaModalOpen && (
       <div
         className="pre-modal"
         role="dialog"
-        aria-hidden={!isModalOpen}
+        aria-hidden={!isPreReservaModalOpen}
         aria-label="Pre-reserva con IA"
       >
-        <div className="pre-modal__overlay pre-modal__overlay--wine" onClick={closeModal} />
+        <div className="pre-modal__overlay pre-modal__overlay--wine" onClick={closePreReservaModal} />
         <div className="pre-modal__panel">
-          <button className="pre-modal__close" onClick={closeModal} aria-label="Cerrar">
+          <button className="pre-modal__close" onClick={closePreReservaModal} aria-label="Cerrar">
             ✕
           </button>
           <iframe
