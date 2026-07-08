@@ -214,22 +214,47 @@
     @apply w-full h-full object-cover transition-transform duration-700;
   }
 
-  /* Amenitiz booking widget */
-  .amenitiz-booking-widget {
-    width: 100%;
-    margin-top: 0.25rem;
-  }
-
-  .amenitiz-booking-widget iframe {
-    width: 100%;
-    min-height: 500px;
-    display: block;
-  }
-
-  @media (min-width: 768px) {
-    .amenitiz-booking-widget iframe {
-      min-height: 600px;
+  /* Amenitiz CTA — botón palpitante */
+  @keyframes amenitiz-pulse {
+    0%,
+    100% {
+      transform: scale(1);
+      box-shadow:
+        0 8px 28px hsl(var(--wine) / 0.4),
+        0 0 0 0 hsl(var(--wine) / 0.3);
     }
+    50% {
+      transform: scale(1.035);
+      box-shadow:
+        0 14px 40px hsl(var(--wine) / 0.55),
+        0 0 24px 6px hsl(var(--wine) / 0.22);
+    }
+  }
+
+  .btn-amenitiz-reserve {
+    background: var(--gradient-wine);
+    color: hsl(var(--primary-foreground));
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    animation: amenitiz-pulse 2.4s ease-in-out infinite;
+    transition:
+      transform 0.35s ease,
+      box-shadow 0.35s ease,
+      animation-play-state 0.2s ease;
+  }
+
+  .btn-amenitiz-reserve:hover {
+    animation-play-state: paused;
+    transform: translateY(-4px) scale(1.04);
+    box-shadow:
+      0 18px 48px hsl(var(--wine) / 0.6),
+      0 0 32px 8px hsl(var(--wine) / 0.28);
+  }
+
+  .btn-amenitiz-reserve:active {
+    transform: translateY(-1px) scale(1.01);
   }
 
   /* Section styles */
