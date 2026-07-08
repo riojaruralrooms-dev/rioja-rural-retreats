@@ -67,17 +67,19 @@ const ApartmentDetailPage = () => {
           </Link>
 
           {/* Header */}
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-10">
-            <h1 className="font-serif text-4xl md:text-5xl text-charcoal">{apt.title}</h1>
-            <div className="inline-flex flex-col self-start md:self-auto items-end gap-1">
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_auto] gap-x-10 gap-y-5 mb-10 items-start">
+            <h1 className="font-serif text-4xl md:text-5xl text-charcoal leading-tight min-w-0">
+              {apt.title}
+            </h1>
+            <div className="flex flex-col items-start lg:items-end gap-2 shrink-0 w-full lg:w-auto">
               <span
-                className="inline-flex items-center bg-primary text-primary-foreground font-semibold px-5 py-2 rounded-full text-sm"
+                className="inline-flex items-center bg-primary text-primary-foreground font-semibold px-5 py-2 rounded-full text-sm whitespace-nowrap"
                 style={{ boxShadow: "var(--shadow-soft)" }}
               >
                 Desde {apt.priceFrom} € / noche
               </span>
               {apt.priceTiers && apt.priceTiers.length > 0 && (
-                <div className="flex gap-2 mt-1">
+                <div className="flex flex-wrap gap-2">
                   {apt.priceTiers.map((tier) => (
                     <div
                       key={tier.people}

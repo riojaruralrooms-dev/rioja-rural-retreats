@@ -12,14 +12,6 @@ const ApartmentListCard = ({ apartment }: ApartmentListCardProps) => {
       className="group relative bg-card rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-1"
       style={{ boxShadow: "var(--shadow-soft)" }}
     >
-      {/* Price badge */}
-      <div className="absolute top-4 right-4 z-10 flex flex-col items-end gap-2">
-        <span className="bg-wine text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg">
-          Desde {apartment.priceFrom},00 € / noche
-        </span>
-        {apartment.petFriendly && <PetFriendlyBadge />}
-      </div>
-
       <div className="flex flex-col md:flex-row">
         {/* Image */}
         <div className="relative md:w-1/2 h-64 md:h-auto min-h-[280px] overflow-hidden">
@@ -33,7 +25,13 @@ const ApartmentListCard = ({ apartment }: ApartmentListCardProps) => {
         {/* Content */}
         <div className="md:w-1/2 p-6 md:p-8 flex flex-col justify-between">
           <div>
-            <h3 className="font-serif text-2xl md:text-3xl text-charcoal mb-3">
+            <div className="flex flex-wrap items-center gap-2 mb-4">
+              <span className="inline-flex items-center bg-wine text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                Desde {apartment.priceFrom},00 € / noche
+              </span>
+              {apartment.petFriendly && <PetFriendlyBadge />}
+            </div>
+            <h3 className="font-serif text-2xl md:text-3xl text-charcoal mb-3 leading-snug">
               {apartment.title}
             </h3>
             <p className="text-muted-foreground leading-relaxed mb-5 text-sm">
