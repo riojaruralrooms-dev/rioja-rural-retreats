@@ -214,6 +214,24 @@
     @apply w-full h-full object-cover transition-transform duration-700;
   }
 
+  /* Amenitiz booking widget */
+  .amenitiz-booking-widget {
+    width: 100%;
+    margin-top: 0.25rem;
+  }
+
+  .amenitiz-booking-widget iframe {
+    width: 100%;
+    min-height: 500px;
+    display: block;
+  }
+
+  @media (min-width: 768px) {
+    .amenitiz-booking-widget iframe {
+      min-height: 600px;
+    }
+  }
+
   /* Section styles */
   .section-padding {
     @apply py-16 md:py-24 lg:py-32;
