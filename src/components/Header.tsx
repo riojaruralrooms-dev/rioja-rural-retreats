@@ -1,7 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { CalendarCheck, Menu, X } from "lucide-react";
-import AmenitizBookingModal from "@/components/AmenitizBookingModal";
+import AmenitizBookingModal, {
+  AMENITIZ_BOOKING_URL,
+  AMENITIZ_CARMELO_BOOKING_URL,
+} from "@/components/AmenitizBookingModal";
 import logo from "@/assets/logo-nuevo.png";
 
 const navItems = [
@@ -15,6 +18,8 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+  const [bookingModalUrl, setBookingModalUrl] = useState(AMENITIZ_BOOKING_URL);
+  const [showPreReservaInBookingModal, setShowPreReservaInBookingModal] = useState(true);
   const [isPreReservaModalOpen, setIsPreReservaModalOpen] = useState(false);
   const location = useLocation();
 
@@ -36,7 +41,9 @@ const Header = () => {
     document.body.style.overflow = "";
   }, []);
 
-  const openBookingModal = useCallback(() => {
+  const openBookingModal = useCallback((url: string, showPreReserva = url === AMENITIZ_BOOKING_URL) => {
+    setBookingModalUrl(url);
+    setShowPreReservaInBookingModal(showPreReserva);
     setIsBookingModalOpen(true);
   }, []);
 
@@ -96,7 +103,7 @@ const Header = () => {
             />
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-10">
+          <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
             {navItems.filter(item => !item.isAnchor).map((item) => (
               <Link
                 key={item.href}
@@ -106,23 +113,37 @@ const Header = () => {
                 {item.label}
               </Link>
             ))}
-            
-            <button onClick={scrollToOpiniones} className="btn-nav-opinions">
+
+            <button onClick={scrollToOpiniones} className="btn-nav-opinions shrink-0">
               Opiniones
             </button>
 
-            <button
-              type="button"
-              onClick={openBookingModal}
-              className="btn-amenitiz-reserve btn-amenitiz-reserve--nav group inline-flex items-center gap-2"
-            >
-              <CalendarCheck
-                size={18}
-                strokeWidth={2.5}
-                className="shrink-0 transition-transform duration-300 group-hover:scale-110"
-              />
-              <span>Reservar ahora</span>
-            </button>
+            <div className="header-cta-group shrink-0">
+              <button
+                type="button"
+                onClick={() => openBookingModal(AMENITIZ_BOOKING_URL)}
+                className="btn-amenitiz-reserve btn-amenitiz-reserve--nav group inline-flex items-center gap-2"
+              >
+                <CalendarCheck
+                  size={18}
+                  strokeWidth={2.5}
+                  className="shrink-0 transition-transform duration-300 group-hover:scale-110"
+                />
+                <span>Reservar ahora</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => openBookingModal(AMENITIZ_CARMELO_BOOKING_URL, false)}
+                className="btn-amenitiz-reserve btn-amenitiz-reserve--nav btn-amenitiz-reserve--nav-long group inline-flex items-center gap-2"
+              >
+                <CalendarCheck
+                  size={18}
+                  strokeWidth={2.5}
+                  className="shrink-0 transition-transform duration-300 group-hover:scale-110"
+                />
+                <span>Reservar en el Sitio del Carmelo</span>
+              </button>
+            </div>
           </nav>
 
           <button
@@ -147,7 +168,7 @@ const Header = () => {
             type="button"
             onClick={() => {
               setIsMobileMenuOpen(false);
-              openBookingModal();
+              openBookingModal(AMENITIZ_BOOKING_URL);
             }}
             className="btn-amenitiz-reserve btn-amenitiz-reserve--nav btn-amenitiz-reserve--mobile group inline-flex items-center justify-center gap-2"
           >
@@ -157,6 +178,21 @@ const Header = () => {
               className="shrink-0 transition-transform duration-300 group-hover:scale-110"
             />
             <span>Reservar ahora</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setIsMobileMenuOpen(false);
+              openBookingModal(AMENITIZ_CARMELO_BOOKING_URL, false);
+            }}
+            className="btn-amenitiz-reserve btn-amenitiz-reserve--nav btn-amenitiz-reserve--mobile group inline-flex items-center justify-center gap-2 text-center leading-snug"
+          >
+            <CalendarCheck
+              size={20}
+              strokeWidth={2.5}
+              className="shrink-0 transition-transform duration-300 group-hover:scale-110"
+            />
+            <span>Reservar en el Sitio del Carmelo</span>
           </button>
           <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className={`nav-link text-base py-2 ${isActive("/") ? "active" : ""}`}>Inicio</Link>
           <Link to="/alojamientos" onClick={() => setIsMobileMenuOpen(false)} className={`nav-link text-base py-2 ${isActive("/alojamientos") ? "active" : ""}`}>Alojamientos</Link>
@@ -170,7 +206,8 @@ const Header = () => {
     <AmenitizBookingModal
       open={isBookingModalOpen}
       onOpenChange={setIsBookingModalOpen}
-      onPreReservaClick={openPreReservaModal}
+      bookingUrl={bookingModalUrl}
+      onPreReservaClick={showPreReservaInBookingModal ? openPreReservaModal : undefined}
     />
 
     {/* Modal Pre-reserva IA con overlay burdeos */}

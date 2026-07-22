@@ -257,11 +257,38 @@
     transform: translateY(-1px) scale(1.01);
   }
 
+  .header-cta-group {
+    display: flex;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
   .btn-amenitiz-reserve--nav {
-    padding: 0.625rem 1.5rem;
-    font-size: 0.8125rem;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.75rem;
     border-radius: 9999px;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
+  }
+
+  .btn-amenitiz-reserve--nav-long {
+    max-width: 10.5rem;
+    line-height: 1.25;
+    text-align: center;
+    white-space: normal;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @media (min-width: 1280px) {
+    .btn-amenitiz-reserve--nav {
+      font-size: 0.8125rem;
+      padding: 0.625rem 1.5rem;
+      letter-spacing: 0.1em;
+    }
+
+    .btn-amenitiz-reserve--nav-long {
+      max-width: 12.5rem;
+    }
   }
 
   .btn-amenitiz-reserve--mobile {

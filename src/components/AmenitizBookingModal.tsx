@@ -7,6 +7,8 @@ import {
 } from "@/components/ui/dialog";
 
 export const AMENITIZ_BOOKING_URL = "https://rioja-rural-rooms.amenitiz.io/es/booking/room";
+export const AMENITIZ_CARMELO_BOOKING_URL =
+  "https://el-sitio-de-carmelo.amenitiz.io/es/booking/room#DatesGuests-BE";
 
 const BOOKING_STEPS = [
   "Primero elige los días en los que nos quieres visitar.",
@@ -19,15 +21,17 @@ interface AmenitizBookingModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onPreReservaClick?: () => void;
+  bookingUrl?: string;
 }
 
 const AmenitizBookingModal = ({
   open,
   onOpenChange,
   onPreReservaClick,
+  bookingUrl = AMENITIZ_BOOKING_URL,
 }: AmenitizBookingModalProps) => {
   const handleGoToBooking = () => {
-    window.open(AMENITIZ_BOOKING_URL, "_blank", "noopener,noreferrer");
+    window.open(bookingUrl, "_blank", "noopener,noreferrer");
     onOpenChange(false);
   };
 
