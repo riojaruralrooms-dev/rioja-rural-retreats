@@ -91,30 +91,30 @@ const Header = () => {
         </a>
       </div>
     <header
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-cream/95 backdrop-blur-md shadow-soft py-3 mt-9"
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-cream/95 backdrop-blur-md shadow-soft py-3 mt-9 overflow-x-hidden"
     >
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center">
+      <div className="container mx-auto px-4 max-w-[100vw]">
+        <div className="flex items-center justify-between gap-3 min-w-0">
+          <Link to="/" className="flex shrink-0 items-center max-w-[38%] sm:max-w-none">
             <img
               src={logo}
               alt="Rioja Rural Rooms"
-              className="h-32 md:h-40 w-auto transition-all duration-300"
+              className="h-24 sm:h-28 xl:h-32 2xl:h-36 w-auto max-h-36 object-contain object-left transition-all duration-300"
             />
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
+          <nav className="hidden xl:flex items-center justify-end gap-3 2xl:gap-5 min-w-0 flex-1">
             {navItems.filter(item => !item.isAnchor).map((item) => (
               <Link
                 key={item.href}
                 to={item.href}
-                className={`nav-link ${isActive(item.href) ? "active" : ""}`}
+                className={`nav-link nav-link--compact shrink-0 ${isActive(item.href) ? "active" : ""}`}
               >
                 {item.label}
               </Link>
             ))}
 
-            <button onClick={scrollToOpiniones} className="btn-nav-opinions shrink-0">
+            <button onClick={scrollToOpiniones} className="btn-nav-opinions btn-nav-opinions--compact shrink-0">
               Opiniones
             </button>
 
@@ -122,7 +122,7 @@ const Header = () => {
               <button
                 type="button"
                 onClick={() => openBookingModal(AMENITIZ_BOOKING_URL)}
-                className="btn-amenitiz-reserve btn-amenitiz-reserve--nav group inline-flex items-center gap-2"
+                className="btn-amenitiz-reserve btn-amenitiz-reserve--nav group inline-flex items-center gap-1.5 2xl:gap-2"
               >
                 <CalendarCheck
                   size={18}
@@ -134,21 +134,22 @@ const Header = () => {
               <button
                 type="button"
                 onClick={() => openBookingModal(AMENITIZ_CARMELO_BOOKING_URL, false)}
-                className="btn-amenitiz-reserve btn-amenitiz-reserve--nav btn-amenitiz-reserve--nav-long group inline-flex items-center gap-2"
+                className="btn-amenitiz-reserve btn-amenitiz-reserve--nav btn-amenitiz-reserve--nav-long group inline-flex items-center gap-1.5 2xl:gap-2"
               >
                 <CalendarCheck
                   size={18}
                   strokeWidth={2.5}
                   className="shrink-0 transition-transform duration-300 group-hover:scale-110"
                 />
-                <span>Reservar en el Sitio del Carmelo</span>
+                <span className="2xl:hidden">Reservar El Carmelo</span>
+                <span className="hidden 2xl:inline">Reservar en el Sitio del Carmelo</span>
               </button>
             </div>
           </nav>
 
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden p-2 transition-colors text-charcoal"
+            className="xl:hidden shrink-0 p-2 transition-colors text-charcoal"
             aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -157,7 +158,7 @@ const Header = () => {
       </div>
 
       <div
-        className={`lg:hidden absolute top-full left-0 right-0 bg-cream shadow-elevated transition-all duration-300 ${
+        className={`xl:hidden absolute top-full left-0 right-0 bg-cream shadow-elevated transition-all duration-300 ${
           isMobileMenuOpen
             ? "opacity-100 visible translate-y-0"
             : "opacity-0 invisible -translate-y-4"
